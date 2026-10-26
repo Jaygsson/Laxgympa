@@ -13,7 +13,7 @@
   --bla:#3AAAF5; --bla-deep:#1572C4; --bla-soft:#D9EFFF;
   --navy:#24306F; --guld:#FFB51E; --guld-soft:#FFF1C9;
   --ratt:#12996A; --ratt-soft:#D3F4E5; --fel:#E2622D; --fel-soft:#FFE6DA;
-  --bom:#EBCFA8; --bom-ben:#BFA488; --on-pop:#FFFFFF; --skugga:rgba(60,30,90,.13);
+  --bom:#EBCFA8; --bom-ben:#BFA488; --on-pop:#FFFFFF; --skugga:rgba(60,30,90,.13); --rod:#D7262E;
   --pop:var(--rosa); --pop-deep:var(--rosa-deep); --pop-soft:var(--rosa-soft);
   --pop2:var(--bla); --pop2-deep:var(--bla-deep); --pop2-soft:var(--bla-soft);
   --matta:var(--bla-soft); --matta-kant:var(--bla);
@@ -30,7 +30,7 @@
     --bla:#62C4FF; --bla-deep:#86D2FF; --bla-soft:#1E3B63;
     --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
     --ratt:#43D894; --ratt-soft:#163E2F; --fel:#FF9468; --fel-soft:#4D2A1E;
-    --bom:#8C6E52; --bom-ben:#6B5642; --on-pop:#1B1233; --skugga:rgba(0,0,0,.35);
+    --bom:#8C6E52; --bom-ben:#6B5642; --on-pop:#1B1233; --skugga:rgba(0,0,0,.35); --rod:#FF6B70;
     color-scheme:dark;
   }
 }
@@ -41,10 +41,14 @@
   --bla:#62C4FF; --bla-deep:#86D2FF; --bla-soft:#1E3B63;
   --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
   --ratt:#43D894; --ratt-soft:#163E2F; --fel:#FF9468; --fel-soft:#4D2A1E;
-  --bom:#8C6E52; --bom-ben:#6B5642; --on-pop:#1B1233; --skugga:rgba(0,0,0,.35);
+  --bom:#8C6E52; --bom-ben:#6B5642; --on-pop:#1B1233; --skugga:rgba(0,0,0,.35); --rod:#FF6B70;
   color-scheme:dark;
 }
 :root[data-skin="ljusbla"]{ --pop:var(--bla); --pop-deep:var(--bla-deep); --pop-soft:var(--bla-soft); --pop2:var(--rosa); --pop2-deep:var(--rosa-deep); --pop2-soft:var(--rosa-soft); --matta:var(--rosa-soft); --matta-kant:var(--rosa); }
+:root[data-skin="dif"]{ --pop:var(--bla); --pop-deep:var(--bla-deep); --pop-soft:var(--bla-soft); --pop2:var(--guld); --pop2-deep:var(--ink); --pop2-soft:var(--guld-soft); }
+:root[data-skin="dif"] .matta{background:repeating-linear-gradient(90deg,var(--bla) 0 26px,var(--guld) 26px 52px,var(--rod) 52px 78px);box-shadow:inset 0 -7px 0 rgba(0,0,0,.18)}
+:root[data-skin="dif"] .namnskylt{background:var(--rod);box-shadow:0 3px 0 color-mix(in srgb,var(--rod) 60%,#000)}
+:root[data-skin="dif"] .rack::before{background:linear-gradient(90deg,var(--bla),var(--guld),var(--rod))}
 :root[data-skin="randig"]{ --pop:var(--bla); --pop-deep:var(--navy); --pop-soft:var(--bla-soft); --pop2:var(--rosa); --pop2-deep:var(--rosa-deep); --pop2-soft:var(--rosa-soft); }
 
 html,body{height:100%}
@@ -342,6 +346,7 @@ p{margin:0}
 .tema.rosa i{background:linear-gradient(135deg,#FF4F9A 50%,#3AAAF5 50%)}
 .tema.ljusbla i{background:linear-gradient(135deg,#3AAAF5 50%,#FF4F9A 50%)}
 .tema.randig i{background:repeating-linear-gradient(90deg,#3AAAF5 0 8px,#24306F 8px 16px)}
+.tema.dif i{background:conic-gradient(#2C8BE6 0 33%,#FFC629 0 66%,#D7262E 0)}
 .vaxel{display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:600}
 .vaxel button{width:64px;height:36px;border-radius:999px;background:var(--line);position:relative;transition:background .2s}
 .vaxel button::after{content:"";position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:var(--surface);box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
@@ -401,6 +406,40 @@ p{margin:0}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* ---------- Figurerna: val, publik, apor i räcket, domare ---------- */
+.kompis .k-effekt,.kompis .k-fraga{opacity:0;pointer-events:none}
+.kompis[data-min="jubel"] .k-effekt{opacity:1;animation:gnistra .9s cubic-bezier(.3,1.6,.5,1)}
+.kompis .k-effekt{transform-box:view-box;transform-origin:80px 70px}
+@keyframes gnistra{from{transform:scale(.3) rotate(-20deg)}to{transform:none}}
+.kompis .k-fraga{font:800 44px var(--display);fill:var(--pop-deep)}
+.kompis[data-min="hmm"] .k-fraga{opacity:1;animation:bubbla .4s cubic-bezier(.3,1.6,.5,1)}
+.figur-val{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%}
+.figur-knapp{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 10px;border-radius:20px;background:var(--surface2);border:3px solid var(--line);font-weight:700;font-size:15px;transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.figur-knapp:active{transform:scale(.94)}
+.figur-knapp[aria-pressed="true"]{border-color:var(--pop);background:var(--pop-soft)}
+.figur-knapp .kompis{width:100%;max-width:120px}
+.panel .figur-knapp .kompis{max-width:84px}
+.scen-golv{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;width:100%;position:relative;z-index:1}
+.scen-golv .kompis-knapp{width:min(220px,44vw)}
+.publik{display:flex;align-items:flex-end;gap:2px;min-width:0}
+.publik.v{justify-content:flex-end}.publik.h{justify-content:flex-start}
+.publik-fig{width:clamp(66px,16vw,112px);display:block;margin-bottom:-6px;transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.publik-fig:active{transform:scale(.92)}
+.rack.med-apor{height:172px}
+.hangare{position:absolute;top:8px;width:66px;transform-origin:50% 4px;animation:sving 4.5s ease-in-out infinite;z-index:2}
+.hangare.v{left:6px}.hangare.h{right:6px;animation-delay:-2.2s}
+.hangare svg{width:100%;height:auto;display:block;overflow:visible}
+.hangare.gungar{animation:gunga 1.9s cubic-bezier(.3,.7,.4,1)}
+@keyframes sving{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes gunga{0%{transform:rotate(0)}12%{transform:rotate(38deg)}28%{transform:rotate(-30deg)}44%{transform:rotate(20deg)}60%{transform:rotate(-12deg)}76%{transform:rotate(6deg)}100%{transform:rotate(0)}}
+.rack.med-apor .rack-hangen{left:76px;right:76px}
+.rack.med-apor .rack-text{left:76px;right:76px}
+.domare-plats{display:flex;flex-direction:column;align-items:center;gap:0}
+.domare-fig{width:96px;display:block;margin-bottom:-14px;position:relative;z-index:1}
+.domare-fig .kompis .k-skugga{display:none}
+.tavla-domare span{display:block;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:480px){.hang{width:42px;height:76px}.figur-val{gap:6px}.figur-knapp{font-size:13px}}
 
 </style>
 <div id="app" class="app"></div>
@@ -1190,6 +1229,215 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
 
 </script>
 <script>
+/* ===== Läxgympan: figurerna (ritade efter Lovas gosedjur) =====
+   Alla figurer delar samma "skelett" så att rörelserna fungerar för alla:
+   huvud runt (80,66), axlar i (60,112) och (100,112), höfter i (71,144) och (89,144), fötter vid y≈180. */
+var Gubbar = (function () {
+  'use strict';
+  var K = 'var(--kontur)', uid = 0;
+  var LISTA = [
+    { id: 'mus', namn: 'Musen' }, { id: 'docka', namn: 'Dockan' }, { id: 'hast', namn: 'Hästen' },
+    { id: 'tvatt', namn: 'Tvättbjörnen' }, { id: 'blaapa', namn: 'Blå apan', apa: true }, { id: 'ljusapa', namn: 'Ljusa apan', apa: true }
+  ];
+  var BODY = 'M58 108 C64 98 96 98 102 108 L106 146 C98 154 62 154 54 146 Z';
+
+  function stygn(x1, y1, cx, cy, x2, y2, n) {
+    var s = '';
+    for (var i = 1; i < n; i++) {
+      var t = i / n, x = (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * cx + t * t * x2, y = (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * cy + t * t * y2;
+      s += 'M' + x.toFixed(1) + ' ' + (y - 3.5).toFixed(1) + ' L' + x.toFixed(1) + ' ' + (y + 3.5).toFixed(1) + ' ';
+    }
+    return '<path d="M' + x1 + ' ' + y1 + ' Q' + cx + ' ' + cy + ' ' + x2 + ' ' + y2 + ' ' + s + '" fill="none" stroke="' + K + '" stroke-width="2.2" stroke-linecap="round"/>';
+  }
+  function munnar(y, bred, tunga) {
+    var w = bred || 9;
+    return '<path class="m m-glad" d="M' + (80 - w) + ' ' + y + ' Q80 ' + (y + 8) + ' ' + (80 + w) + ' ' + y + '" fill="none" stroke="' + K + '" stroke-width="2.6" stroke-linecap="round"/>' +
+      (tunga ? '<ellipse class="m m-glad" cx="80" cy="' + (y + 5) + '" rx="3.4" ry="2.5" fill="#F49AB8"/>' : '') +
+      '<g class="m m-jubel"><path d="M' + (80 - w - 1) + ' ' + (y - 1) + ' Q80 ' + (y + 17) + ' ' + (80 + w + 1) + ' ' + (y - 1) + ' Z" fill="' + K + '" stroke="' + K + '" stroke-width="2" stroke-linejoin="round"/><ellipse cx="80" cy="' + (y + 8) + '" rx="4.5" ry="2.8" fill="#F49AB8"/></g>' +
+      '<path class="m m-hmm" d="M' + (80 - w + 2) + ' ' + (y + 4) + ' Q80 ' + (y) + ' ' + (80 + w - 2) + ' ' + (y + 4) + '" fill="none" stroke="' + K + '" stroke-width="2.6" stroke-linecap="round"/>';
+  }
+  function ogon(x1, x2, y, rx, ry, farg) {
+    return '<g class="k-ogon"><ellipse cx="' + x1 + '" cy="' + y + '" rx="' + rx + '" ry="' + ry + '" fill="' + (farg || K) + '"/><ellipse cx="' + x2 + '" cy="' + y + '" rx="' + rx + '" ry="' + ry + '" fill="' + (farg || K) + '"/>' +
+      '<circle cx="' + (x1 + rx * 0.4) + '" cy="' + (y - ry * 0.4) + '" r="' + Math.max(1.6, rx * 0.38) + '" fill="#fff"/><circle cx="' + (x2 + rx * 0.4) + '" cy="' + (y - ry * 0.4) + '" r="' + Math.max(1.6, rx * 0.38) + '" fill="#fff"/></g>';
+  }
+  function morrhar() { return '<g stroke="' + K + '" stroke-width="1.6" stroke-linecap="round" opacity=".55"><path d="M58 80 L42 76M58 85 L42 87M102 80 L118 76M102 85 L118 87"/></g>'; }
+  function fluff(cx, cy, r, farg, n) {
+    var p = '', i;
+    for (i = 0; i <= n; i++) {
+      var a = (i / n) * Math.PI * 2, rr = i % 2 ? r : r + 4.5;
+      p += (i ? 'L' : 'M') + (cx + rr * Math.cos(a)).toFixed(1) + ' ' + (cy + rr * Math.sin(a)).toFixed(1) + ' ';
+    }
+    return '<path d="' + p + 'Z" fill="' + farg + '" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/>';
+  }
+
+  // ---------- Huvuden ----------
+  var HUVUD = {
+    mus: function () {
+      var g = '#B9B5C9';
+      return '<circle cx="47" cy="40" r="19" fill="' + g + '" stroke="' + K + '" stroke-width="3"/><circle cx="47" cy="40" r="11" fill="#F7B5CD"/>' +
+        '<circle cx="113" cy="40" r="19" fill="' + g + '" stroke="' + K + '" stroke-width="3"/><circle cx="113" cy="40" r="11" fill="#F7B5CD"/>' +
+        '<circle cx="80" cy="68" r="34" fill="' + g + '" stroke="' + K + '" stroke-width="3"/>' +
+        '<ellipse cx="80" cy="82" rx="23" ry="16" fill="#FFF6EC"/>' +
+        '<path d="M52 46 Q56 22 80 20 Q104 22 108 46 Q80 36 52 46 Z" fill="#CFCED8" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/><circle cx="80" cy="20" r="5" fill="#CFCED8" stroke="' + K + '" stroke-width="2.5"/>' +
+        '<ellipse cx="68" cy="61" rx="8.5" ry="10.5" fill="#fff" stroke="' + K + '" stroke-width="2"/><ellipse cx="92" cy="61" rx="8.5" ry="10.5" fill="#fff" stroke="' + K + '" stroke-width="2"/>' +
+        ogon(69, 91, 63, 4.6, 6.2) +
+        '<ellipse cx="80" cy="75" rx="5.5" ry="4.2" fill="' + K + '"/>' + munnar(83, 9, true) + morrhar();
+    },
+    docka: function () {
+      var id = 'dk' + (++uid), lila = '#DCCDF6', svart = '#1C1830', prickar = '', x, y;
+      for (y = 30; y < 106; y += 10) for (x = 40 + ((y / 10) % 2) * 5; x < 120; x += 10) prickar += '<circle cx="' + x + '" cy="' + y + '" r="1.8"/>';
+      var huvud = 'M46 44 Q44 26 58 29 Q80 23 102 29 Q116 26 114 44 L112 88 Q80 108 48 88 Z';
+      return '<path d="M50 46 C36 72 46 102 36 134" stroke="' + svart + '" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M50 46 C36 72 46 102 36 134" stroke="#9B6BE0" stroke-width="2.5" stroke-dasharray="5 6" fill="none"/>' +
+        '<path d="M110 46 C126 74 114 104 126 136" stroke="' + svart + '" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M110 46 C126 74 114 104 126 136" stroke="#9B6BE0" stroke-width="2.5" stroke-dasharray="5 6" fill="none"/>' +
+        '<defs><clipPath id="' + id + '"><path d="' + huvud + '"/></clipPath></defs>' +
+        '<path d="' + huvud + '" fill="' + lila + '"/><g clip-path="url(#' + id + ')" fill="#fff" opacity=".8">' + prickar + '</g>' +
+        '<path d="' + huvud + '" fill="none" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/>' +
+        '<path d="M50 34 Q60 24 70 30 M90 30 Q100 22 110 34" stroke="' + svart + '" stroke-width="7" stroke-linecap="round" fill="none"/>' +
+        '<circle cx="54" cy="30" r="4.5" fill="#9B6BE0"/><circle cx="106" cy="30" r="4.5" fill="#9B6BE0"/>' +
+        '<g class="k-ogon"><circle cx="65" cy="57" r="13" fill="' + svart + '"/><circle cx="59" cy="65" r="1.8" fill="#fff"/><circle cx="73" cy="66" r="1.5" fill="#fff"/><circle cx="96" cy="55" r="12" fill="' + svart + '"/><circle cx="104" cy="62" r="1.8" fill="#fff"/>' +
+        '<circle cx="66" cy="57" r="8.5" fill="#F7F5F2" stroke="' + K + '" stroke-width="2"/><circle cx="63.5" cy="57" r="1.6" fill="' + K + '"/><circle cx="68.5" cy="57" r="1.6" fill="' + K + '"/>' +
+        '<circle cx="95" cy="56" r="8.5" fill="#F7F5F2" stroke="' + K + '" stroke-width="2"/><circle cx="92.5" cy="56" r="1.6" fill="' + K + '"/><circle cx="97.5" cy="56" r="1.6" fill="' + K + '"/></g>' +
+        '<g class="m m-glad">' + stygn(62, 80, 80, 92, 98, 80, 7) + '</g><g class="m m-jubel">' + stygn(60, 78, 80, 100, 100, 78, 8) + '</g><g class="m m-hmm">' + stygn(64, 86, 80, 82, 96, 86, 6) + '</g>';
+    },
+    hast: function () {
+      var b = '#C98A55', svart = '#1C1830';
+      return '<path d="M96 26 C122 34 128 62 122 96 M102 28 C120 44 118 70 114 100 M90 26 C108 40 112 60 108 90" stroke="' + svart + '" stroke-width="7" stroke-linecap="round" fill="none"/>' +
+        '<path d="M58 36 L52 6 L76 26 Z" fill="' + b + '" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/><path d="M59 30 L56 14 L69 26 Z" fill="#F7B5CD"/>' +
+        '<path d="M102 36 L108 6 L84 26 Z" fill="' + b + '" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/><path d="M101 30 L104 14 L91 26 Z" fill="#F7B5CD"/>' +
+        '<path d="M47 58 Q46 26 80 24 Q114 26 113 58 L108 88 Q80 112 52 88 Z" fill="' + b + '" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/>' +
+        '<path d="M73 30 Q80 25 87 30 L84 74 L76 74 Z" fill="#FFFCF6"/>' +
+        '<ellipse cx="80" cy="90" rx="25" ry="17" fill="#FFF9F2" stroke="' + K + '" stroke-width="3"/><ellipse cx="70" cy="89" rx="3.6" ry="2.6" fill="' + K + '"/><ellipse cx="90" cy="89" rx="3.6" ry="2.6" fill="' + K + '"/>' +
+        '<path d="M76 22 Q70 32 66 42 M82 22 Q86 30 92 38 M79 22 Q78 34 80 44" stroke="' + svart + '" stroke-width="6" stroke-linecap="round" fill="none"/>' +
+        '<path d="M54 80 Q80 70 106 80" stroke="#F49AC1" stroke-width="6" fill="none"/><path d="M56 80 L60 42" stroke="#F49AC1" stroke-width="5"/>' +
+        '<circle cx="55" cy="80" r="7" fill="#FFD6E6" stroke="' + K + '" stroke-width="1.5"/><circle cx="105" cy="80" r="7" fill="#FFD6E6" stroke="' + K + '" stroke-width="1.5"/><circle cx="60" cy="46" r="6" fill="#FFD6E6" stroke="' + K + '" stroke-width="1.5"/>' +
+        ogon(66, 94, 58, 5, 6.8) + '<path d="M60 52 L57 48M100 52 L103 48" stroke="' + K + '" stroke-width="2" stroke-linecap="round"/>' +
+        munnar(98, 8, false);
+    },
+    tvatt: function () {
+      var g = '#A9B2C8', m = '#2C3150';
+      return '<path d="M50 48 L46 18 L70 32 Z" fill="' + g + '" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/><path d="M52 40 L50 26 L62 33 Z" fill="' + m + '"/>' +
+        '<path d="M110 48 L114 18 L90 32 Z" fill="' + g + '" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/><path d="M108 40 L110 26 L98 33 Z" fill="' + m + '"/>' +
+        '<circle cx="80" cy="66" r="35" fill="' + g + '" stroke="' + K + '" stroke-width="3"/>' +
+        '<ellipse cx="80" cy="85" rx="24" ry="15" fill="#F6F2EA"/><path d="M75 33 L80 52 L85 33 Z" fill="' + m + '"/>' +
+        '<path d="M44 62 Q58 46 76 58 Q80 62 84 58 Q102 46 116 62 Q108 76 94 72 Q80 68 66 72 Q52 76 44 62 Z" fill="' + m + '"/>' +
+        '<g class="k-ogon"><circle cx="66" cy="62" r="6.8" fill="#fff"/><circle cx="94" cy="62" r="6.8" fill="#fff"/><circle cx="67" cy="63" r="3.8" fill="' + K + '"/><circle cx="95" cy="63" r="3.8" fill="' + K + '"/><circle cx="68.5" cy="61.5" r="1.4" fill="#fff"/><circle cx="96.5" cy="61.5" r="1.4" fill="#fff"/></g>' +
+        '<ellipse cx="80" cy="78" rx="5.5" ry="4.2" fill="' + K + '"/>' + munnar(86, 8, true) + morrhar();
+    },
+    blaapa: function () {
+      var t = '#22B6D1', l = '#C3ECF7';
+      return '<circle cx="42" cy="68" r="12" fill="' + t + '" stroke="' + K + '" stroke-width="3"/><circle cx="42" cy="68" r="6.5" fill="' + l + '"/><circle cx="118" cy="68" r="12" fill="' + t + '" stroke="' + K + '" stroke-width="3"/><circle cx="118" cy="68" r="6.5" fill="' + l + '"/>' +
+        fluff(80, 66, 35, t, 26) + '<path d="M60 40 Q66 50 70 40 Q76 52 82 40 Q88 52 94 42" fill="none" stroke="#7DDCEB" stroke-width="3" stroke-linecap="round"/>' +
+        '<path d="M56 60 Q58 42 80 50 Q102 42 104 60 Q106 76 96 80 Q100 98 80 101 Q60 98 64 80 Q54 76 56 60 Z" fill="' + l + '" stroke="' + K + '" stroke-width="2"/>' +
+        '<circle cx="69" cy="63" r="7.5" fill="#2F86E0" stroke="' + K + '" stroke-width="1.5"/><circle cx="91" cy="63" r="7.5" fill="#2F86E0" stroke="' + K + '" stroke-width="1.5"/>' +
+        ogon(69, 91, 63, 3.8, 3.8) +
+        '<path d="M77 81 L80 84 L83 81 M80 84 L80 87" stroke="' + K + '" stroke-width="1.8" stroke-linecap="round" fill="none"/>' + munnar(91, 8, false);
+    },
+    ljusapa: function () {
+      var b = '#EBD6B4', gr = '#8E8F9C';
+      return fluff(80, 66, 35, b, 28) +
+        '<circle cx="80" cy="70" r="25" fill="#FFFFFF" stroke="' + K + '" stroke-width="2"/>' +
+        '<ellipse cx="80" cy="72" rx="17" ry="20" fill="' + gr + '" stroke="' + K + '" stroke-width="2"/>' +
+        '<circle cx="73" cy="66" r="5.2" fill="#8A4522"/><circle cx="87" cy="66" r="5.2" fill="#8A4522"/>' + ogon(73, 87, 66, 2.6, 2.6) +
+        '<path d="M78 76 L80 78 L82 76" stroke="' + K + '" stroke-width="1.8" stroke-linecap="round" fill="none"/>' + munnar(83, 6, false);
+    }
+  };
+
+  // ---------- Kroppar ----------
+  function ben(farg, strumpa, sko) {
+    var s = '';
+    [[63, 'k-ben-v', 68], [82, 'k-ben-h', 92]].forEach(function (b) {
+      s += '<g class="' + b[1] + '"><rect x="' + b[0] + '" y="138" width="15" height="38" rx="7.5" fill="' + farg + '" stroke="' + K + '" stroke-width="3"/>' +
+        (strumpa ? '<rect x="' + (b[0] + 1.5) + '" y="160" width="12" height="12" fill="' + strumpa + '"/>' : '') +
+        '<ellipse cx="' + b[2] + '" cy="177" rx="11" ry="6" fill="' + sko + '" stroke="' + K + '" stroke-width="3"/></g>';
+    });
+    return s;
+  }
+  function arm(cls, x1, y1, x2, y2, farg, hand) {
+    return '<g class="' + cls + '"><path d="M' + x1 + ' ' + y1 + ' L' + x2 + ' ' + y2 + '" stroke="' + K + '" stroke-width="15" stroke-linecap="round"/><path d="M' + x1 + ' ' + y1 + ' L' + x2 + ' ' + y2 + '" stroke="' + farg + '" stroke-width="9" stroke-linecap="round"/>' +
+      (hand ? '<circle cx="' + x2 + '" cy="' + y2 + '" r="7" fill="' + hand + '" stroke="' + K + '" stroke-width="2.5"/>' : '') + '</g>';
+  }
+  function kropp(fill, monster) {
+    var id = 'kb' + (++uid);
+    return '<defs><clipPath id="' + id + '"><path d="' + BODY + '"/></clipPath></defs><path d="' + BODY + '" fill="' + fill + '"/>' +
+      (monster ? '<g clip-path="url(#' + id + ')">' + monster + '</g>' : '') +
+      '<path d="' + BODY + '" fill="none" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/>';
+  }
+  var KROPP = {
+    mus: function () {
+      var g = '#B9B5C9';
+      return { bak: '', ben: ben(g, '#FFFFFF', '#24306F'), kropp: kropp('#1F2B6B', '<rect x="60" y="96" width="8" height="60" fill="#7CC4F2"/><rect x="76" y="96" width="8" height="60" fill="#7CC4F2"/><rect x="92" y="96" width="8" height="60" fill="#7CC4F2"/>') +
+        '<path d="M70 103 L80 114 L90 103" stroke="#fff" stroke-width="4" fill="none" stroke-linejoin="round"/><path d="M56 140 L104 140 L103 155 L84 157 L80 151 L76 157 L57 155 Z" fill="#1F2B6B" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/>',
+        armar: ['#B9B5C9', '#FFFFFF'], arm: null };
+    },
+    docka: function () {
+      var svart = '#1C1830', mon = '', x, y;
+      for (y = 104; y < 150; y += 12) for (x = 56 + ((y - 104) / 12 % 2) * 6; x < 108; x += 12) mon += '<path d="M' + x + ' ' + (y - 5) + ' l5 5 -5 5 -5 -5z" fill="#7B4BC4"/><circle cx="' + (x + 6) + '" cy="' + y + '" r="1.5" fill="#7B4BC4"/>';
+      return { bak: '', ben: ben('#EADFF7', null, svart), kropp: kropp('#F4EEFA', mon) +
+        '<rect x="56" y="126" width="48" height="6" fill="#EFEFF6" stroke="' + K + '" stroke-width="1.5"/>' +
+        '<path d="M48 132 Q80 124 112 132 L120 152 Q100 160 80 157 Q60 160 40 152 Z" fill="' + svart + '" stroke="' + K + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+        '<path d="M44 150 q6 6 12 0 q6 6 12 0 q6 6 12 0 q6 6 12 0 q6 6 12 0 q6 6 12 0" stroke="#fff" stroke-width="1.5" fill="none" opacity=".7"/>',
+        armar: [svart, '#DCCDF6'] };
+    },
+    hast: function () {
+      var b = '#C98A55';
+      return { bak: '', ben: ben(b, '#FFFCF6', '#4A3428'), kropp: kropp(b, '<path d="M72 98 Q100 104 108 140 L92 156 Q80 132 72 98 Z" fill="#FFFCF6"/>') + '<path d="M62 104 Q80 112 98 104" stroke="#F49AC1" stroke-width="5" fill="none"/>', armar: [b, '#FFFCF6'] };
+    },
+    tvatt: function () {
+      var g = '#A9B2C8';
+      return { bak: '<path d="M60 146 C30 152 14 132 22 104" stroke="' + K + '" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M60 146 C30 152 14 132 22 104" stroke="' + g + '" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M60 146 C30 152 14 132 22 104" stroke="#2C3150" stroke-width="16" stroke-dasharray="9 9" fill="none"/>',
+        ben: ben(g, null, '#6B7490'), kropp: kropp('#FF8A3D', '<path d="M30 146 L130 92 L130 110 L30 164 Z" fill="#FFD23F"/>'), armar: [g, '#2C3150'] };
+    },
+    blaapa: function () {
+      var t = '#22B6D1';
+      return { bak: '', ben: ben(t, null, '#C3ECF7'), kropp: kropp(t, '<circle cx="70" cy="118" r="10" fill="#7DDCEB"/><circle cx="94" cy="136" r="12" fill="#7DDCEB"/><circle cx="86" cy="104" r="6" fill="#55CBE0"/>'), armar: [t, '#C3ECF7'], lang: true };
+    },
+    ljusapa: function () {
+      var b = '#EBD6B4';
+      return { bak: '', ben: ben(b, null, '#8E8F9C'), kropp: kropp(b, '<ellipse cx="80" cy="128" rx="16" ry="18" fill="#F6E9D4"/>'), armar: [b, '#8E8F9C'], lang: true };
+    }
+  };
+
+  function bandSVG() {
+    return '<g class="k-band"><path d="M122 102 L142 74" stroke="' + K + '" stroke-width="3.5" stroke-linecap="round"/>' +
+      '<path d="M142 74 C156 56 166 92 178 70 S 194 62 198 82" fill="none" stroke="var(--pop2)" stroke-width="6" stroke-linecap="round">' +
+      '<animate attributeName="d" dur="1.6s" repeatCount="indefinite" values="M142 74 C156 56 166 92 178 70 S 194 62 198 82;M142 74 C154 90 168 56 180 80 S 196 92 198 66;M142 74 C156 56 166 92 178 70 S 194 62 198 82"/></path></g>';
+  }
+
+  function figur(id, min, opt) {
+    opt = opt || {};
+    if (!HUVUD[id]) id = 'mus';
+    var k = KROPP[id](), lang = k.lang;
+    var av = lang ? [60, 112, 36, 160] : [60, 112, 40, 136], ah = lang ? [100, 112, 128, 94] : [100, 112, 122, 102];
+    var armH = '<g class="k-arm-h"><path d="M' + ah[0] + ' ' + ah[1] + ' L' + ah[2] + ' ' + ah[3] + '" stroke="' + K + '" stroke-width="15" stroke-linecap="round"/><path d="M' + ah[0] + ' ' + ah[1] + ' L' + ah[2] + ' ' + ah[3] + '" stroke="' + k.armar[0] + '" stroke-width="9" stroke-linecap="round"/>' +
+      (opt.band !== false ? bandSVG() : '') + '<circle cx="' + ah[2] + '" cy="' + ah[3] + '" r="7" fill="' + k.armar[1] + '" stroke="' + K + '" stroke-width="2.5"/></g>';
+    return '<svg class="kompis' + (opt.cls ? ' ' + opt.cls : '') + '" viewBox="-40 0 240 196" data-min="' + (min || 'glad') + '" role="img" aria-label="' + (opt.label || 'Kompisen') + '">' +
+      '<ellipse class="k-skugga" cx="80" cy="184" rx="40" ry="6" fill="var(--skugga)"/>' +
+      '<g class="k-hel">' + k.bak + k.ben + k.kropp + arm('k-arm-v', av[0], av[1], av[2], av[3], k.armar[0], k.armar[1]) + armH +
+      '<g class="k-huvud">' + HUVUD[id]() + '</g></g>' +
+      '<g class="k-effekt" aria-hidden="true"><path d="M20 30 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="var(--guld)"/><path d="M140 18 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5z" fill="var(--pop)"/><path d="M150 70 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="var(--guld)"/></g>' +
+      '<text class="k-fraga" x="132" y="34" aria-hidden="true">?</text></svg>';
+  }
+  function huvud(id) {
+    if (!HUVUD[id]) id = 'mus';
+    return '<svg viewBox="28 2 104 112" aria-hidden="true">' + HUVUD[id]().replace(/class="m m-(jubel|hmm)"/g, 'style="display:none"').replace(/class="m m-glad"/g, '') + '</svg>';
+  }
+  // Apa som hänger i räcket (används för aporna när de inte är huvudfigur)
+  function hangare(id) {
+    var k = KROPP[id](), f = k.armar[0], h = k.armar[1];
+    var arm = function (x1, y1, x2, y2) { return '<path d="M' + x1 + ' ' + y1 + ' Q' + ((x1 + x2) / 2 + (x1 < 80 ? -10 : 10)) + ' ' + ((y1 + y2) / 2) + ' ' + x2 + ' ' + y2 + '" stroke="' + K + '" stroke-width="17" stroke-linecap="round" fill="none"/><path d="M' + x1 + ' ' + y1 + ' Q' + ((x1 + x2) / 2 + (x1 < 80 ? -10 : 10)) + ' ' + ((y1 + y2) / 2) + ' ' + x2 + ' ' + y2 + '" stroke="' + f + '" stroke-width="11" stroke-linecap="round" fill="none"/>'; };
+    return '<svg class="hangare-svg" viewBox="20 0 120 250" aria-hidden="true">' +
+      arm(68, 150, 56, 10) + arm(92, 150, 104, 10) + '<circle cx="56" cy="10" r="8" fill="' + h + '" stroke="' + K + '" stroke-width="2.5"/><circle cx="104" cy="10" r="8" fill="' + h + '" stroke="' + K + '" stroke-width="2.5"/>' +
+      '<path d="M72 182 Q66 210 62 228" stroke="' + K + '" stroke-width="15" stroke-linecap="round" fill="none"/><path d="M72 182 Q66 210 62 228" stroke="' + f + '" stroke-width="9" stroke-linecap="round" fill="none"/>' +
+      '<path d="M88 182 Q94 210 98 228" stroke="' + K + '" stroke-width="15" stroke-linecap="round" fill="none"/><path d="M88 182 Q94 210 98 228" stroke="' + f + '" stroke-width="9" stroke-linecap="round" fill="none"/>' +
+      '<ellipse cx="60" cy="232" rx="10" ry="7" fill="' + h + '" stroke="' + K + '" stroke-width="2.5"/><ellipse cx="100" cy="232" rx="10" ry="7" fill="' + h + '" stroke="' + K + '" stroke-width="2.5"/>' +
+      '<ellipse cx="80" cy="160" rx="22" ry="30" fill="' + f + '" stroke="' + K + '" stroke-width="3"/>' +
+      '<g transform="translate(0 50)">' + HUVUD[id]().replace(/class="m m-(jubel|hmm)"/g, 'style="display:none"').replace(/class="m m-glad"/g, '') + '</g></svg>';
+  }
+  return { LISTA: LISTA, figur: figur, huvud: huvud, hangare: hangare, namn: function (id) { var g = LISTA.filter(function (x) { return x.id === id; })[0]; return g ? g.namn : 'Kompisen'; }, arApa: function (id) { return id === 'blaapa' || id === 'ljusapa'; } };
+})();
+
+</script>
+<script>
 /* ===== Läxgympan: appen ===== */
 (function () {
   'use strict';
@@ -1201,7 +1449,7 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
 
   // ---------- Lagring (bara på den här plattan) ----------
   var NYCKEL = 'laxgympan.v1';
-  function standard() { return { v: 1, namn: '', kompis: '', vanner: '', skin: 'rosa', ljud: true, uppl: true, stjarnor: 0, pass: {}, missade: [] }; }
+  function standard() { return { v: 1, namn: '', figur: '', namnPa: {}, vanner: '', skin: 'rosa', ljud: true, stjarnor: 0, pass: {}, missade: [] }; }
   var S = (function () {
     try { var raw = localStorage.getItem(NYCKEL); if (raw) return Object.assign(standard(), JSON.parse(raw)); } catch (e) { }
     return standard();
@@ -1216,9 +1464,8 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
   var POANG = { ratt: 2, ratt2: 1, miss: 0, kunde: 2, nastan: 1, inte: 0 };
   var BEROM = ['Rätt!', 'Snyggt!', 'Klockrent!', 'Perfekt landning!', 'Tio av tio!', 'Grymt!', 'Japp, rätt!', 'Stark!'];
   var PRAT = ['Vilken läxa kör vi i dag?', 'Matte är som att hjula. Det blir lättare för varje gång!', 'Fel svar är bara träning. Då lär sig hjärnan!', 'Tryck på mig, så gör jag en rörelse!', 'Räkna på papper, så kollar jag svaret.', 'Ju fler stjärnor, desto fler rörelser lär jag mig.'];
-  var KOMPISNAMN = ['Pirra', 'Smilla', 'Volta', 'Glitter', 'Fia', 'Nova'];
 
-  function kompisNamn() { return S.kompis || 'Kompisen'; }
+  function kompisNamn() { var n = (S.namnPa || {})[S.figur]; return n || Gubbar.namn(figurId()); }
   function vanner() { return (S.vanner || '').split(/[,\n]/).map(function (s) { return s.trim().slice(0, 20); }).filter(Boolean).slice(0, 8); }
   function ctx() { return { lista: vanner() }; }
 
@@ -1315,43 +1562,15 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
     document.body.appendChild(t); setTimeout(function () { t.remove(); }, 2700);
   }
 
-  // ---------- Kompisen (SVG) ----------
-  var uid = 0;
-  function kompisSVG(min) {
-    var id = 'k' + (++uid);
-    return '<svg class="kompis" viewBox="-40 0 240 196" data-min="' + (min || 'glad') + '" role="img" aria-label="' + esc(kompisNamn()) + ', en katt i gympadräkt">' +
-      '<ellipse class="k-skugga" cx="80" cy="184" rx="40" ry="6" fill="var(--skugga)"/>' +
-      '<defs><clipPath id="' + id + '"><path d="M58 108 C64 98 96 98 102 108 L106 146 C98 154 62 154 54 146 Z"/></clipPath></defs>' +
-      '<g class="k-hel">' +
-        '<g class="k-ben-v"><rect x="63" y="138" width="15" height="38" rx="7.5" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/><ellipse cx="68" cy="177" rx="10" ry="5.5" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/></g>' +
-        '<g class="k-ben-h"><rect x="82" y="138" width="15" height="38" rx="7.5" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/><ellipse cx="92" cy="177" rx="10" ry="5.5" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/></g>' +
-        '<path d="M58 108 C64 98 96 98 102 108 L106 146 C98 154 62 154 54 146 Z" fill="var(--pop)"/>' +
-        '<g clip-path="url(#' + id + ')"><path d="M30 146 L130 92 L130 110 L30 164 Z" fill="var(--pop2)"/><path d="M30 158 L130 104 L130 108 L30 162 Z" fill="#fff" opacity=".7"/></g>' +
-        '<path d="M58 108 C64 98 96 98 102 108 L106 146 C98 154 62 154 54 146 Z" fill="none" stroke="var(--kontur)" stroke-width="3" stroke-linejoin="round"/>' +
-        '<path d="M70 120 l2 4.5 4.5 2 -4.5 2 -2 4.5 -2 -4.5 -4.5 -2 4.5 -2z" fill="#fff" opacity=".9"/>' +
-        '<g class="k-arm-v"><path d="M60 112 L40 136" stroke="var(--kontur)" stroke-width="15" stroke-linecap="round"/><path d="M60 112 L40 136" stroke="var(--fur)" stroke-width="9" stroke-linecap="round"/></g>' +
-        '<g class="k-arm-h"><path d="M100 112 L122 102" stroke="var(--kontur)" stroke-width="15" stroke-linecap="round"/><path d="M100 112 L122 102" stroke="var(--fur)" stroke-width="9" stroke-linecap="round"/>' +
-          '<g class="k-band"><path d="M122 102 L142 74" stroke="var(--kontur)" stroke-width="3.5" stroke-linecap="round"/>' +
-          '<path d="M142 74 C156 56 166 92 178 70 S 194 62 198 82" fill="none" stroke="var(--pop2)" stroke-width="6" stroke-linecap="round">' +
-            '<animate attributeName="d" dur="1.6s" repeatCount="indefinite" values="M142 74 C156 56 166 92 178 70 S 194 62 198 82;M142 74 C154 90 168 56 180 80 S 196 92 198 66;M142 74 C156 56 166 92 178 70 S 194 62 198 82"/></path></g>' +
-        '</g>' +
-        '<g class="k-huvud">' +
-          '<path d="M48 48 L50 12 L76 34 Z" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3" stroke-linejoin="round"/><path d="M53 40 L54 22 L67 33 Z" fill="var(--rosa)" opacity=".55"/>' +
-          '<path d="M112 48 L110 12 L84 34 Z" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3" stroke-linejoin="round"/><path d="M107 40 L106 22 L93 33 Z" fill="var(--rosa)" opacity=".55"/>' +
-          '<circle cx="80" cy="66" r="38" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/>' +
-          '<g><path d="M58 31 L42 21 L44 42 Z" fill="var(--pop2)" stroke="var(--kontur)" stroke-width="2.5" stroke-linejoin="round"/><path d="M58 31 L74 21 L72 42 Z" fill="var(--pop2)" stroke="var(--kontur)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="58" cy="31" r="5" fill="var(--pop)" stroke="var(--kontur)" stroke-width="2.5"/></g>' +
-          '<g class="k-ogon"><ellipse cx="66" cy="66" rx="6" ry="8" fill="var(--kontur)"/><ellipse cx="94" cy="66" rx="6" ry="8" fill="var(--kontur)"/><circle cx="68.5" cy="62.5" r="2.4" fill="#fff"/><circle cx="96.5" cy="62.5" r="2.4" fill="#fff"/></g>' +
-          '<ellipse cx="53" cy="79" rx="7.5" ry="4.5" fill="var(--rosa)" opacity=".38"/><ellipse cx="107" cy="79" rx="7.5" ry="4.5" fill="var(--rosa)" opacity=".38"/>' +
-          '<path d="M76.5 74 L83.5 74 L80 78.5 Z" fill="var(--rosa)" stroke="var(--kontur)" stroke-width="1.5" stroke-linejoin="round"/>' +
-          '<path class="m m-glad" d="M71 81 Q75.5 87 80 81 Q84.5 87 89 81" fill="none" stroke="var(--kontur)" stroke-width="2.5" stroke-linecap="round"/>' +
-          '<g class="m m-jubel"><path d="M70 80 Q80 98 90 80 Z" fill="var(--kontur)" stroke="var(--kontur)" stroke-width="2" stroke-linejoin="round"/><ellipse cx="80" cy="89" rx="5" ry="3" fill="var(--rosa)"/></g>' +
-          '<path class="m m-hmm" d="M73 85 Q80 80 87 85" fill="none" stroke="var(--kontur)" stroke-width="2.5" stroke-linecap="round"/>' +
-          '<g stroke="var(--kontur)" stroke-width="1.6" stroke-linecap="round" opacity=".55"><path d="M44 76 L30 72M44 81 L30 83M116 76 L130 72M116 81 L130 83"/></g>' +
-        '</g>' +
-      '</g></svg>';
-  }
-  function miniKompis() {
-    return '<svg viewBox="36 8 88 96" aria-hidden="true"><path d="M48 48 L50 12 L76 34 Z" fill="var(--fur)" stroke="var(--kontur)" stroke-width="4" stroke-linejoin="round"/><path d="M112 48 L110 12 L84 34 Z" fill="var(--fur)" stroke="var(--kontur)" stroke-width="4" stroke-linejoin="round"/><circle cx="80" cy="66" r="36" fill="var(--fur)" stroke="var(--kontur)" stroke-width="4"/><ellipse cx="66" cy="66" rx="6" ry="8" fill="var(--kontur)"/><ellipse cx="94" cy="66" rx="6" ry="8" fill="var(--kontur)"/><path d="M71 81 Q75.5 87 80 81 Q84.5 87 89 81" fill="none" stroke="var(--kontur)" stroke-width="3" stroke-linecap="round"/><path d="M58 31 L42 21 L44 42 Z M58 31 L74 21 L72 42 Z" fill="var(--pop2)" stroke="var(--kontur)" stroke-width="3" stroke-linejoin="round"/></svg>';
+  // ---------- Figurerna ----------
+  function figurId() { return S.figur || 'mus'; }
+  function kompisSVG(min, extra) { return Gubbar.figur(figurId(), min, { cls: 'huvudfigur' + (extra ? ' ' + extra : ''), label: esc(kompisNamn()) }); }
+  function miniKompis() { return Gubbar.huvud(figurId()); }
+  function ovriga() { return Gubbar.LISTA.filter(function (g) { return g.id !== figurId(); }); }
+  function figurVal(akt) {
+    return '<div class="figur-val">' + Gubbar.LISTA.map(function (g) {
+      return '<button class="figur-knapp" data-act="' + akt + '" data-f="' + g.id + '" aria-pressed="' + (S.figur === g.id) + '">' + Gubbar.figur(g.id, 'glad', { band: false, label: g.namn }) + '<span>' + esc((S.namnPa || {})[g.id] || g.namn) + '</span></button>';
+    }).join('') + '</div>';
   }
   var blinkTimer = 0;
   function startaBlink() {
@@ -1362,8 +1581,8 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
     };
     blinkTimer = setTimeout(tick, 1800);
   }
-  function rorelse(id) {
-    $$('.kompis').forEach(function (k) {
+  function rorelse(id, el) {
+    (el ? [el] : $$('.kompis.huvudfigur')).forEach(function (k) {
       clearTimeout(k._rt);
       RORELSER.concat([{ id: 'tap' }, { id: 'hmm' }]).forEach(function (r) { k.classList.remove('r-' + r.id); });
       void k.getBoundingClientRect();
@@ -1478,15 +1697,21 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
       return '<button class="hang" data-act="medalj" aria-label="' + esc(METALL[x.p.medalj][2] + ': ' + namn) + '">' + medaljSVG(x.p.medalj) + '</button>';
     }).join('') : [0, 1, 2].map(function () { return '<span class="hang tom" aria-hidden="true"><svg viewBox="0 0 60 100"><path d="M8 0 H26 L36 50 L22 54 Z M52 0 H34 L24 50 L38 54 Z" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 4"/><circle cx="30" cy="72" r="20" fill="none" stroke="var(--line)" stroke-width="3" stroke-dasharray="5 5"/></svg></span>'; }).join('');
 
-    var bubbla;
-    if (!S.kompis) {
-      bubbla = '<div class="pratbubbla"><form data-form="kompis"><span>Hej! Jag ska träna med dig. <strong>Vad ska jag heta?</strong></span><input id="onb-kompis" type="text" maxlength="16" placeholder="Skriv ett namn" autocomplete="off"><div class="forslag">' + KOMPISNAMN.map(function (n) { return '<button type="button" data-act="onb-forslag" data-n="' + n + '">' + n + '</button>'; }).join('') + '</div><button class="knapp" type="submit">Klar</button></form></div>';
+    var bubbla, harNamn = !!(S.namnPa || {})[S.figur];
+    if (!S.figur) {
+      bubbla = '<div class="pratbubbla"><span>Hej! <strong>Vem vill du träna med?</strong> Tryck på en kompis.</span></div>';
+    } else if (!harNamn) {
+      bubbla = '<div class="pratbubbla"><form data-form="kompis"><span>Hej! <strong>Vad heter jag?</strong></span><input id="onb-kompis" type="text" maxlength="16" placeholder="Skriv namnet" autocomplete="off"><button class="knapp" type="submit">Klar</button></form></div>';
     } else if (!S.namn) {
-      bubbla = '<div class="pratbubbla"><form data-form="namn"><span>Jag heter ' + esc(S.kompis) + '! <strong>Vad heter du?</strong></span><input id="onb-namn" type="text" maxlength="20" placeholder="Ditt namn" autocomplete="off"><button class="knapp" type="submit">Klar</button></form></div>';
+      bubbla = '<div class="pratbubbla"><form data-form="namn"><span>Jag heter ' + esc(kompisNamn()) + '! <strong>Vad heter du?</strong></span><input id="onb-namn" type="text" maxlength="20" placeholder="Ditt namn" autocomplete="off"><button class="knapp" type="submit">Klar</button></form></div>';
     } else {
       bubbla = '<div class="pratbubbla" id="prat">' + esc(PRAT[Math.floor(Math.random() * PRAT.length)]) + '</div>';
     }
     var u = upplasta(), nasta = RORELSER.filter(function (r) { return S.stjarnor < r.kravs; })[0];
+    var andra = S.figur ? ovriga() : [];
+    var apor = andra.filter(function (g) { return g.apa; }), publik = andra.filter(function (g) { return !g.apa; });
+    var apa = function (g, sida) { return '<button class="hangare ' + sida + '" data-act="gunga" aria-label="' + esc((S.namnPa || {})[g.id] || g.namn) + ' hänger i räcket">' + Gubbar.hangare(g.id) + '</button>'; };
+    var pub = function (g) { return '<button class="publik-fig" data-act="publik" aria-label="' + esc((S.namnPa || {})[g.id] || g.namn) + '">' + Gubbar.figur(g.id, 'glad', { band: false, cls: 'publik-svg', label: esc(g.namn) }) + '</button>'; };
     var rorelser = RORELSER.map(function (r) { return S.stjarnor >= r.kravs ? '<button class="rorelse" data-act="rorelse" data-r="' + r.id + '">' + r.namn + '</button>' : '<span class="rorelse last">' + r.namn + ' · ' + r.kravs + '</span>'; }).join('');
 
     var kort = LAXOR.map(function (set) {
@@ -1509,8 +1734,9 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
       '<button class="ikon-knapp" data-act="inst" aria-label="Inställningar">' + IK.kugge + '</button></header>' +
       '<div class="hem-grid">' +
         '<section class="scen" aria-label="Din kompis">' +
-          '<div class="rack"><div class="rack-hangen">' + rack + '</div>' + (medaljer.length ? '' : '<p class="rack-text">Här hänger dina medaljer.</p>') + '</div>' +
-          '<div class="kompis-scen">' + bubbla + '<button class="kompis-knapp" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG() + '</button><div class="matta"></div>' + (S.kompis ? '<div class="namnskylt">' + esc(S.kompis) + '</div>' : '') + '</div>' +
+          '<div class="rack' + (apor.length ? ' med-apor' : '') + '">' + (apor[0] ? apa(apor[0], 'v') : '') + '<div class="rack-hangen">' + rack + '</div>' + (apor[1] ? apa(apor[1], 'h') : '') + (medaljer.length ? '' : '<p class="rack-text">Här hänger dina medaljer.</p>') + '</div>' +
+          (S.figur ? '<div class="kompis-scen">' + bubbla + '<div class="scen-golv"><div class="publik v">' + publik.slice(0, 2).map(pub).join('') + '</div><button class="kompis-knapp" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG() + '</button><div class="publik h">' + publik.slice(2).map(pub).join('') + '</div></div><div class="matta"></div><div class="namnskylt">' + esc(kompisNamn()) + '</div></div>' :
+            '<div class="kompis-scen">' + bubbla + figurVal('valj-figur') + '</div>') +
           '<div class="rorelser" aria-label="Rörelser">' + rorelser + '</div>' +
           '<p class="nasta-rorelse">' + (nasta ? (nasta.kravs - S.stjarnor) + ' stjärnor kvar till ' + nasta.namn + '.' : 'Alla rörelser är upplåsta!') + '</p>' +
         '</section>' +
@@ -1739,7 +1965,8 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
   // ---------- Vy: Klar ----------
   function vyKlar() {
     var s = P.slut, bas = 5 + s.andel * 5;  // domarna ger 5,0–10,0
-    var dom = [0, 1, 2].map(function (i) { var d = s.andel === 1 ? 10 : Math.max(0, Math.min(10, bas + (Math.random() * 0.3 - 0.15))); return '<div class="tavla-domare"><span>Domare ' + (i + 1) + '</span><b>' + L.fmtN(Math.round(d * 10) / 10, 1) + '</b></div>'; }).join('');
+    var domare = ovriga().slice(0, 3);
+    var dom = [0, 1, 2].map(function (i) { var d = s.andel === 1 ? 10 : Math.max(0, Math.min(10, bas + (Math.random() * 0.3 - 0.15))), g = domare[i]; return '<div class="domare-plats">' + (g ? '<span class="domare-fig">' + Gubbar.figur(g.id, 'jubel', { band: false, cls: 'domar-svg', label: esc(g.namn) }) + '</span>' : '') + '<div class="tavla-domare"><span>' + esc(g ? ((S.namnPa || {})[g.id] || g.namn) : 'Domare ' + (i + 1)) + '</span><b>' + L.fmtN(Math.round(d * 10) / 10, 1) + '</b></div></div>'; }).join('');
     var rubrik = { guld: 'Guld!', silver: 'Silver!', brons: 'Brons!' }[s.medalj];
     var under = { guld: 'Perfekt landning! Du kan det här.', silver: 'Snyggt jobbat! Nästan hela vägen.', brons: 'Bra kämpat! Kör igen, så blir det ännu bättre.' }[s.medalj];
     var set = hittaSet(P.setId), harOva = set && set.pass.some(function (p) { return p.gen; }) && !(set.pass.filter(function (p) { return p.id === P.passId; })[0] || {}).gen;
@@ -1764,9 +1991,10 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
     return '<div class="overlay" data-act="inst-bakgrund"><div class="panel" role="dialog" aria-modal="true" aria-labelledby="inst-rubrik">' +
       '<h2 id="inst-rubrik">Inställningar</h2>' +
       '<label for="s-namn">Ditt namn<input id="s-namn" type="text" maxlength="20" value="' + esc(S.namn) + '" autocomplete="off"></label>' +
-      '<label for="s-kompis">Kompisens namn<input id="s-kompis" type="text" maxlength="16" value="' + esc(S.kompis) + '" autocomplete="off"></label>' +
+      '<div><p style="font-weight:600;margin-bottom:8px">Huvudfigur</p>' + figurVal('byt-figur') + '</div>' +
+      '<label for="s-kompis">Huvudfigurens namn<input id="s-kompis" type="text" maxlength="16" value="' + esc((S.namnPa || {})[S.figur] || '') + '" placeholder="' + esc(Gubbar.namn(figurId())) + '" autocomplete="off"></label>' +
       '<label for="s-vanner">Kompisar i textuppgifterna<small>Skriv några namn med komma emellan. De dyker upp i de nya mattefrågorna. Namnen stannar på den här plattan.</small><input id="s-vanner" type="text" maxlength="160" value="' + esc(S.vanner) + '" placeholder="Till exempel: Saga, Elsa, Maja" autocomplete="off"></label>' +
-      '<div><p style="font-weight:600;margin-bottom:8px">Färger</p><div class="teman">' + [['rosa', 'Rosa'], ['ljusbla', 'Ljusblå'], ['randig', 'Blårandig']].map(function (t) { return '<button class="tema ' + t[0] + '" data-act="skin" data-s="' + t[0] + '" aria-pressed="' + (S.skin === t[0]) + '"><i></i>' + t[1] + '</button>'; }).join('') + '</div></div>' +
+      '<div><p style="font-weight:600;margin-bottom:8px">Färger</p><div class="teman">' + [['rosa', 'Rosa'], ['ljusbla', 'Ljusblå'], ['randig', 'Blårandig'], ['dif', 'Blå, gul och röd']].map(function (t) { return '<button class="tema ' + t[0] + '" data-act="skin" data-s="' + t[0] + '" aria-pressed="' + (S.skin === t[0]) + '"><i></i>' + t[1] + '</button>'; }).join('') + '</div></div>' +
       '<div class="vaxel"><span>Ljud</span><button data-act="vaxla" data-k="ljud" aria-pressed="' + !!S.ljud + '" aria-label="Ljud"></button></div>' +
       '<div class="farozon">' + (nollstallFraga ? '<p><b>Är du säker?</b> Alla stjärnor, medaljer och rörelser försvinner.</p><div class="rad"><button class="knapp" data-act="nollstall-ja">Ja, börja om</button><button class="knapp sek" data-act="nollstall-nej">Nej</button></div>' : '<p>Vill du börja om från noll? Stjärnor och medaljer nollställs.</p><div class="rad"><button class="knapp sek" data-act="nollstall">Börja om från noll</button></div>') + '</div>' +
       '<button class="knapp" data-act="inst-stang">Klar</button></div></div>';
@@ -1774,7 +2002,7 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
   function sparaInst() {
     var a = $('#s-namn'), b = $('#s-kompis'), c = $('#s-vanner');
     if (a) S.namn = a.value.trim().slice(0, 20);
-    if (b) S.kompis = b.value.trim().slice(0, 16);
+    if (b && S.figur) { S.namnPa = S.namnPa || {}; S.namnPa[S.figur] = b.value.trim().slice(0, 16); }
     if (c) S.vanner = c.value.slice(0, 160);
     spara();
   }
@@ -1796,14 +2024,17 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
       case 'rorelse': rorelse(el.getAttribute('data-r')); minSpel('jubel', 1200); break;
       case 'medalj': ljud('tap'); el.classList.remove('dangla'); void el.offsetWidth; el.classList.add('dangla'); break;
       case 'stjarnor': ljud('boing'); el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); konfettiFran(el, 24); break;
-      case 'onb-forslag': { var inp = $('#onb-kompis'); if (inp) { inp.value = el.getAttribute('data-n'); inp.focus(); } ljud('tap'); break; }
+      case 'valj-figur': S.figur = el.getAttribute('data-f'); spara(); ljud('ratt'); render(); setTimeout(function () { rorelse('hopp'); minSpel('jubel', 1300); }, 100); break;
+      case 'byt-figur': sparaInst(); S.figur = el.getAttribute('data-f'); spara(); ljud('tap'); render(); break;
+      case 'gunga': ljud('boing'); el.classList.remove('gungar'); void el.offsetWidth; el.classList.add('gungar'); break;
+      case 'publik': { var sv = $('svg', el); ljud('boing'); rorelse(Math.random() < 0.5 ? 'hopp' : 'tap', sv); sv.setAttribute('data-min', 'jubel'); setTimeout(function () { sv.setAttribute('data-min', 'glad'); }, 1200); break; }
       case 'inst': inst = true; nollstallFraga = false; render(); setTimeout(function () { var f = $('#s-namn'); if (f) f.focus(); }, 50); break;
       case 'inst-bakgrund': case 'inst-stang': sparaInst(); inst = false; render(); break;
       case 'skin': sparaInst(); S.skin = el.getAttribute('data-s'); spara(); render(); break;
       case 'vaxla': sparaInst(); { var k = el.getAttribute('data-k'); S[k] = !S[k]; spara(); render(); } break;
       case 'nollstall': sparaInst(); nollstallFraga = true; render(); break;
       case 'nollstall-nej': nollstallFraga = false; render(); break;
-      case 'nollstall-ja': { var beh = { namn: S.namn, kompis: S.kompis, vanner: S.vanner, skin: S.skin, ljud: S.ljud, uppl: S.uppl }; S = Object.assign(standard(), beh); spara(); nollstallFraga = false; inst = false; toast('Klart! Allt är nollställt.'); render(); break; }
+      case 'nollstall-ja': { var beh = { namn: S.namn, figur: S.figur, namnPa: S.namnPa, vanner: S.vanner, skin: S.skin, ljud: S.ljud }; S = Object.assign(standard(), beh); spara(); nollstallFraga = false; inst = false; toast('Klart! Allt är nollställt.'); render(); break; }
       // Pass
       case 'val': {
         var i = +el.getAttribute('data-i'); if (P.klar || P.valda.indexOf(i) >= 0) return;
@@ -1864,7 +2095,7 @@ if (typeof module !== 'undefined') module.exports = LAXOR;
   document.addEventListener('submit', function (e) {
     e.preventDefault();
     var f = e.target.getAttribute('data-form');
-    if (f === 'kompis') { var v = ($('#onb-kompis').value || '').trim().slice(0, 16); if (!v) { toast('Skriv ett namn eller välj ett förslag.'); return; } S.kompis = v; spara(); ljud('ratt'); render(); setTimeout(function () { rorelse('hopp'); minSpel('jubel', 1300); }, 100); }
+    if (f === 'kompis') { var v = ($('#onb-kompis').value || '').trim().slice(0, 16); if (!v) { toast('Skriv ett namn först.'); return; } S.namnPa = S.namnPa || {}; S.namnPa[S.figur] = v; spara(); ljud('ratt'); render(); setTimeout(function () { rorelse('hopp'); minSpel('jubel', 1300); }, 100); }
     if (f === 'namn') { var n = ($('#onb-namn').value || '').trim().slice(0, 20); if (!n) { toast('Skriv ditt namn först.'); return; } S.namn = n; spara(); ljud('ratt'); render(); setTimeout(function () { rorelse('hopp'); konfettiFran($('.kompis-knapp'), 50); }, 100); }
   });
   document.addEventListener('keydown', function (e) {
