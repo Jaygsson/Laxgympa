@@ -2022,7 +2022,7 @@ var Gubbar = (function () {
 
   function vySpel() {
     var typ = spelTyp(), namn = esc(kompisNamn());
-    var instr = typ === 'hopp' ? 'Tryck på skärmen för att hoppa över häckarna och plintarna. Tryck en gång till i luften för ett extra högt hopp. Ta stjärnorna på vägen!' : 'Dra ' + namn + ' med fingret och akta dig för snöbollarna och kottarna. Fånga stjärnorna!';
+    var instr = typ === 'hopp' ? 'Tryck på skärmen för att hoppa över häckarna och plintarna. Tryck en gång till i luften för ett extra högt hopp. Ta stjärnorna på vägen!' : 'Sätt fingret var som helst, till exempel en bit under ' + namn + ', och dra. ' + namn + ' följer fingret utan att hoppa dit, så du ser hela tiden var du är. Akta dig för snöbollarna och kottarna, och fånga stjärnorna!';
     return '<div class="vy spelvy"><div class="spel-topp"><button class="ikon-knapp" data-act="spel-avsluta" aria-label="Avsluta spelet">' + IK.kryss + '</button>' +
       '<div class="spel-tid" aria-hidden="true"><div id="spel-tidfyll"></div></div><span class="spel-hjartan" id="spel-hjartan" aria-label="3 liv kvar">' + HJARTA + HJARTA + HJARTA + '</span>' +
       '<span class="spel-stj" aria-live="polite">' + IK.stjarna + '<b id="spel-stj">0</b></span></div>' +
@@ -2041,6 +2041,8 @@ var Gubbar = (function () {
     storlekSpel(true); ritaSpel(); placeraFigur();
     plan.addEventListener('pointerdown', spelPek);
     plan.addEventListener('pointermove', spelDra);
+    plan.addEventListener('pointerup', spelSlapp);
+    plan.addEventListener('pointercancel', spelSlapp);
   }
   function storlekSpel(forsta) {
     var s = SPEL; if (!s) return;
@@ -2069,18 +2071,18 @@ var Gubbar = (function () {
     var s = SPEL; if (!s || !s.igang || s.slut) return;
     if (e.target.closest && e.target.closest('.spel-overlay')) return;
     if (s.typ === 'hopp') { hoppa(); e.preventDefault(); return; }
-    var p = spelPos(e); satMal(p);
+    var p = spelPos(e);
+    s.drag = { id: e.pointerId, px: p.x, py: p.y, fx: s.mx, fy: s.my };
+    try { s.plan.setPointerCapture(e.pointerId); } catch (er) { }
+    e.preventDefault();
   }
   function spelDra(e) {
-    var s = SPEL; if (!s || !s.igang || s.slut || s.typ !== 'regn') return;
-    if (e.pointerType === 'mouse' && !e.buttons) return;
-    satMal(spelPos(e));
+    var s = SPEL; if (!s || !s.igang || s.slut || s.typ !== 'regn' || !s.drag || e.pointerId !== s.drag.id) return;
+    var p = spelPos(e);
+    s.mx = Math.max(s.fw * 0.2, Math.min(s.W - s.fw * 0.2, s.drag.fx + (p.x - s.drag.px)));
+    s.my = Math.max(s.H * 0.42, Math.min(s.H - 10, s.drag.fy + (p.y - s.drag.py)));
   }
-  function satMal(p) {
-    var s = SPEL;
-    s.mx = Math.max(s.fw * 0.2, Math.min(s.W - s.fw * 0.2, p.x));
-    s.my = Math.max(s.H * 0.42, Math.min(s.H - 10, p.y + s.fh * 0.45));
-  }
+  function spelSlapp(e) { var s = SPEL; if (s && s.drag && e.pointerId === s.drag.id) s.drag = null; }
   function hoppa() {
     var s = SPEL; if (s.hopp >= 2) return;
     s.vy = -s.hoppV * (s.hopp ? 0.8 : 1); s.hopp++; ljud('boing');
