@@ -1,0 +1,1891 @@
+<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#FF4F9A"><meta name="mobile-web-app-capable" content="yes"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2096%2096%22%3E%3Crect%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23FF4F9A%22/%3E%3Cpath%20d%3D%22M22%2046%20L24%2014%20L46%2034%20Z%20M74%2046%20L72%2014%20L50%2034%20Z%22%20fill%3D%22%23FFF2E6%22%20stroke%3D%22%232A2D5A%22%20stroke-width%3D%224%22%20stroke-linejoin%3D%22round%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2256%22%20r%3D%2228%22%20fill%3D%22%23FFF2E6%22%20stroke%3D%22%232A2D5A%22%20stroke-width%3D%224%22/%3E%3Cellipse%20cx%3D%2238%22%20cy%3D%2254%22%20rx%3D%224.5%22%20ry%3D%226%22%20fill%3D%22%232A2D5A%22/%3E%3Cellipse%20cx%3D%2258%22%20cy%3D%2254%22%20rx%3D%224.5%22%20ry%3D%226%22%20fill%3D%22%232A2D5A%22/%3E%3Cpath%20d%3D%22M40%2067%20Q44%2072%2048%2067%20Q52%2072%2056%2067%22%20fill%3D%22none%22%20stroke%3D%22%232A2D5A%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M32%2026%20L20%2018%20L22%2034%20Z%20M32%2026%20L44%2018%20L42%2034%20Z%22%20fill%3D%22%233AAAF5%22%20stroke%3D%22%232A2D5A%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style><title>Läxgympan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@600;800&family=Lexend:wght@400;500;600;700&display=swap">
+</head><body><style>
+/* Layout: gymnastiksal. Hem = scen med kompisen på mattan och medaljer som dinglar på en räcke, läxkorten bredvid.
+   Pass = en bom överst som visar hur långt man kommit, frågekortet i mitten och kompisen vid sidan. */
+:root{
+  --bg:#FFF3F8; --surface:#FFFFFF; --surface2:#FFF8FB;
+  --ink:#20244F; --muted:#5E628F; --line:#EBDDEB;
+  --rosa:#FF4F9A; --rosa-deep:#D2307C; --rosa-soft:#FFDCEB;
+  --bla:#3AAAF5; --bla-deep:#1572C4; --bla-soft:#D9EFFF;
+  --navy:#24306F; --guld:#FFB51E; --guld-soft:#FFF1C9;
+  --ratt:#12996A; --ratt-soft:#D3F4E5; --fel:#E2622D; --fel-soft:#FFE6DA;
+  --bom:#EBCFA8; --bom-ben:#BFA488; --on-pop:#FFFFFF; --skugga:rgba(60,30,90,.13);
+  --pop:var(--rosa); --pop-deep:var(--rosa-deep); --pop-soft:var(--rosa-soft);
+  --pop2:var(--bla); --pop2-deep:var(--bla-deep); --pop2-soft:var(--bla-soft);
+  --matta:var(--bla-soft); --matta-kant:var(--bla);
+  --display:"Grandstander","Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Lexend",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  /* Illustrationsfärger, lika i båda teman */
+  --fur:#FFF2E6; --kontur:#2A2D5A;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#151730; --surface:#22264A; --surface2:#272C55;
+    --ink:#F7F2FF; --muted:#AEB1DA; --line:#363C6E;
+    --rosa:#FF6FAE; --rosa-deep:#FF85BC; --rosa-soft:#4A2650;
+    --bla:#62C4FF; --bla-deep:#86D2FF; --bla-soft:#1E3B63;
+    --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
+    --ratt:#43D894; --ratt-soft:#163E2F; --fel:#FF9468; --fel-soft:#4D2A1E;
+    --bom:#8C6E52; --bom-ben:#6B5642; --on-pop:#1B1233; --skugga:rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151730; --surface:#22264A; --surface2:#272C55;
+  --ink:#F7F2FF; --muted:#AEB1DA; --line:#363C6E;
+  --rosa:#FF6FAE; --rosa-deep:#FF85BC; --rosa-soft:#4A2650;
+  --bla:#62C4FF; --bla-deep:#86D2FF; --bla-soft:#1E3B63;
+  --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
+  --ratt:#43D894; --ratt-soft:#163E2F; --fel:#FF9468; --fel-soft:#4D2A1E;
+  --bom:#8C6E52; --bom-ben:#6B5642; --on-pop:#1B1233; --skugga:rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+:root[data-skin="ljusbla"]{ --pop:var(--bla); --pop-deep:var(--bla-deep); --pop-soft:var(--bla-soft); --pop2:var(--rosa); --pop2-deep:var(--rosa-deep); --pop2-soft:var(--rosa-soft); --matta:var(--rosa-soft); --matta-kant:var(--rosa); }
+:root[data-skin="randig"]{ --pop:var(--bla); --pop-deep:var(--navy); --pop-soft:var(--bla-soft); --pop2:var(--rosa); --pop2-deep:var(--rosa-deep); --pop2-soft:var(--rosa-soft); }
+
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.45;overflow:hidden;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-action:manipulation;padding:0}
+:focus-visible{outline:3px solid var(--pop2);outline-offset:3px;border-radius:12px}
+h1,h2,h3{font-family:var(--display);font-weight:800;margin:0;text-wrap:balance;line-height:1.1}
+p{margin:0}
+
+.app{height:100%;position:relative;isolation:isolate}
+.app::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(55% 40% at 0% 0%,var(--pop-soft),transparent 70%),radial-gradient(50% 38% at 100% 100%,var(--pop2-soft),transparent 72%)}
+.vy{height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;animation:vyIn .35s cubic-bezier(.2,.9,.3,1.2)}
+.inre{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 40px;display:flex;flex-direction:column;gap:20px}
+@keyframes vyIn{from{opacity:.0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+
+/* ---------- Knappar ---------- */
+.knapp{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:0 26px;border-radius:999px;font-family:var(--display);font-weight:800;font-size:21px;background:var(--pop-deep);color:var(--on-pop);box-shadow:0 5px 0 color-mix(in srgb,var(--pop-deep) 62%,#000),0 10px 22px var(--skugga);transition:transform .16s cubic-bezier(.3,1.6,.5,1),box-shadow .16s}
+.knapp:active{transform:translateY(4px) scale(.98);box-shadow:0 1px 0 color-mix(in srgb,var(--pop-deep) 62%,#000),0 4px 10px var(--skugga)}
+.knapp.sek{background:var(--surface);color:var(--ink);box-shadow:0 4px 0 var(--line),0 8px 18px var(--skugga)}
+.knapp.tips{background:var(--guld-soft);color:var(--ink);box-shadow:0 4px 0 color-mix(in srgb,var(--guld) 55%,transparent),0 8px 18px var(--skugga)}
+.knapp[disabled]{opacity:.45;pointer-events:none}
+.knapp svg{width:24px;height:24px;flex:none}
+.ikon-knapp{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--surface);box-shadow:0 3px 0 var(--line),0 6px 14px var(--skugga);transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.ikon-knapp:active{transform:scale(.9)}
+.ikon-knapp svg{width:26px;height:26px}
+.chip{display:inline-flex;align-items:center;gap:6px;font:600 13px/1 var(--body);text-transform:uppercase;letter-spacing:.08em;padding:7px 11px;border-radius:999px;white-space:nowrap}
+.chip.matte{background:var(--rosa-soft);color:var(--rosa-deep)}
+.chip.no{background:var(--bla-soft);color:var(--bla-deep)}
+.chip.papper{background:var(--guld-soft);color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px}
+.chip svg{width:16px;height:16px}
+
+/* ---------- Bråk ---------- */
+.br{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.05;font-size:.82em;margin:0 .14em;font-variant-numeric:tabular-nums;font-weight:inherit}
+.br>span{display:block;padding:0 .18em}
+.br>span:first-child{border-bottom:2px solid currentColor;padding-bottom:.06em}
+.br>span:last-child{padding-top:.06em}
+
+/* ---------- Hem ---------- */
+.topp{display:flex;align-items:center;gap:12px}
+.halsning{flex:1;min-width:0}
+.halsning h1{overflow-wrap:anywhere}
+.halsning h1{font-size:clamp(32px,5.5vw,48px);color:var(--ink)}
+.halsning h1 em{font-style:normal;color:var(--pop-deep)}
+.halsning p{color:var(--muted);font-size:18px;margin-top:4px}
+.stjarnor{display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 18px 0 12px;border-radius:999px;background:var(--guld-soft);font:800 24px var(--display);font-variant-numeric:tabular-nums;box-shadow:0 3px 0 color-mix(in srgb,var(--guld) 50%,transparent)}
+.stjarnor svg{width:30px;height:30px}
+.stjarnor.pop svg{animation:stjarnPop .6s cubic-bezier(.3,1.8,.5,1)}
+@keyframes stjarnPop{0%{transform:scale(1) rotate(0)}40%{transform:scale(1.5) rotate(-20deg)}100%{transform:scale(1) rotate(0)}}
+
+.hem-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+@media (min-width:880px){.hem-grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr);align-items:start}}
+
+.scen{position:relative;background:var(--surface);border-radius:30px;padding:16px 18px 20px;box-shadow:0 2px 0 var(--line),0 14px 34px var(--skugga);display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.rack{position:relative;height:112px;margin:0 -4px}
+.rack::before{content:"";position:absolute;left:4px;right:4px;top:10px;height:10px;border-radius:6px;background:linear-gradient(var(--bom),color-mix(in srgb,var(--bom) 70%,#000))}
+.rack-hangen{position:absolute;left:0;right:0;top:14px;display:flex;justify-content:center;gap:clamp(6px,2vw,16px);padding:0 12px}
+.hang{width:52px;height:92px;transform-origin:50% 0;display:block}
+.hang svg{width:100%;height:100%;overflow:visible}
+.hang.dangla{animation:dangla 1.8s cubic-bezier(.3,.7,.4,1)}
+.hang.tom{opacity:.5}
+@keyframes dangla{0%{transform:rotate(0)}10%{transform:rotate(22deg)}26%{transform:rotate(-17deg)}42%{transform:rotate(11deg)}58%{transform:rotate(-7deg)}74%{transform:rotate(4deg)}88%{transform:rotate(-2deg)}100%{transform:rotate(0)}}
+.rack-text{position:absolute;left:0;right:0;bottom:4px;text-align:center;color:var(--muted);font-size:14px}
+
+.kompis-scen{position:relative;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;padding-top:8px}
+.pratbubbla{position:relative;justify-self:stretch;background:var(--pop2-soft);color:var(--ink);border-radius:22px;padding:14px 16px;font-size:18px;font-weight:500;margin-bottom:12px;animation:bubbla .5s cubic-bezier(.3,1.6,.5,1)}
+.pratbubbla::after{content:"";position:absolute;left:50%;bottom:-12px;width:24px;height:24px;background:inherit;transform:translateX(-50%) rotate(45deg);border-radius:4px}
+@keyframes bubbla{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}
+.pratbubbla form{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+.pratbubbla input{font:500 19px var(--body);padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--ink);width:100%}
+.pratbubbla .forslag{display:flex;flex-wrap:wrap;gap:8px}
+.pratbubbla .forslag button{padding:8px 14px;border-radius:999px;background:var(--surface);font-weight:600;box-shadow:0 2px 0 var(--line)}
+.kompis-knapp{width:min(240px,62vw);display:block;position:relative;z-index:1}
+.matta{width:86%;height:44px;margin-top:-34px;border-radius:16px;background:var(--matta);box-shadow:inset 0 -7px 0 var(--matta-kant)}
+:root[data-skin="randig"] .matta{background:repeating-linear-gradient(90deg,var(--bla) 0 28px,var(--navy) 28px 56px);box-shadow:inset 0 -7px 0 rgba(0,0,0,.18)}
+.namnskylt{margin-top:-14px;position:relative;z-index:2;background:var(--pop-deep);color:var(--on-pop);font:800 18px var(--display);padding:6px 16px;border-radius:999px;box-shadow:0 3px 0 color-mix(in srgb,var(--pop-deep) 60%,#000)}
+.rorelser{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.rorelse{padding:9px 14px;border-radius:999px;background:var(--pop-soft);color:var(--pop-deep);font-weight:700;font-size:15px;transition:transform .18s cubic-bezier(.3,1.6,.5,1)}
+.rorelse:active{transform:scale(.9)}
+.rorelse.last{background:transparent;color:var(--muted);border:2px dashed var(--line);font-weight:500}
+.nasta-rorelse{text-align:center;color:var(--muted);font-size:14px}
+
+.laxor{display:flex;flex-direction:column;gap:14px}
+.laxor h2{font-size:26px}
+.laxkort{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:16px;align-items:center;width:100%;text-align:left;background:var(--surface);border-radius:24px;padding:16px 18px;box-shadow:0 3px 0 var(--line),0 12px 26px var(--skugga);transition:transform .2s cubic-bezier(.3,1.6,.5,1);animation:kortIn .5s cubic-bezier(.2,1.2,.4,1) both}
+.laxkort:active{transform:scale(.97) rotate(-.6deg)}
+.laxkort:nth-child(2){animation-delay:.05s}.laxkort:nth-child(3){animation-delay:.1s}.laxkort:nth-child(4){animation-delay:.15s}.laxkort:nth-child(5){animation-delay:.2s}
+@keyframes kortIn{from{transform:translateY(16px);opacity:.3}to{transform:none;opacity:1}}
+.amnesruta{width:62px;height:62px;border-radius:18px;display:grid;place-items:center;font:800 26px var(--display)}
+.amnesruta.matte{background:var(--rosa-soft);color:var(--rosa-deep)}
+.amnesruta.no{background:var(--bla-soft);color:var(--bla-deep)}
+.amnesruta.igen{background:var(--guld-soft);color:var(--ink)}
+.amnesruta svg{width:34px;height:34px}
+.laxkort h3{font-size:22px}
+.laxkort p{color:var(--muted);font-size:15px;margin-top:2px}
+.laxkort .rad{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.ring{width:54px;height:54px}
+.ring text{font:700 13px var(--body);fill:var(--ink)}
+.ring .bak{stroke:var(--line)}
+.ring .fram{stroke:var(--pop);transition:stroke-dashoffset .8s}
+
+/* ---------- Läxa (stationer) ---------- */
+.setvy-topp{display:flex;gap:14px;align-items:center}
+.setvy-topp h1{font-size:clamp(28px,5vw,40px)}
+.setvy-topp p{color:var(--muted)}
+.stationer{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;position:relative}
+.stationer::before{content:"";position:absolute;left:44px;top:30px;bottom:30px;border-left:4px dashed var(--pop-soft)}
+.station{position:relative;display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;text-align:left;background:var(--surface);border-radius:22px;padding:14px 16px;box-shadow:0 3px 0 var(--line),0 10px 22px var(--skugga);transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.station:active{transform:scale(.97)}
+.station .nr{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--pop-soft);color:var(--pop-deep);font:800 24px var(--display)}
+.station.gen .nr{background:var(--pop2-soft);color:var(--pop2-deep)}
+.station.klar .nr{background:var(--pop-deep);color:var(--on-pop)}
+.station .nr svg{width:28px;height:28px}
+.station h3{font-size:20px}
+.station p{color:var(--muted);font-size:15px}
+.station .mini-medalj{width:34px;height:56px}
+.station .kor{font:800 18px var(--display);color:var(--pop-deep);display:flex;align-items:center;gap:4px}
+
+/* ---------- Pass ---------- */
+.pass-topp{display:flex;align-items:center;gap:14px}
+.bom{position:relative;flex:1;height:58px}
+.bom-yta{position:absolute;left:0;right:0;top:26px;height:16px;border-radius:8px;background:var(--bom);box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+.bom-fyll{position:absolute;left:0;top:0;bottom:0;border-radius:8px;background:var(--pop);transition:width .55s cubic-bezier(.3,1.2,.5,1)}
+.bom::before,.bom::after{content:"";position:absolute;top:42px;width:12px;height:14px;background:var(--bom-ben);border-radius:0 0 4px 4px}
+.bom::before{left:10%}.bom::after{right:10%}
+.bom-prickar{position:absolute;left:8px;right:8px;top:30px;display:flex;justify-content:space-between;pointer-events:none}
+.bom-prickar i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.65)}
+.bom-prickar i.ratt{background:var(--ratt)}.bom-prickar i.ratt2{background:var(--guld)}.bom-prickar i.miss{background:var(--fel)}
+.bom-kompis{position:absolute;top:-2px;width:38px;height:34px;transform:translateX(-50%);transition:left .6s cubic-bezier(.4,1.4,.5,1)}
+.bom-kompis.hoppa{animation:miniHopp .6s cubic-bezier(.3,.7,.4,1)}
+@keyframes miniHopp{0%,100%{translate:0 0}45%{translate:0 -14px}}
+.raknare{font:800 20px var(--display);font-variant-numeric:tabular-nums;color:var(--muted);min-width:56px;text-align:right}
+
+.pass-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;align-items:start}
+@media (min-width:760px){.pass-grid{grid-template-columns:minmax(0,1fr) 180px}}
+.pass-kompis{display:none}
+@media (min-width:760px){.pass-kompis{display:flex;flex-direction:column;align-items:center;gap:6px;position:sticky;top:10px}}
+.pass-kompis .kompis-knapp{width:100%}
+.pass-kompis .matta{width:100%;height:34px;margin-top:-26px}
+.fraga-kort{position:relative;background:var(--surface);border-radius:30px;padding:clamp(18px,3vw,30px);box-shadow:0 3px 0 var(--line),0 16px 36px var(--skugga);display:flex;flex-direction:column;gap:18px;min-width:0}
+.fraga-kort.in{animation:fragaIn .45s cubic-bezier(.2,1.3,.4,1)}
+@keyframes fragaIn{from{transform:translateX(40px) rotate(1.5deg);opacity:0}to{transform:none;opacity:1}}
+.fraga-kort.skaka{animation:skaka .45s}
+@keyframes skaka{0%,100%{transform:none}20%{transform:translateX(-10px) rotate(-1deg)}40%{transform:translateX(9px) rotate(1deg)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+.fraga-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fraga-meta .las{margin-left:auto}
+.liten-kompis{display:block;width:74px;margin:-10px 0 -6px}
+@media (min-width:760px){.liten-kompis{display:none}}
+.fraga-text{font-family:var(--body);font-weight:600;font-size:clamp(21px,3.2vw,28px);line-height:1.35;text-wrap:pretty;max-width:36ch}
+.uttryck{font:800 clamp(30px,6vw,46px)/1.3 var(--display);font-variant-numeric:tabular-nums;letter-spacing:.01em;color:var(--pop-deep);overflow-x:auto}
+.uttryck .lucka{display:inline-grid;place-items:center;min-width:1.2em;height:1.15em;border-radius:10px;background:var(--pop-soft);font-size:.8em;vertical-align:middle}
+.figur{display:flex;justify-content:center;overflow-x:auto;padding:4px 0}
+.figur svg{max-width:100%;height:auto}
+.fig-del{fill:var(--surface);stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round}
+.fig-del.farg{fill:var(--pop)}
+.tl-linje{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.tl-streck{stroke:var(--ink);stroke-width:2}
+.tl-text{fill:var(--ink);font:600 18px var(--body);text-anchor:middle}
+.tl-pil{fill:var(--pop-deep)}
+.tl-pilnamn{fill:var(--pop-deep);font:800 20px var(--display);text-anchor:middle}
+
+/* Flerval */
+.alternativ{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.alt{display:flex;align-items:center;gap:14px;min-height:72px;padding:12px 18px;border-radius:20px;background:var(--surface2);border:3px solid var(--line);text-align:left;font-size:21px;font-weight:600;transition:transform .18s cubic-bezier(.3,1.6,.5,1),background .2s,border-color .2s}
+.alt:active{transform:scale(.96)}
+.alt .bokstav{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--pop-soft);color:var(--pop-deep);font:800 20px var(--display)}
+.alt.ratt{background:var(--ratt-soft);border-color:var(--ratt);animation:studs .5s cubic-bezier(.3,1.8,.5,1)}
+.alt.ratt .bokstav{background:var(--ratt);color:#fff}
+.alt.fel{background:var(--fel-soft);border-color:var(--fel);opacity:.75;animation:skaka .4s}
+.alt.fel .bokstav{background:var(--fel);color:#fff}
+.alt[disabled]{pointer-events:none}
+@keyframes studs{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+
+/* Skriv svaret */
+.falten{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.falt{display:flex;flex-direction:column;gap:6px;text-align:left}
+.falt .etikett{font-weight:600;font-size:17px;color:var(--muted);min-height:1.4em}
+.falt .ruta{display:flex;align-items:center;gap:8px;min-height:64px;padding:0 16px;border-radius:18px;border:3px solid var(--line);background:var(--surface2);font:700 28px var(--display);font-variant-numeric:tabular-nums;transition:border-color .2s,box-shadow .2s}
+.falt .ruta .tomt{color:var(--muted);opacity:.5}
+.falt .ruta .enhet{margin-left:auto;font:600 18px var(--body);color:var(--muted)}
+.falt.aktiv .ruta{border-color:var(--pop);box-shadow:0 0 0 5px var(--pop-soft)}
+.falt.aktiv .ruta::after{content:"";width:3px;height:30px;background:var(--pop);border-radius:2px;animation:blink 1s steps(1) infinite;order:1}
+.falt.aktiv .ruta .enhet{order:2}
+@keyframes blink{50%{opacity:0}}
+.falt.ok .ruta{border-color:var(--ratt);background:var(--ratt-soft)}
+.falt.nej .ruta{border-color:var(--fel);background:var(--fel-soft);animation:skaka .4s}
+.falt input{font:600 24px var(--body);min-height:64px;padding:0 16px;border-radius:18px;border:3px solid var(--line);background:var(--surface2);color:var(--ink);width:100%}
+.falt input:focus{outline:none;border-color:var(--pop);box-shadow:0 0 0 5px var(--pop-soft)}
+.tangenter{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px;width:100%;margin:0 auto}
+.tangenter.med-snedstreck{grid-template-columns:repeat(4,1fr);max-width:520px}
+.tangent{min-height:62px;border-radius:18px;background:var(--surface2);font:800 28px var(--display);box-shadow:0 4px 0 var(--line);transition:transform .1s}
+.tangent:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line);background:var(--pop-soft)}
+.tangent.extra{background:var(--pop-soft);color:var(--pop-deep)}
+.tangent svg{width:28px;height:28px;vertical-align:middle}
+
+/* Ordna */
+.ordna{display:flex;flex-direction:column;gap:14px}
+.ordna-rad{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px;border-radius:20px;background:var(--surface2);border:3px dashed var(--line)}
+.ordna-rad .rand{font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.plats{min-width:64px;min-height:70px;border-radius:16px;border:3px solid var(--line);display:grid;place-items:center;font:700 26px var(--body);background:var(--surface)}
+.plats.fylld{border-color:var(--pop);animation:studs .4s cubic-bezier(.3,1.8,.5,1)}
+.ordna-pool{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;min-height:74px}
+.bricka{min-width:64px;min-height:70px;padding:0 10px;border-radius:16px;background:var(--pop-soft);color:var(--ink);font:700 26px var(--body);box-shadow:0 4px 0 color-mix(in srgb,var(--pop) 40%,transparent);transition:transform .18s cubic-bezier(.3,1.6,.5,1)}
+.bricka:active{transform:scale(.9) rotate(-4deg)}
+
+/* Pilkast */
+.pilkast{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:center;justify-items:center}
+@media (min-width:640px){.pilkast{grid-template-columns:minmax(0,300px) minmax(0,1fr)}}
+.tavla{width:min(300px,100%);touch-action:manipulation;cursor:crosshair;filter:drop-shadow(0 10px 18px var(--skugga))}
+.tavla .pilen{animation:pilIn .35s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pilIn{from{transform:scale(2.4);opacity:0}to{transform:none;opacity:1}}
+.tavla .pilen{transform-box:fill-box;transform-origin:center}
+.pil-info{display:flex;flex-direction:column;gap:12px;width:100%}
+.traffar{display:flex;flex-wrap:wrap;gap:8px;min-height:44px}
+.traffar span{padding:8px 12px;border-radius:12px;background:var(--surface2);border:2px solid var(--line);font:800 20px var(--display)}
+.pil-summa{font:800 26px var(--display);font-variant-numeric:tabular-nums}
+.pil-summa small{font:500 16px var(--body);color:var(--muted)}
+.pil-knappar{display:flex;gap:10px;flex-wrap:wrap}
+.pil-knappar .knapp{min-height:48px;font-size:17px;padding:0 18px}
+
+/* Kort */
+.kort-hjalp{color:var(--muted);font-size:17px;display:flex;gap:10px;align-items:flex-start}
+.kort-hjalp svg{width:26px;height:26px;flex:none;margin-top:2px}
+.kort-svar{background:var(--pop2-soft);border-radius:20px;padding:16px 18px;font-size:20px;line-height:1.5;animation:vand .5s cubic-bezier(.2,1.2,.4,1)}
+@keyframes vand{from{transform:perspective(600px) rotateX(-70deg);opacity:0}to{transform:none;opacity:1}}
+.kort-svar b{color:var(--pop2-deep)}
+.bedom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.bedom button{min-height:70px;border-radius:18px;font:800 18px var(--display);padding:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .18s cubic-bezier(.3,1.6,.5,1)}
+.bedom button:active{transform:scale(.94)}
+.bedom small{font:500 13px var(--body);opacity:.8}
+.bedom .kunde{background:var(--ratt-soft);color:var(--ink)}
+.bedom .nastan{background:var(--guld-soft);color:var(--ink)}
+.bedom .inte{background:var(--fel-soft);color:var(--ink)}
+
+/* Återkoppling */
+.aterkoppling{display:flex;flex-direction:column;gap:12px}
+.aterkoppling:empty{display:none}
+.besked{display:flex;align-items:center;gap:12px;border-radius:18px;padding:14px 16px;font-size:19px;font-weight:600;animation:bubbla .4s cubic-bezier(.3,1.6,.5,1)}
+.besked svg{width:30px;height:30px;flex:none}
+.besked.ratt{background:var(--ratt-soft)}
+.besked.ratt strong{font:800 24px var(--display);color:var(--ratt)}
+.besked.fel{background:var(--fel-soft)}
+.besked.info{background:var(--pop2-soft)}
+.plus{margin-left:auto;font:800 22px var(--display);color:var(--ink);display:inline-flex;align-items:center;gap:4px;animation:flyt 1s cubic-bezier(.2,1.4,.4,1)}
+.plus svg{width:24px;height:24px}
+@keyframes flyt{from{transform:translateY(18px) scale(.6);opacity:0}to{transform:none;opacity:1}}
+.ledtradsruta{display:flex;gap:12px;background:var(--guld-soft);border-radius:18px;padding:14px 16px;font-size:18px;animation:bubbla .4s cubic-bezier(.3,1.6,.5,1)}
+.ledtradsruta svg{width:28px;height:28px;flex:none}
+.losning{border:3px dashed var(--line);border-radius:20px;padding:14px 16px;background:var(--surface2)}
+.losning h3{font-size:19px;margin-bottom:8px}
+.losning ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;counter-reset:steg}
+.losning li{counter-increment:steg;display:flex;gap:12px;align-items:flex-start;font-size:18px;line-height:1.5;animation:stegIn .4s both}
+.losning li::before{content:counter(steg);flex:none;width:30px;height:30px;border-radius:50%;background:var(--pop2-soft);color:var(--pop2-deep);font:800 16px var(--display);display:grid;place-items:center;margin-top:1px}
+.losning li:nth-child(2){animation-delay:.25s}.losning li:nth-child(3){animation-delay:.5s}.losning li:nth-child(4){animation-delay:.75s}.losning li:nth-child(5){animation-delay:1s}
+@keyframes stegIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.facit{font-weight:600;font-size:19px;padding:10px 0 0}
+.knapp-rad{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.knapp-rad .knapp.nasta{animation:nastaPuls 1.6s ease-in-out infinite}
+@keyframes nastaPuls{0%,100%{transform:none}50%{transform:scale(1.04)}}
+
+/* ---------- Klar ---------- */
+.klar{align-items:center;text-align:center}
+.klar-medalj{width:130px;height:210px;transform-origin:50% 0;animation:medaljFall 1.4s cubic-bezier(.3,.9,.4,1.2) both}
+.klar-medalj.dangla{animation:dangla 1.8s cubic-bezier(.3,.7,.4,1)}
+@keyframes medaljFall{0%{transform:translateY(-120%) rotate(0)}45%{transform:translateY(0) rotate(14deg)}65%{transform:rotate(-9deg)}82%{transform:rotate(4deg)}100%{transform:rotate(0)}}
+.klar h1{font-size:clamp(40px,8vw,64px);color:var(--pop-deep)}
+.klar .under{color:var(--muted);font-size:19px;max-width:40ch}
+.domare{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.tavla-domare{width:104px;padding:12px 6px 10px;border-radius:16px;background:#1D2250;color:#FFE27A;box-shadow:0 6px 0 #0F1233,0 12px 24px var(--skugga);animation:vandUpp .6s cubic-bezier(.2,1.4,.4,1) both}
+.tavla-domare:nth-child(2){animation-delay:.25s}.tavla-domare:nth-child(3){animation-delay:.5s}
+.tavla-domare b{display:block;font:800 36px/1 var(--display);font-variant-numeric:tabular-nums;text-shadow:0 0 12px rgba(255,226,122,.55)}
+.tavla-domare span{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:#C9CCF5}
+@keyframes vandUpp{from{transform:perspective(500px) rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+.klar-stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.klar-stats span{background:var(--surface);border-radius:999px;padding:10px 16px;font-weight:600;box-shadow:0 3px 0 var(--line);display:inline-flex;gap:6px;align-items:center}
+.klar-stats svg{width:22px;height:22px}
+.ny-rorelse{background:var(--pop-soft);border-radius:22px;padding:14px 18px;font-size:19px;font-weight:600;max-width:520px;animation:bubbla .5s .9s both cubic-bezier(.3,1.6,.5,1)}
+.ny-rorelse strong{font-family:var(--display);color:var(--pop-deep);font-size:22px}
+.klar .kompis-knapp{width:min(200px,50vw)}
+.klar-knappar{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+
+/* ---------- Inställningar ---------- */
+.overlay{position:fixed;inset:0;z-index:40;background:rgba(20,16,50,.45);display:grid;place-items:center;padding:16px;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.panel{width:min(560px,100%);max-height:calc(100% - 20px);overflow-y:auto;background:var(--surface);border-radius:28px;padding:22px;display:flex;flex-direction:column;gap:18px;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:bubbla .35s cubic-bezier(.3,1.5,.5,1)}
+.panel h2{font-size:28px}
+.panel label{display:flex;flex-direction:column;gap:6px;font-weight:600}
+.panel label small{font-weight:400;color:var(--muted)}
+.panel input[type=text]{font:500 19px var(--body);padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface2);color:var(--ink)}
+.teman{display:flex;gap:10px;flex-wrap:wrap}
+.tema{display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:999px;border:3px solid var(--line);font-weight:600}
+.tema[aria-pressed="true"]{border-color:var(--pop)}
+.tema i{width:32px;height:32px;border-radius:50%;display:block}
+.tema.rosa i{background:linear-gradient(135deg,#FF4F9A 50%,#3AAAF5 50%)}
+.tema.ljusbla i{background:linear-gradient(135deg,#3AAAF5 50%,#FF4F9A 50%)}
+.tema.randig i{background:repeating-linear-gradient(90deg,#3AAAF5 0 8px,#24306F 8px 16px)}
+.vaxel{display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:600}
+.vaxel button{width:64px;height:36px;border-radius:999px;background:var(--line);position:relative;transition:background .2s}
+.vaxel button::after{content:"";position:absolute;top:4px;left:4px;width:28px;height:28px;border-radius:50%;background:var(--surface);box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.vaxel button[aria-pressed="true"]{background:var(--ratt)}
+.vaxel button[aria-pressed="true"]::after{transform:translateX(28px)}
+.farozon{border-top:2px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:10px}
+.farozon p{color:var(--muted);font-size:15px}
+.farozon .rad{display:flex;gap:10px;flex-wrap:wrap}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:60;background:var(--ink);color:var(--bg);padding:14px 20px;border-radius:999px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);animation:toast 2.6s both;max-width:calc(100% - 32px);text-align:center}
+@keyframes toast{0%{transform:translate(-50%,30px);opacity:0}10%,85%{transform:translate(-50%,0);opacity:1}100%{transform:translate(-50%,10px);opacity:0}}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+
+/* ---------- Kompisen ---------- */
+.kompis{display:block;width:100%;height:auto;overflow:visible}
+.kompis .k-hel{transform-box:view-box;transform-origin:80px 180px;animation:andas 3.4s ease-in-out infinite}
+.kompis .k-huvud{transform-box:view-box;transform-origin:80px 100px}
+.kompis .k-ogon{transform-box:fill-box;transform-origin:center;transition:transform .08s}
+.kompis.blink .k-ogon{transform:scaleY(.12)}
+.kompis .k-arm-v{transform-box:view-box;transform-origin:60px 112px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.kompis .k-arm-h{transform-box:view-box;transform-origin:100px 112px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+.kompis .k-band{transform-box:view-box;transform-origin:122px 102px}
+.kompis .k-ben-v{transform-box:view-box;transform-origin:71px 144px}
+.kompis .k-ben-h{transform-box:view-box;transform-origin:89px 144px}
+.kompis .k-skugga{transform-box:fill-box;transform-origin:center}
+.kompis .m{display:none}
+.kompis[data-min="glad"] .m-glad,.kompis[data-min="jubel"] .m-jubel,.kompis[data-min="hmm"] .m-hmm{display:inline}
+.kompis[data-min="jubel"] .k-arm-v{transform:rotate(110deg)}
+.kompis[data-min="jubel"] .k-arm-h{transform:rotate(-55deg)}
+@keyframes andas{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-2px) scale(1.012,1.02)}}
+.kompis.r-tap .k-hel{animation:wobbla .7s cubic-bezier(.3,.7,.4,1)}
+@keyframes wobbla{0%{transform:rotate(0)}15%{transform:rotate(-9deg) scale(1.04,.96)}35%{transform:rotate(7deg)}55%{transform:rotate(-4deg)}75%{transform:rotate(2deg)}100%{transform:rotate(0)}}
+.kompis.r-hopp .k-hel{animation:hopp .85s cubic-bezier(.3,.7,.4,1)}
+.kompis.r-hopp .k-skugga,.kompis.r-volt .k-skugga,.kompis.r-splitt .k-skugga{animation:skugga .85s}
+@keyframes hopp{0%{transform:none}18%{transform:scale(1.1,.86)}45%{transform:translateY(-60px) scale(.94,1.08)}62%{transform:translateY(-60px)}86%{transform:translateY(0) scale(1.1,.88)}100%{transform:none}}
+@keyframes skugga{0%,100%{transform:none;opacity:1}45%,62%{transform:scale(.6);opacity:.5}}
+.kompis.r-piruett .k-hel{animation:piruett 1.1s ease-in-out}
+@keyframes piruett{0%{transform:none}12%{transform:translateY(-10px) scaleX(1)}25%{transform:translateY(-16px) scaleX(-1)}38%{transform:translateY(-16px) scaleX(1)}51%{transform:translateY(-16px) scaleX(-1)}64%{transform:translateY(-16px) scaleX(1)}77%{transform:translateY(-10px) scaleX(-1)}90%{transform:translateY(0) scaleX(1)}100%{transform:none}}
+.kompis.r-volt .k-hel{transform-origin:80px 110px;animation:volt 1s cubic-bezier(.3,.7,.4,1)}
+@keyframes volt{0%{transform:none}15%{transform:scale(1.1,.85)}50%{transform:translateY(-80px) rotate(-180deg)}85%{transform:translateY(0) rotate(-360deg) scale(1.08,.9)}100%{transform:rotate(-360deg)}}
+.kompis.r-hjula .k-hel{transform-origin:80px 110px;animation:hjula 1.6s cubic-bezier(.45,.1,.4,1)}
+@keyframes hjula{0%{transform:none}45%{transform:translateX(70px) rotate(360deg)}55%{transform:translateX(70px) rotate(360deg)}100%{transform:translateX(0) rotate(0)}}
+.kompis.r-splitt .k-hel{animation:hopp .85s cubic-bezier(.3,.7,.4,1)}
+.kompis.r-splitt .k-ben-v{animation:splittV .85s}
+.kompis.r-splitt .k-ben-h{animation:splittH .85s}
+.kompis.r-splitt .k-arm-v{transform:rotate(110deg)}
+.kompis.r-splitt .k-arm-h{transform:rotate(-55deg)}
+@keyframes splittV{0%,25%,85%,100%{transform:none}45%,62%{transform:rotate(62deg)}}
+@keyframes splittH{0%,25%,85%,100%{transform:none}45%,62%{transform:rotate(-62deg)}}
+.kompis.r-band .k-band{animation:band 1.3s cubic-bezier(.4,.1,.4,1)}
+.kompis.r-band .k-arm-h{transform:rotate(-55deg)}
+.kompis.r-band .k-hel{animation:piruett 1.3s ease-in-out}
+@keyframes band{0%{transform:none}100%{transform:rotate(720deg)}}
+.kompis.r-hmm .k-huvud{animation:hmm 1.1s ease-in-out}
+@keyframes hmm{0%,100%{transform:none}25%,75%{transform:rotate(-11deg)}}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+</style>
+<div id="app" class="app"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<script>
+/* ===== Läxgympan: logik (ren och testbar, inga DOM-anrop) ===== */
+var Lx = (function () {
+  'use strict';
+
+  // ---------- Slump ----------
+  function slump(seed) {
+    var a = (seed >>> 0) || 1;
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function heltal(r, a, b) { return a + Math.floor(r() * (b - a + 1)); }
+  function valj(r, arr) { return arr[Math.floor(r() * arr.length)]; }
+  function blanda(r, arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function sgd(a, b) { a = Math.abs(a); b = Math.abs(b); while (b) { var t = a % b; a = b; b = t; } return a; }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function range(n) { var a = []; for (var i = 0; i < n; i++) a.push(i); return a; }
+
+  // ---------- Ord ----------
+  var TALORD = ['noll', 'en', 'två', 'tre', 'fyra', 'fem', 'sex', 'sju', 'åtta', 'nio', 'tio', 'elva', 'tolv', 'tretton', 'fjorton', 'femton', 'sexton', 'sjutton', 'arton', 'nitton', 'tjugo'];
+  var DELNAMN = { 2: 'halv', 3: 'tredjedel', 4: 'fjärdedel', 5: 'femtedel', 6: 'sjättedel', 7: 'sjundedel', 8: 'åttondel', 9: 'niondel', 10: 'tiondel', 11: 'elftedel', 12: 'tolftedel', 20: 'tjugondel', 100: 'hundradel', 1000: 'tusendel' };
+  function brakOrd(n, d) {
+    var ns = String(n).trim(), ds = String(d).trim();
+    var N = parseInt(ns, 10), D = parseInt(ds, 10);
+    if (String(N) !== ns || String(D) !== ds || !DELNAMN[D]) return ns + ' delat med ' + ds;
+    var namn = DELNAMN[D];
+    if (N === 1) return D === 2 ? 'en halv' : 'en ' + namn;
+    var tal = TALORD[N] || String(N);
+    return tal + ' ' + (D === 2 ? 'halvor' : namn + 'ar');
+  }
+  function talbart(s) {
+    return String(s || '')
+      .replace(/\{([^{}\/]+)\/([^{}]+)\}/g, function (m, a, b) { return ' ' + brakOrd(a, b) + ' '; })
+      .replace(/·/g, ' gånger ').replace(/−/g, ' minus ').replace(/=/g, ' är lika med ')
+      .replace(/\*\*/g, '').replace(/\s+/g, ' ').trim();
+  }
+  function gen(namn) { return /[sxz]$/i.test(namn) ? namn : namn + 's'; }
+
+  // ---------- Format ----------
+  function fmt(x) {
+    var v = Math.round(x * 1e6) / 1e6;
+    if (v === 0) v = 0;
+    var s = String(Math.abs(v));
+    if (s.indexOf('e') >= 0) s = Math.abs(v).toFixed(6).replace(/\.?0+$/, '');
+    var delar = s.split('.'), h = delar[0], d = delar[1];
+    if (h.length > 4) h = h.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return (v < 0 ? '−' : '') + h + (d ? ',' + d : '');
+  }
+  function fmtN(x, n) { return x.toFixed(n).replace('.', ','); }
+  function br(n, d) { return '{' + n + '/' + d + '}'; }
+
+  // ---------- Tolka svar ----------
+  function parseTal(s) {
+    if (s === null || s === undefined) return null;
+    var t = String(s).toLowerCase().replace(/[\s ]+/g, '').replace(/[−–—]/g, '-');
+    t = t.replace(/(kronor|kr|öre|kg|cm|mm|m|st|år|poäng|grader|°c|°)$/, '');
+    t = t.replace(',', '.');
+    if (!/^-?(\d+(\.\d*)?|\.\d+)$/.test(t)) return null;
+    return parseFloat(t);
+  }
+  function parseBrak(s) {
+    if (s === null || s === undefined) return null;
+    var t = String(s).replace(/[\s ]+/g, '');
+    var m = t.match(/^(-?\d+)\/(\d+)$/);
+    if (!m) return null;
+    var n = parseInt(m[1], 10), d = parseInt(m[2], 10);
+    if (d === 0) return null;
+    return { n: n, d: d };
+  }
+  function normText(s) {
+    return String(s || '').toLowerCase().replace(/[.,!?;:"'()]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function lev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j;
+    for (i = 0; i <= m; i++) { d[i] = [i]; }
+    for (j = 0; j <= n; j++) { d[0][j] = j; }
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) {
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    return d[m][n];
+  }
+
+  // ---------- Rätta ----------
+  function kollaFalt(f, inp) {
+    var raw = (inp === null || inp === undefined ? '' : String(inp)).trim();
+    if (!raw) return { ok: false, format: true, msg: 'Skriv ett svar i alla rutor först.' };
+    if (f.typ === 'brak') {
+      var b = parseBrak(raw);
+      if (!b) return { ok: false, format: true, msg: 'Svara i bråkform, till exempel 3/4. Tryck på knappen med snedstrecket.' };
+      var r = parseBrak(f.svar);
+      if (b.n * r.d !== r.n * b.d) return { ok: false };
+      var g = sgd(b.n, b.d);
+      if (b.n !== r.n || b.d !== r.d) return { ok: true, note: br(b.n, b.d) + ' är samma sak som ' + br(r.n, r.d) + '.' };
+      if (g > 1) return { ok: true, note: 'Det kan också skrivas ' + br(b.n / g, b.d / g) + '.' };
+      return { ok: true };
+    }
+    if (f.typ === 'text') {
+      var n = normText(raw);
+      var godta = [f.svar].concat(f.godta || []).map(normText);
+      if (godta.indexOf(n) >= 0) return { ok: true };
+      for (var i = 0; i < godta.length; i++) {
+        var tol = godta[i].length >= 9 ? 2 : godta[i].length >= 5 ? 1 : 0;
+        if (tol && lev(n, godta[i]) <= tol) return { ok: true, note: 'Det stavas: ' + f.svar + '.' };
+      }
+      return { ok: false };
+    }
+    var v = parseTal(raw);
+    if (v === null) {
+      if (parseBrak(raw)) return { ok: false, format: true, msg: 'Svara med ett tal i decimalform, till exempel 0,25.' };
+      return { ok: false, format: true, msg: 'Svara med ett tal, till exempel 12 eller 0,5.' };
+    }
+    return { ok: Math.abs(v - parseTal(f.svar)) < 1e-9 };
+  }
+
+  function kolla(q, svar) {
+    if (q.typ === 'val') return { ok: svar === q.ratt };
+    if (q.typ === 'ordna') {
+      var okO = Array.isArray(svar) && svar.length === q.items.length && svar.every(function (v, i) { return v === i; });
+      if (Array.isArray(svar) && svar.length < q.items.length) return { ok: false, format: true, msg: 'Lägg alla talen i rad först.' };
+      return { ok: okO };
+    }
+    if (q.typ === 'pil') {
+      var sum = svar.reduce(function (a, b) { return a + b; }, 0);
+      if (svar.length !== q.pilar) return { ok: false, format: true, msg: 'Kasta ' + q.pilar + ' pilar först. Du har kastat ' + svar.length + '.' };
+      return { ok: sum === q.mal, sum: sum };
+    }
+    if (q.typ === 'svar') {
+      var res = q.falt.map(function (f, i) { return kollaFalt(f, svar[i]); });
+      var form = null;
+      for (var k = 0; k < res.length; k++) if (res[k].format) { form = res[k]; break; }
+      if (form) return { ok: false, format: true, msg: form.msg, falt: res };
+      return { ok: res.every(function (x) { return x.ok; }), falt: res, note: res.map(function (x) { return x.note; }).filter(Boolean).join(' ') };
+    }
+    return { ok: false };
+  }
+
+  function facitFalt(f) {
+    if (f.typ === 'brak') { var p = f.svar.split('/'); return br(p[0], p[1]); }
+    if (f.typ === 'text') return f.svar;
+    return fmt(parseTal(f.svar)) + (f.enhet ? ' ' + f.enhet : '');
+  }
+  function facit(q) {
+    if (q.typ === 'val') return q.alt[q.ratt];
+    if (q.typ === 'ordna') return q.items.join(',  ');
+    if (q.typ === 'svar') {
+      return q.falt.map(function (f) {
+        var e = f.etikett || '';
+        if (!e) return facitFalt(f);
+        return /=\s*$/.test(e) ? e + ' ' + facitFalt(f) : e + ': ' + facitFalt(f);
+      }).join('   ');
+    }
+    return '';
+  }
+
+  // ---------- Namn i textuppgifter ----------
+  var NAMN = ['Saga', 'Elsa', 'Maja', 'Alva', 'Noah', 'Ella', 'Vera', 'Liam', 'Ines', 'Milo', 'Wilma', 'Hugo'];
+  function namnen(r, c, k) {
+    var egna = blanda(r, (c && c.lista) || []);
+    var ovriga = blanda(r, NAMN).filter(function (n) { return egna.indexOf(n) < 0; });
+    return egna.concat(ovriga).slice(0, k);
+  }
+
+  // ---------- Generatorer: liknande frågor ----------
+  var G = {};
+
+  G.jamfor = function (r) {
+    var typ = heltal(r, 0, 2), A, B, a, b, steg, ledtrad, t, h;
+    if (typ === 0 || typ === 2) {
+      t = heltal(r, 2, 9); h = heltal(r, 11, t * 10 - 1); if (h % 10 === 0) h += 1;
+      a = t * 10; b = h;
+      if (typ === 0) {
+        A = fmt(t / 10); B = fmt(h / 100);
+        ledtrad = 'Lägg till en nolla så att båda talen får två decimaler. Jämför sedan.';
+        steg = ['Skriv talen med två decimaler: ' + fmtN(t / 10, 2) + ' och ' + fmtN(h / 100, 2) + '.', (t * 10) + ' hundradelar är mer än ' + h + ' hundradelar.', 'Störst är ' + A + '.'];
+      } else {
+        A = br(t, 10); B = br(h, 100);
+        ledtrad = 'Skriv ' + A + ' som hundradelar.';
+        steg = [A + ' = ' + br(t * 10, 100), (t * 10) + ' hundradelar är mer än ' + h + ' hundradelar.', 'Störst är ' + A + '.'];
+      }
+    } else {
+      var nd = valj(r, [[1, 2], [1, 4], [3, 4], [1, 5], [2, 5], [3, 5], [4, 5], [3, 10], [7, 10], [9, 10]]);
+      var fh = nd[0] * (100 / nd[1]);
+      do { h = fh + valj(r, [-1, 1]) * heltal(r, 3, 15); } while (h <= 0 || h >= 100);
+      a = fh; b = h; A = br(nd[0], nd[1]); B = fmt(h / 100);
+      ledtrad = 'Gör om ' + A + ' till decimalform först. Förläng så att det står 100 under strecket.';
+      steg = [A + ' = ' + br(fh, 100) + ' = ' + fmtN(fh / 100, 2), 'Jämför ' + fmtN(fh / 100, 2) + ' och ' + fmtN(h / 100, 2) + '.', 'Störst är ' + (fh > h ? A : B) + '.'];
+    }
+    var alt = r() < 0.5 ? [B, A] : [A, B];
+    var storst = a > b ? A : B;
+    return { typ: 'val', text: 'Vilket tal är störst?', alt: alt, ratt: alt.indexOf(storst), fast: true, ledtrad: ledtrad, losning: steg };
+  };
+
+  G.figur = function (r) {
+    var n, k, figur;
+    if (r() < 0.65) {
+      var rader, kol;
+      do { rader = heltal(r, 1, 3); kol = heltal(r, 2, 5); } while (rader * kol < 3);
+      n = rader * kol; k = heltal(r, 1, n - 1);
+      figur = { form: 'rutor', rader: rader, kol: kol, fargade: blanda(r, range(n)).slice(0, k) };
+    } else {
+      n = valj(r, [2, 3, 4, 5, 6, 8]); k = heltal(r, 1, n - 1);
+      figur = { form: 'cirkel', delar: n, fargade: range(k) };
+    }
+    var dec = 100 % n === 0;
+    var falt = [{ etikett: 'Bråkform', typ: 'brak', svar: k + '/' + n }];
+    if (dec) falt.push({ etikett: 'Decimalform', typ: 'tal', svar: fmt(k / n) });
+    var losning = ['Räkna alla lika stora delar: ' + n + '. Det blir nämnaren, talet under strecket.', 'Räkna de färgade delarna: ' + k + '. Det blir täljaren, talet över strecket.', 'Andelen är ' + br(k, n) + '.'];
+    if (dec) losning.push(br(k, n) + ' = ' + br(k * 100 / n, 100) + ' = ' + fmt(k / n));
+    return { typ: 'svar', text: 'Hur stor andel av figuren är färgad? Svara i bråkform' + (dec ? ' och decimalform.' : '.'), figur: figur, falt: falt, ledtrad: 'Hur många lika stora delar finns det totalt? Hur många av dem är färgade?', losning: losning };
+  };
+
+  G.brak_dec = function (r) {
+    var val = valj(r, ['14', '14', '34', '12', '15', '25', '35', '45', 't', 't', 'h', 'h']);
+    var n, d;
+    if (val === 't') { d = 10; n = heltal(r, 1, 9); }
+    else if (val === 'h') { d = 100; n = valj(r, [heltal(r, 1, 9), heltal(r, 11, 99)]); if (n % 10 === 0) n += 1; }
+    else { n = +val[0]; d = +val[1]; }
+    var v = n / d, ordform = (d === 10 || d === 100) && n < 20 && r() < 0.45;
+    var text = ordform ? 'Skriv ' + brakOrd(n, d) + ' i decimalform.' : 'Skriv ' + br(n, d) + ' i decimalform.';
+    var losning;
+    if (d === 10 || d === 100) {
+      losning = [br(n, d) + ' betyder ' + brakOrd(n, d) + '.', d === 10 ? 'Tiondelar står på första platsen efter kommat.' : 'Hundradelar står på andra platsen efter kommat.', br(n, d) + ' = ' + fmt(v)];
+    } else {
+      var k = 100 / d;
+      losning = ['Förläng så att det står 100 under strecket: ' + br(n, d) + ' = ' + br(n * k, 100), br(n * k, 100) + ' betyder ' + brakOrd(n * k, 100) + '.', br(n, d) + ' = ' + fmt(v)];
+    }
+    return { typ: 'svar', text: text, falt: [{ typ: 'tal', svar: fmt(v) }], ledtrad: (d === 10 || d === 100) ? 'Tiondelar är en decimal. Hundradelar är två decimaler.' : 'Gör om bråket så att det står 10 eller 100 under strecket.', losning: losning };
+  };
+
+  G.dec_brak = function (r) {
+    var pl = valj(r, [1, 2, 2, 3]), D = Math.pow(10, pl), n;
+    if (pl === 1) n = heltal(r, 1, 9);
+    else if (pl === 2) n = valj(r, [heltal(r, 1, 9), heltal(r, 11, 99)]);
+    else n = valj(r, [heltal(r, 1, 9), heltal(r, 11, 99), heltal(r, 101, 999)]);
+    if (n % 10 === 0) n += 1;
+    var dec = fmt(n / D), plats = ['', 'tiondels', 'hundradels', 'tusendels'][pl];
+    return { typ: 'svar', text: 'Skriv ' + dec + ' i bråkform.', falt: [{ typ: 'brak', svar: n + '/' + D }], ledtrad: 'En decimal betyder tiondelar, två decimaler hundradelar och tre decimaler tusendelar.', losning: [dec + ' har ' + (pl === 1 ? 'en decimal' : TALORD[pl] + ' decimaler') + '. Den sista siffran står på ' + plats + 'platsen.', 'Det är ' + brakOrd(n, D) + '.', dec + ' = ' + br(n, D)] };
+  };
+
+  G.kronor = function (r) {
+    var kr = valj(r, [0, heltal(r, 1, 9), heltal(r, 10, 49)]);
+    var ore = valj(r, [heltal(r, 1, 9), heltal(r, 1, 9), valj(r, [10, 20, 30, 40, 50, 60, 70, 80, 90]), valj(r, [25, 75, 35, 45, 55, 65, 85, 95])]);
+    var v = (kr * 100 + ore) / 100;
+    var losning = ['1 krona = 100 öre. Öre är alltså hundradelar av en krona.', ore + ' öre = ' + fmtN(ore / 100, 2) + ' kr'];
+    if (kr) losning.push(kr + ' kr + ' + fmtN(ore / 100, 2) + ' kr = ' + fmtN(v, 2) + ' kr');
+    if (ore % 10 === 0) losning.push('Man kan också skriva ' + fmt(v) + ' kr.');
+    return { typ: 'svar', text: 'Skriv i kronor: ' + (kr ? kr + ' kr ' : '') + ore + ' öre', falt: [{ typ: 'tal', svar: fmt(v), enhet: 'kr' }], ledtrad: 'Hur många öre går det på en krona? Ska öret stå på tiondelsplatsen eller hundradelsplatsen?', losning: losning };
+  };
+
+  var AVR = [
+    { namn: 'tiotal', u: 10000, gen: function (r) { return valj(r, [heltal(r, 101, 999) * 1000, heltal(r, 1001, 9999) * 100]); } },
+    { namn: 'hundratal', u: 100000, gen: function (r) { return heltal(r, 101, 9999) * 1000; } },
+    { namn: 'heltal', u: 1000, gen: function (r) { return valj(r, [heltal(r, 11, 999) * 100, heltal(r, 101, 9999) * 10, heltal(r, 1001, 99999)]); } },
+    { namn: 'tiondelar', u: 100, gen: function (r) { return valj(r, [heltal(r, 101, 9999) * 10, heltal(r, 1001, 99999)]); } },
+    { namn: 'hundradelar', u: 10, gen: function (r) { return heltal(r, 1001, 99999); } }
+  ];
+  var PLATS = { 10000: 'tiotalssiffran', 100000: 'hundratalssiffran', 1000: 'entalssiffran', 100: 'tiondelssiffran', 10: 'hundradelssiffran' };
+  function avrundaMilli(m, u) { return Math.floor((m + u / 2) / u) * u; }
+  G.avrunda = function (r) {
+    var a = valj(r, AVR), m;
+    do { m = a.gen(r); } while (m % a.u === 0);
+    var res = avrundaMilli(m, a.u), siffra = Math.floor((m % a.u) / (a.u / 10));
+    var x = fmt(m / 1000), y = fmt(res / 1000);
+    return { typ: 'svar', text: 'Avrunda ' + x + ' till ' + a.namn + '.', falt: [{ typ: 'tal', svar: y }], ledtrad: 'Titta på siffran direkt till höger om den plats du avrundar till. 0–4: avrunda nedåt. 5–9: avrunda uppåt.', losning: ['Titta på siffran till höger om ' + PLATS[a.u] + '. Den är ' + siffra + '.', siffra >= 5 ? siffra + ' är 5 eller mer, så vi avrundar uppåt.' : siffra + ' är mindre än 5, så vi avrundar nedåt.', x + ' ≈ ' + y] };
+  };
+
+  G.platsvarde = function (r) {
+    var s = blanda(r, [1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, 3);
+    var fria = [0, 0, 0].concat([1, 2, 3, 4, 5, 6, 7, 8, 9].filter(function (x) { return s.indexOf(x) < 0; }));
+    var tal = valj(r, fria) + ',' + s.join('');
+    var namn = ['tiondels', 'hundradels', 'tusendels'], p = heltal(r, 0, 2);
+    var tabell = tal + ': ' + s[0] + ' tiondelar, ' + s[1] + ' hundradelar och ' + s[2] + ' tusendelar.';
+    if (r() < 0.5) {
+      return { typ: 'svar', text: 'Du har talet ' + tal + '. Vilken siffra är ' + namn[p] + 'siffran?', falt: [{ typ: 'tal', svar: String(s[p]) }], ledtrad: 'Första platsen efter kommat är tiondelar, sedan kommer hundradelar och sist tusendelar.', losning: [tabell, cap(namn[p]) + 'siffran är ' + s[p] + '.'] };
+    }
+    var alt = [String(s[p]), '0,' + s[p], '0,0' + s[p], '0,00' + s[p]];
+    return { typ: 'val', text: 'Vilket värde har siffran ' + s[p] + ' i talet ' + tal + '?', alt: alt, ratt: p + 1, fast: true, ledtrad: 'Vilken plats står siffran ' + s[p] + ' på efter kommat?', losning: [tabell, 'Siffran ' + s[p] + ' står på ' + namn[p] + 'platsen, så den är värd ' + alt[p + 1] + '.'] };
+  };
+
+  G.x_brak = function (r) {
+    var d = heltal(r, 3, 12), n = heltal(r, 1, d - 1), form = heltal(r, 0, 2);
+    var ekv = ['1 − x = ' + br(n, d), 'x + ' + br(n, d) + ' = 1', br(n, d) + ' = 1 − x'][form];
+    return { typ: 'svar', text: 'Vilket tal är x?', uttryck: ekv, falt: [{ etikett: 'x =', typ: 'brak', svar: (d - n) + '/' + d }], ledtrad: 'Skriv 1 som ett bråk med samma nämnare: 1 = ' + br(d, d) + '.', losning: ['1 = ' + br(d, d), form === 1 ? 'x är det som fattas för att ' + br(n, d) + ' ska bli ' + br(d, d) + '.' : 'x är det man tar bort från ' + br(d, d) + ' för att få ' + br(n, d) + '.', br(d, d) + ' − ' + br(n, d) + ' = ' + br(d - n, d), 'x = ' + br(d - n, d)] };
+  };
+
+  G.tallinje = function (r) {
+    var typ = valj(r, [{ fran: 0, till: 10, delar: 5 }, { fran: 0, till: 10, delar: 2 }, { fran: 0, till: 2, delar: 10 }, { fran: 0, till: 1, delar: 10 }, { fran: 0, till: 5, delar: 4 }]);
+    var tot = (typ.till - typ.fran) * typ.delar, k;
+    do { k = heltal(r, 1, tot - 1); } while (k % typ.delar === 0);
+    var bas = typ.fran + Math.floor(k / typ.delar), kk = k % typ.delar, v = typ.fran + k / typ.delar, steg = 1 / typ.delar;
+    return { typ: 'svar', text: 'Vilket tal pekar pilen på?', figur: { form: 'tallinje', fran: typ.fran, till: typ.till, delar: typ.delar, pilar: [{ namn: '', varde: v }] }, falt: [{ typ: 'tal', svar: fmt(v) }], ledtrad: 'Räkna hur många små steg det är mellan två heltal. Hur mycket är ett litet steg värt?', losning: ['Mellan två heltal finns ' + typ.delar + ' små steg.', 'Ett litet steg är ' + br(1, typ.delar) + ' = ' + fmt(steg) + '.', 'Pilen står ' + kk + ' små steg efter ' + bas + ': ' + bas + ' + ' + kk + ' · ' + fmt(steg) + ' = ' + fmt(v)] };
+  };
+
+  G.andel_kvar = function (r, c) {
+    var nm = namnen(r, c, 3), dec, falt, d, n;
+    if (r() < 0.5) {
+      d = valj(r, [4, 5, 8, 10]); n = heltal(r, 1, d - 1);
+      var mat = valj(r, [['en pizza', 'pizzan'], ['en kladdkaka', 'kladdkakan'], ['en tårta', 'tårtan'], ['en långpannekaka', 'långpannekakan']]);
+      dec = 100 % d === 0;
+      falt = [{ etikett: 'Bråkform', typ: 'brak', svar: (d - n) + '/' + d }];
+      if (dec) falt.push({ etikett: 'Decimalform', typ: 'tal', svar: fmt((d - n) / d) });
+      var los = ['Hela ' + mat[1] + ' = ' + br(d, d), br(d, d) + ' − ' + br(n, d) + ' = ' + br(d - n, d)];
+      if (dec) los.push(br(d - n, d) + ' = ' + fmt((d - n) / d));
+      return { typ: 'svar', papper: true, text: nm[0] + ' äter upp ' + brakOrd(n, d) + ' av ' + mat[0] + '. Hur stor andel av ' + mat[1] + ' finns kvar? Svara i bråkform' + (dec ? ' och decimalform.' : '.'), falt: falt, ledtrad: 'Hela ' + mat[1] + ' är ' + br(d, d) + '.', losning: los };
+    }
+    var T = valj(r, [10, 12, 20, 24, 30]), e1, e2, e3;
+    do { e1 = heltal(r, 1, Math.floor(T / 3)); e2 = heltal(r, 1, Math.floor(T / 3)); e3 = heltal(r, 1, Math.floor(T / 3)); } while (e1 + e2 + e3 >= T);
+    var sum = e1 + e2 + e3, kvar = T - sum, g = sgd(kvar, T);
+    var frukt = valj(r, [['plommon', 'plommonen'], ['jordgubbar', 'jordgubbarna'], ['clementiner', 'clementinerna']]);
+    dec = (kvar * 100) % T === 0;
+    falt = [{ etikett: 'Bråkform', typ: 'brak', svar: kvar + '/' + T }];
+    if (dec) falt.push({ etikett: 'Decimalform', typ: 'tal', svar: fmt(kvar / T) });
+    var l2 = ['De äter ' + e1 + ' + ' + e2 + ' + ' + e3 + ' = ' + sum + ' st.', 'Kvar: ' + T + ' − ' + sum + ' = ' + kvar + ' st.', 'Andelen som finns kvar är ' + br(kvar, T) + '.'];
+    if (g > 1) l2.push(br(kvar, T) + ' = ' + br(kvar / g, T / g));
+    if (dec) l2.push('I decimalform: ' + fmt(kvar / T));
+    return { typ: 'svar', papper: true, text: 'På ett fat ligger ' + T + ' ' + frukt[0] + '. ' + nm[0] + ' äter ' + e1 + ', ' + nm[1] + ' äter ' + e2 + ' och ' + nm[2] + ' äter ' + e3 + '. Hur stor andel av ' + frukt[1] + ' finns kvar? Svara i bråkform' + (dec ? ' och decimalform.' : '.'), falt: falt, ledtrad: 'Hur många äter de tillsammans? Hur många är kvar av alla ' + T + '?', losning: l2 };
+  };
+
+  G.ko = function (r, c) {
+    var N = namnen(r, c, 1)[0], a = heltal(r, 3, 14), b = heltal(r, 3, 14);
+    var plats = valj(r, ['kön till trampolinen', 'kön till bommen', 'kön till matsalen', 'kön till dansuppvisningen', 'kön till fotbollsmatchen']);
+    return { typ: 'svar', papper: true, text: N + ' står i ' + plats + '. ' + N + ' är nummer ' + a + ' framifrån och nummer ' + b + ' bakifrån. Hur många står i kön?', falt: [{ typ: 'tal', svar: String(a + b - 1), enhet: 'st' }], ledtrad: 'Rita kön på papperet. Se till att du inte räknar ' + N + ' två gånger.', losning: ['Framifrån räknar du ' + a + ' personer, och ' + N + ' är den sista av dem.', 'Bakifrån räknar du ' + b + ' personer, och ' + N + ' är den första av dem.', N + ' har räknats två gånger: ' + a + ' + ' + b + ' − 1 = ' + (a + b - 1) + '.'] };
+  };
+
+  G.hiss = function (r, c) {
+    var N = namnen(r, c, 1)[0], s = heltal(r, 3, 9), n = heltal(r, 1, s - 1), u = heltal(r, 2, 9), e = s - n + u, nast = r() < 0.6;
+    var svar = nast ? e + 1 : e;
+    var vn = function (x) { return x === 1 ? 'en våning' : TALORD[x] + ' våningar'; };
+    var los = [s + ' − ' + n + ' = ' + (s - n) + '. ' + N + ' är på våning ' + (s - n) + '.', (s - n) + ' + ' + u + ' = ' + e + '. ' + N + ' är på våning ' + e + '.'];
+    los.push(nast ? 'Våning ' + e + ' är näst högst. Då är den högsta våningen ' + (e + 1) + ', och huset har ' + (e + 1) + ' våningar.' : 'Våning ' + e + ' är den högsta, så huset har ' + e + ' våningar.');
+    return { typ: 'svar', papper: true, text: N + ' kliver in i hissen på våning ' + s + '. Först åker ' + N + ' ner ' + vn(n) + ' och sedan upp ' + vn(u) + '. Då är ' + N + ' på ' + (nast ? 'näst högsta' : 'högsta') + ' våningen. Hur många våningar har huset?', falt: [{ typ: 'tal', svar: String(svar) }], ledtrad: 'Rita huset som en stege på papperet och följ hissen.', losning: los };
+  };
+
+  G.rest = function (r) {
+    var d = heltal(r, 3, 9), q = heltal(r, 3, 9), x = heltal(r, 1, d - 1), a = d * q + x, v = heltal(r, 0, 2);
+    if (v === 0) return { typ: 'svar', papper: true, text: 'Vilket tal är x?', uttryck: br(a, d) + ' = ' + q + ' rest x', falt: [{ etikett: 'x =', typ: 'tal', svar: String(x) }], ledtrad: 'Hur mycket är ' + q + ' · ' + d + '? Hur mycket fattas sedan till ' + a + '?', losning: [q + ' · ' + d + ' = ' + (q * d), a + ' − ' + (q * d) + ' = ' + x, 'x = ' + x] };
+    if (v === 1) return { typ: 'svar', papper: true, text: 'Vilket tal är x?', uttryck: br(a, d) + ' = x rest ' + x, falt: [{ etikett: 'x =', typ: 'tal', svar: String(q) }], ledtrad: 'Ta bort resten först: ' + a + ' − ' + x + '. Hur många gånger går ' + d + ' i det?', losning: [a + ' − ' + x + ' = ' + (a - x), br(a - x, d) + ' = ' + q + ', för ' + q + ' · ' + d + ' = ' + (a - x), 'x = ' + q] };
+    return { typ: 'svar', papper: true, text: 'Vilket tal är x?', uttryck: br(a, 'x') + ' = ' + q + ' rest ' + x, falt: [{ etikett: 'x =', typ: 'tal', svar: String(d) }], ledtrad: 'Ta bort resten först: ' + a + ' − ' + x + '. Vilket tal gånger ' + q + ' blir det?', losning: [a + ' − ' + x + ' = ' + (a - x), q + ' · x = ' + (a - x), q + ' · ' + d + ' = ' + (a - x) + ', så x = ' + d] };
+  };
+
+  G.uppstallning = function (r) {
+    var v = valj(r, ['mult', 'div', 'sub', 'add']), a, b;
+    if (v === 'mult') {
+      a = heltal(r, 112, 989); b = heltal(r, 3, 9);
+      var delar = [Math.floor(a / 100) * 100, Math.floor((a % 100) / 10) * 10, a % 10].filter(function (x) { return x > 0; });
+      return { typ: 'svar', papper: true, text: 'Räkna ut.', uttryck: b + ' · ' + a, falt: [{ typ: 'tal', svar: String(a * b) }], ledtrad: 'Dela upp ' + a + ' i hundratal, tiotal och ental. Multiplicera var för sig.', losning: [a + ' = ' + delar.join(' + '), delar.map(function (x) { return b + ' · ' + x; }).join(' + '), '= ' + delar.map(function (x) { return b * x; }).join(' + '), '= ' + fmt(a * b)] };
+    }
+    if (v === 'div') {
+      b = heltal(r, 2, 9);
+      var q = heltal(r, Math.max(11, Math.ceil(100 / b)), Math.floor(999 / b));
+      a = b * q;
+      var h = Math.floor(q / 100) * 100, t = Math.floor((q % 100) / 10) * 10, o = q % 10;
+      var kv = [h, t, o].filter(function (x) { return x > 0; });
+      return { typ: 'svar', papper: true, text: 'Räkna ut.', uttryck: br(a, b), falt: [{ typ: 'tal', svar: String(q) }], ledtrad: 'Dela upp ' + a + ' i delar som är lätta att dela med ' + b + '.', losning: [a + ' = ' + kv.map(function (x) { return b * x; }).join(' + '), kv.map(function (x) { return br(b * x, b) + ' = ' + x; }).join(',  '), kv.join(' + ') + ' = ' + q] };
+    }
+    if (v === 'sub') {
+      do { a = heltal(r, 300, 999); b = heltal(r, 101, a - 50); } while (!((a % 10) < (b % 10) || (Math.floor(a / 10) % 10) < (Math.floor(b / 10) % 10)));
+      var A = [a % 10, Math.floor(a / 10) % 10, Math.floor(a / 100)], B = [b % 10, Math.floor(b / 10) % 10, Math.floor(b / 100)];
+      var namnK = ['Ental', 'Tiotal', 'Hundratal'], st = [], lan = 0;
+      for (var i = 0; i < 3; i++) {
+        var ai = A[i] - lan, pre = lan ? 'Efter växlingen är det ' + ai + ' kvar. ' : '';
+        lan = 0;
+        if (i === 2 && ai === B[i] && ai === 0) { continue; }
+        if (ai < B[i]) { st.push(namnK[i] + ': ' + pre + ai + ' − ' + B[i] + ' går inte. Växla: ' + (ai + 10) + ' − ' + B[i] + ' = ' + (ai + 10 - B[i]) + '.'); lan = 1; }
+        else st.push(namnK[i] + ': ' + pre + ai + ' − ' + B[i] + ' = ' + (ai - B[i]) + '.');
+      }
+      st.push('Svar: ' + a + ' − ' + b + ' = ' + (a - b));
+      return { typ: 'svar', papper: true, text: 'Räkna ut.', uttryck: a + ' − ' + b, falt: [{ typ: 'tal', svar: String(a - b) }], ledtrad: 'Ställ upp talen under varandra. Börja med entalen. Går det inte, får du växla.', losning: st };
+    }
+    do { a = heltal(r, 120, 899); b = heltal(r, 101, 999 - a); } while (!((a % 10) + (b % 10) >= 10 || (Math.floor(a / 10) % 10) + (Math.floor(b / 10) % 10) >= 10));
+    var A2 = [a % 10, Math.floor(a / 10) % 10, Math.floor(a / 100)], B2 = [b % 10, Math.floor(b / 10) % 10, Math.floor(b / 100)];
+    var nk = ['Ental', 'Tiotal', 'Hundratal'], s2 = [], minne = 0;
+    for (var j = 0; j < 3; j++) {
+      var sum = A2[j] + B2[j] + minne, txt = A2[j] + ' + ' + B2[j] + (minne ? ' + 1 (minnessiffran)' : '') + ' = ' + sum;
+      if (sum >= 10 && j < 2) { s2.push(nk[j] + ': ' + txt + '. Skriv ' + (sum - 10) + ' och lägg 1 i minnet.'); minne = 1; }
+      else { s2.push(nk[j] + ': ' + txt + '.'); minne = 0; }
+    }
+    s2.push('Svar: ' + a + ' + ' + b + ' = ' + fmt(a + b));
+    return { typ: 'svar', papper: true, text: 'Räkna ut.', uttryck: a + ' + ' + b, falt: [{ typ: 'tal', svar: String(a + b) }], ledtrad: 'Ställ upp talen under varandra. Börja med entalen och glöm inte minnessiffran.', losning: s2 };
+  };
+
+  G.talfoljd = function (r) {
+    var typ = heltal(r, 0, 3), f = [], beskr, i, s, d;
+    if (typ === 0) { s = heltal(r, 1, 30); d = heltal(r, 3, 25); for (i = 0; i < 6; i++) f.push(s + i * d); beskr = 'Talen ökar med ' + d + ' varje gång.'; }
+    else if (typ === 1) { d = heltal(r, 3, 15); s = heltal(r, 5 * d + 1, 5 * d + 60); for (i = 0; i < 6; i++) f.push(s - i * d); beskr = 'Talen minskar med ' + d + ' varje gång.'; }
+    else if (typ === 2) { s = heltal(r, 1, 5); var k = valj(r, [2, 2, 3]); for (i = 0; i < 6; i++) f.push(s * Math.pow(k, i)); beskr = 'Talen blir ' + (k === 2 ? 'dubbelt så stora' : 'tre gånger så stora') + ' varje gång.'; }
+    else { var upp = r() < 0.5, x = heltal(r, 60, 120); f.push(x); for (i = 1; i < 6; i++) { x = upp ? x + i : x - i; f.push(x); } beskr = upp ? 'Talen ökar med 1, sedan 2, sedan 3 och så vidare.' : 'Talen minskar med 1, sedan 2, sedan 3 och så vidare.'; }
+    var luckor = valj(r, [[3, 5], [2, 4], [3, 4], [2, 5]]);
+    var vis = f.map(function (v, j) { return luckor.indexOf(j) >= 0 ? '?' : fmt(v); }).join(',   ');
+    return { typ: 'svar', text: 'Vilka tal ska stå i stället för frågetecknen?', uttryck: vis, falt: [{ etikett: 'Första ?', typ: 'tal', svar: String(f[luckor[0]]) }, { etikett: 'Andra ?', typ: 'tal', svar: String(f[luckor[1]]) }], ledtrad: 'Titta på hur mycket talen ändras från ett tal till nästa.', losning: [beskr, 'Det ger ' + fmt(f[luckor[0]]) + ' och ' + fmt(f[luckor[1]]) + '.', 'Hela följden: ' + f.map(fmt).join(', ')] };
+  };
+
+  G.dubbelt = function (r, c) {
+    var nm = namnen(r, c, 2), A = nm[0], B = nm[1], ggr = valj(r, [2, 2, 3]), k = heltal(r, 4, 30), T = k * (ggr + 1);
+    var gt = ggr === 2 ? 'dubbelt' : 'tre gånger';
+    var mall = valj(r, [
+      { t: A + ' och ' + B + ' gör tillsammans ' + T + ' hjulningar. ' + B + ' gör ' + gt + ' så många som ' + A + '. Hur många hjulningar gör var och en?', e: 'st' },
+      { t: A + ' och ' + B + ' bär tillsammans ' + T + ' kg ved. ' + B + ' bär ' + gt + ' så mycket som ' + A + '. Hur många kilogram bär var och en?', e: 'kg' },
+      { t: A + ' och ' + B + ' gör tillsammans ' + T + ' mål på fotbollsträningen. ' + B + ' gör ' + gt + ' så många mål som ' + A + '. Hur många mål gör var och en?', e: 'st' }
+    ]);
+    return { typ: 'svar', papper: true, text: mall.t, falt: [{ etikett: A, typ: 'tal', svar: String(k), enhet: mall.e }, { etikett: B, typ: 'tal', svar: String(ggr * k), enhet: mall.e }], ledtrad: 'Rita ' + gen(A) + ' del som en ruta och ' + gen(B) + ' del som ' + TALORD[ggr] + ' lika stora rutor.', losning: [A + ' får 1 del och ' + B + ' får ' + ggr + ' delar. Tillsammans blir det ' + (ggr + 1) + ' delar.', '1 del = ' + br(T, ggr + 1) + ' = ' + k, A + ': ' + k + '.  ' + B + ': ' + ggr + ' · ' + k + ' = ' + (ggr * k) + '.', 'Kolla: ' + k + ' + ' + (ggr * k) + ' = ' + T] };
+  };
+
+  G.handla = function (r, c) {
+    var N = namnen(r, c, 1)[0], n, w, p, m, cost, P;
+    do { n = heltal(r, 2, 5); w = heltal(r, 1, 3); p = heltal(r, 9, 25); m = heltal(r, 1, n - 1); cost = m * w * p; P = cost < 100 ? 100 : cost < 200 ? 200 : 0; } while (!P || cost < 20);
+    var W = n * w, vara = valj(r, [['äpplen', 'äpplena'], ['päron', 'päronen'], ['potatis', 'potatisen'], ['apelsiner', 'apelsinerna']]);
+    return { typ: 'svar', papper: true, text: cap(TALORD[n]) + ' lika tunga påsar med ' + vara[0] + ' väger tillsammans ' + W + ' kg. ' + cap(vara[1]) + ' kostar ' + p + ' kr per kilogram. ' + N + ' köper ' + (m === 1 ? 'en påse' : TALORD[m] + ' påsar') + '. Hur mycket får ' + N + ' tillbaka om ' + N + ' betalar med en ' + (P === 100 ? 'hundralapp' : 'tvåhundralapp') + '?', falt: [{ typ: 'tal', svar: String(P - cost), enhet: 'kr' }], ledtrad: 'Ta ett steg i taget. Hur mycket väger en påse?', losning: ['En påse väger ' + br(W, n) + ' = ' + w + ' kg.', (m === 1 ? 'En påse' : cap(TALORD[m]) + ' påsar') + ' väger ' + m + ' · ' + w + ' = ' + (m * w) + ' kg.', 'Det kostar ' + (m * w) + ' · ' + p + ' = ' + cost + ' kr.', 'Tillbaka: ' + P + ' − ' + cost + ' = ' + (P - cost) + ' kr.'] };
+  };
+
+  G.siffror = function (r) {
+    var s = blanda(r, [1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, 5);
+    var asc = s.slice().sort(function (a, b) { return a - b; }), desc = asc.slice().reverse();
+    var v = valj(r, ['minsta', 'näst minsta', 'största', 'näst största']);
+    var byt = function (a) { var b = a.slice(); var t = b[3]; b[3] = b[4]; b[4] = t; return b; };
+    var svar = (v === 'minsta' ? asc : v === 'näst minsta' ? byt(asc) : v === 'största' ? desc : byt(desc)).join('');
+    var min = v.indexOf('minsta') >= 0;
+    var los = [min ? 'Sortera siffrorna från minst till störst: ' + fmt(+asc.join('')) + ' är det minsta talet.' : 'Sortera siffrorna från störst till minst: ' + fmt(+desc.join('')) + ' är det största talet.'];
+    if (v.indexOf('näst') === 0) los.push('Det ' + v + ' talet får man genom att byta plats på de två sista siffrorna.');
+    los.push('Svar: ' + fmt(+svar));
+    return { typ: 'svar', papper: true, text: 'Använd alla siffrorna ' + s.join(', ') + ' en gång var. Skriv det ' + v + ' tal som går.', falt: [{ typ: 'tal', svar: svar }], ledtrad: min ? 'Det minsta talet får man när de minsta siffrorna står först.' : 'Det största talet får man när de största siffrorna står först.', losning: los };
+  };
+
+  G.ordna_brak = function (r) {
+    var items, ledtrad, losning;
+    if (r() < 0.6) {
+      var d = blanda(r, [2, 3, 4, 5, 6, 8, 10, 12, 100]).slice(0, 5).sort(function (a, b) { return a - b; });
+      items = d.map(function (x) { return br(1, x); });
+      ledtrad = 'Ju fler delar det hela delas i, desto mindre blir varje del.';
+      losning = ['Alla bråk har 1 i täljaren. Då är det nämnaren som avgör.', 'Ju större nämnare, desto mindre del.', items.join(',  ')];
+    } else {
+      var D = valj(r, [6, 8, 10, 12]);
+      var tal = blanda(r, range(D - 1).map(function (x) { return x + 1; })).slice(0, 5).sort(function (a, b) { return b - a; });
+      items = tal.map(function (x) { return br(x, D); });
+      ledtrad = 'Alla har samma nämnare. Jämför täljarna, talen över strecket.';
+      losning = ['Alla bråk har ' + D + ' i nämnaren. Då är det täljaren som avgör.', 'Ju större täljare, desto större tal.', items.join(',  ')];
+    }
+    return { typ: 'ordna', text: 'Skriv talen i storleksordning. Börja med det största.', items: items, etiketter: ['Störst', 'Minst'], ledtrad: ledtrad, losning: losning };
+  };
+
+  var TAVLA = [1, 5, 20, 25, 50];
+  G.pil = function (r, c) {
+    var N = namnen(r, c, 1)[0], n = heltal(r, 3, 6), traff = [], i;
+    for (i = 0; i < n; i++) traff.push(valj(r, TAVLA));
+    traff.sort(function (a, b) { return b - a; });
+    var mal = traff.reduce(function (a, b) { return a + b; }, 0);
+    return { typ: 'pil', text: N + ' kastar ' + n + ' pilar och alla träffar tavlan. ' + N + ' får ' + mal + ' poäng. Hur kan pilarna ha träffat?', pilar: n, mal: mal, varden: TAVLA, ledtrad: 'Titta på sista siffran i ' + mal + '. Vilka ringar behövs för att summan ska sluta så?', losning: ['Ett sätt: ' + traff.join(' + ') + ' = ' + mal + '.', 'Det kan finnas fler sätt som också är rätt.'] };
+  };
+
+  G.storst = function (r) {
+    var kand = [], sett = {};
+    var fr = [[1, 2], [1, 4], [3, 4], [1, 5], [2, 5], [3, 5], [4, 5], [3, 10], [7, 10], [9, 10], [5, 4], [3, 2]];
+    while (kand.length < 5) {
+      var x;
+      if (r() < 0.4) { var p = valj(r, fr); x = { vis: br(p[0], p[1]), h: p[0] * 100 / p[1] }; }
+      else { var h = valj(r, [heltal(r, 5, 99), heltal(r, 101, 199), heltal(r, 1, 19) * 10]); x = { vis: fmt(h / 100), h: h }; }
+      if (!sett[x.h]) { sett[x.h] = 1; kand.push(x); }
+    }
+    var max = r() < 0.5, mal = kand.reduce(function (a, b) { return (max ? b.h > a.h : b.h < a.h) ? b : a; });
+    return { typ: 'val', text: 'Vilket av talen är ' + (max ? 'störst' : 'minst') + '?', alt: kand.map(function (k) { return k.vis; }), ratt: kand.indexOf(mal), fast: true, ledtrad: 'Skriv alla talen som decimaltal med två decimaler. Då blir de lätta att jämföra.', losning: ['Med två decimaler: ' + kand.map(function (k) { return fmtN(k.h / 100, 2); }).join(',  '), (max ? 'Störst' : 'Minst') + ' är ' + mal.vis + '.'] };
+  };
+
+  function genPass(lista, antal, c, seed) {
+    var r = slump(seed === undefined ? (Date.now() ^ Math.floor(Math.random() * 1e9)) : seed);
+    var ordning = [];
+    while (ordning.length < antal) ordning = ordning.concat(blanda(r, lista));
+    var sett = {}, ut = [];
+    ordning.slice(0, antal).forEach(function (g, i) {
+      var q, forsok = 0;
+      do { q = G[g](r, c || {}); forsok++; } while (sett[q.text + (q.uttryck || '')] && forsok < 6);
+      sett[q.text + (q.uttryck || '')] = 1;
+      q.id = 'gen-' + g + '-' + i; q.gen = g;
+      ut.push(q);
+    });
+    return ut;
+  }
+
+  return {
+    slump: slump, heltal: heltal, valj: valj, blanda: blanda, sgd: sgd, range: range,
+    fmt: fmt, fmtN: fmtN, br: br, brakOrd: brakOrd, talbart: talbart, TALORD: TALORD,
+    parseTal: parseTal, parseBrak: parseBrak, normText: normText, lev: lev,
+    kollaFalt: kollaFalt, kolla: kolla, facit: facit, avrundaMilli: avrundaMilli,
+    G: G, genPass: genPass, TAVLA: TAVLA
+  };
+})();
+if (typeof module !== 'undefined') module.exports = Lx;
+
+</script>
+<script>
+/* ===== Läxgympan: läxorna =====
+   Varje läxa har pass. Ett pass har antingen fasta frågor (fragor),
+   nya liknande frågor varje gång (gen) eller ett blandat förhör (pool).
+   Frågetyper: val (flerval), svar (skriv in svaret), kort (förklara med egna ord),
+   ordna (storleksordning) och pil (pilkastning). {3/4} visas som ett bråk. */
+var LAXOR = [
+  {
+    id: 'kap1', amne: 'matte', titel: 'Övningsprov kap 1', under: 'Bråk och decimaltal',
+    pass: [
+      { id: 'del1', titel: 'Del 1', under: 'Störst, andelar, decimaler och kronor', fragor: [
+        { typ: 'val', text: 'Vilket tal är störst?', alt: ['0,3', '0,13'], ratt: 0, fast: true,
+          ledtrad: 'Lägg till en nolla så att båda talen får två decimaler: 0,30 och 0,13.',
+          losning: ['Skriv talen med två decimaler: 0,30 och 0,13.', '30 hundradelar är mer än 13 hundradelar.', '0,3 är störst.'] },
+        { typ: 'val', text: 'Vilket tal är störst?', alt: ['0,15', '{1/5}'], ratt: 1, fast: true,
+          ledtrad: 'Gör om {1/5} till decimalform. Hur många tiondelar är en femtedel?',
+          losning: ['{1/5} = {2/10} = 0,2', '0,2 är samma som 0,20, och 0,20 är mer än 0,15.', '{1/5} är störst.'] },
+        { typ: 'val', text: 'Vilket tal är störst?', alt: ['{7/10}', '{17/100}'], ratt: 0, fast: true,
+          ledtrad: 'Skriv {7/10} som hundradelar.',
+          losning: ['{7/10} = {70/100}', '70 hundradelar är mer än 17 hundradelar.', '{7/10} är störst.'] },
+        { typ: 'svar', text: 'Hur stor andel av figuren är färgad? Svara i bråkform.',
+          figur: { form: 'cirkel', delar: 4, fargade: [0] },
+          falt: [{ typ: 'brak', svar: '1/4' }],
+          ledtrad: 'Hur många lika stora delar finns det? Hur många av dem är färgade?',
+          losning: ['Cirkeln är delad i 4 lika stora delar.', '1 del är färgad.', 'Andelen är {1/4}. Som decimaltal är det 0,25.'] },
+        { typ: 'svar', text: 'Hur stor andel av figuren är färgad? Svara i bråkform.',
+          figur: { form: 'rutor', rader: 3, kol: 2, fargade: [0, 2, 3, 4] },
+          falt: [{ typ: 'brak', svar: '4/6' }],
+          ledtrad: 'Räkna alla rutor. Räkna sedan de färgade.',
+          losning: ['Det finns 6 lika stora rutor.', '4 av dem är färgade.', 'Andelen är {4/6}. Det är samma sak som {2/3}.'] },
+        { typ: 'svar', text: 'Hur stor andel av figuren är färgad? Svara i bråkform.',
+          figur: { form: 'triangel', rader: 3, fargade: [0, 2, 4, 6, 8] },
+          falt: [{ typ: 'brak', svar: '5/9' }],
+          ledtrad: 'Räkna alla små trianglar, även de som står upp och ner.',
+          losning: ['Den stora triangeln är delad i 9 lika stora små trianglar.', '5 av dem är färgade.', 'Andelen är {5/9}.'] },
+        { typ: 'svar', text: 'Skriv talen i decimalform.',
+          falt: [{ etikett: 'a) fem tiondelar', typ: 'tal', svar: '0,5' }, { etikett: 'b) {11/100}', typ: 'tal', svar: '0,11' }, { etikett: 'c) tre hundradelar', typ: 'tal', svar: '0,03' }],
+          ledtrad: 'Tiondelar står på första platsen efter kommat. Hundradelar står på andra platsen.',
+          losning: ['Fem tiondelar = 0,5', '{11/100} = elva hundradelar = 0,11', 'Tre hundradelar = 0,03. Trean står på hundradelsplatsen.'] },
+        { typ: 'svar', text: 'Skriv i kronor.',
+          falt: [{ etikett: 'a) 17 kr 30 öre', typ: 'tal', svar: '17,3', enhet: 'kr' }, { etikett: 'b) 50 öre', typ: 'tal', svar: '0,5', enhet: 'kr' }, { etikett: 'c) 3 kr 5 öre', typ: 'tal', svar: '3,05', enhet: 'kr' }],
+          ledtrad: '1 krona = 100 öre. Då är 1 öre en hundradel av en krona, alltså 0,01 kr.',
+          losning: ['17 kr 30 öre = 17,30 kr. Det kan också skrivas 17,3 kr.', '50 öre = 0,50 kr = 0,5 kr', '5 öre = 0,05 kr. Alltså är 3 kr 5 öre = 3,05 kr.'] },
+        { typ: 'svar', text: 'Avrunda.', papper: true,
+          falt: [{ etikett: 'a) 679 till hundratal', typ: 'tal', svar: '700' }, { etikett: 'b) 129,5 till tiotal', typ: 'tal', svar: '130' }, { etikett: 'c) 0,678 till tiondelar', typ: 'tal', svar: '0,7' }],
+          ledtrad: 'Titta på siffran till höger om den plats du avrundar till. 0–4: avrunda nedåt. 5–9: avrunda uppåt.',
+          losning: ['679: tiotalssiffran är 7, så 679 ≈ 700.', '129,5: entalssiffran är 9, så 129,5 ≈ 130.', '0,678: hundradelssiffran är 7, så 0,678 ≈ 0,7.'] },
+        { typ: 'svar', text: 'Vilket tal är x?', papper: true,
+          falt: [{ etikett: 'a) 1 − x = {3/8}', typ: 'brak', svar: '5/8' }, { etikett: 'b) x + {5/7} = 1', typ: 'brak', svar: '2/7' }, { etikett: 'c) {4/5} = 1 − x', typ: 'brak', svar: '1/5' }],
+          ledtrad: 'Skriv 1 som ett bråk med samma nämnare, till exempel 1 = {8/8}.',
+          losning: ['a) {8/8} − {3/8} = {5/8}, så x = {5/8}', 'b) {7/7} − {5/7} = {2/7}, så x = {2/7}', 'c) {5/5} − {4/5} = {1/5}, så x = {1/5}'] },
+        { typ: 'svar', text: 'Vilka tal pekar pilarna på?',
+          figur: { form: 'tallinje', fran: 0, till: 10, delar: 5, pilar: [{ namn: 'a', varde: 1.6 }, { namn: 'b', varde: 3.8 }, { namn: 'c', varde: 5.2 }, { namn: 'd', varde: 7.6 }] },
+          falt: [{ etikett: 'a', typ: 'tal', svar: '1,6' }, { etikett: 'b', typ: 'tal', svar: '3,8' }, { etikett: 'c', typ: 'tal', svar: '5,2' }, { etikett: 'd', typ: 'tal', svar: '7,6' }],
+          ledtrad: 'Räkna de små strecken mellan två heltal. Hur mycket är ett litet steg värt?',
+          losning: ['Mellan två heltal finns 5 små steg, så ett litet steg är 0,2.', 'a: 1 + 3 · 0,2 = 1,6.   b: 3 + 4 · 0,2 = 3,8.', 'c: 5 + 1 · 0,2 = 5,2.   d: 7 + 3 · 0,2 = 7,6.'] },
+        { typ: 'svar', text: 'Jonas äter upp tre femtedelar av en pizza. Hur stor andel av pizzan finns kvar? Svara i bråkform och decimalform.', papper: true,
+          falt: [{ etikett: 'Bråkform', typ: 'brak', svar: '2/5' }, { etikett: 'Decimalform', typ: 'tal', svar: '0,4' }],
+          ledtrad: 'Hela pizzan är {5/5}.',
+          losning: ['Hela pizzan = {5/5}', '{5/5} − {3/5} = {2/5}', '{2/5} = {4/10} = 0,4'] },
+        { typ: 'svar', text: 'Lukas står i kön till matsalen. Han är nummer 7 framifrån och nummer 11 bakifrån. Hur många står i kön?', papper: true,
+          falt: [{ typ: 'tal', svar: '17', enhet: 'st' }],
+          ledtrad: 'Rita kön på papperet. Se till att du inte räknar Lukas två gånger.',
+          losning: ['Framifrån räknar du 7 personer, och Lukas är den sista av dem.', 'Bakifrån räknar du 11 personer, och Lukas är den första av dem.', 'Lukas har räknats två gånger: 7 + 11 − 1 = 17.'] }
+      ] },
+      { id: 'del2', titel: 'Del 2', under: 'Siffrornas värde, avrundning och kluringar', fragor: [
+        { typ: 'svar', text: 'Du har talet 0,547. Vilken siffra är hundradelssiffran?',
+          falt: [{ typ: 'tal', svar: '4' }],
+          ledtrad: 'Första platsen efter kommat är tiondelar. Den andra är hundradelar.',
+          losning: ['0,547: 5 tiondelar, 4 hundradelar och 7 tusendelar.', 'Hundradelssiffran är 4.'] },
+        { typ: 'val', text: 'Vilket värde har siffran 7 i talet 0,547?', alt: ['7', '0,7', '0,07', '0,007'], ratt: 3, fast: true,
+          ledtrad: 'Vilken plats står sjuan på efter kommat?',
+          losning: ['Sjuan står på tredje platsen efter kommat. Det är tusendelsplatsen.', 'Den är värd 7 tusendelar, alltså 0,007.'] },
+        { typ: 'svar', text: 'Avrunda talet 19,325 till',
+          falt: [{ etikett: 'a) heltal', typ: 'tal', svar: '19' }, { etikett: 'b) tiondelar', typ: 'tal', svar: '19,3' }, { etikett: 'c) hundradelar', typ: 'tal', svar: '19,33' }],
+          ledtrad: 'Titta på siffran direkt till höger om den plats du avrundar till.',
+          losning: ['Heltal: tiondelssiffran är 3, så 19,325 ≈ 19.', 'Tiondelar: hundradelssiffran är 2, så 19,325 ≈ 19,3.', 'Hundradelar: tusendelssiffran är 5. Då avrundar vi uppåt: 19,325 ≈ 19,33.'] },
+        { typ: 'svar', text: 'Axel kliver in i en hiss på femte våningen i ett höghus. Först åker han ner tre våningar. Sedan åker han upp sju våningar. Då är han på näst högsta våningen. Hur många våningar har huset?', papper: true,
+          falt: [{ typ: 'tal', svar: '10' }],
+          ledtrad: 'Rita huset som en stege på papperet och följ Axel.',
+          losning: ['5 − 3 = 2. Axel är på våning 2.', '2 + 7 = 9. Axel är på våning 9.', 'Våning 9 är näst högst, så den högsta är våning 10. Huset har 10 våningar.'] },
+        { typ: 'val', text: 'Vilket av talen är störst?', alt: ['{1/2}', '1,2', '0,12', '1,12', '{11/12}'], ratt: 1, fast: true,
+          ledtrad: 'Vilka av talen är större än 1? Jämför sedan dem.',
+          losning: ['{1/2} = 0,5, och {11/12} är lite mindre än 1.', '1,2 och 1,12 är större än 1. Skriv 1,2 som 1,20.', '1,20 är mer än 1,12, så 1,2 är störst.'] },
+        { typ: 'val', text: 'Vilket av talen är minst?', alt: ['{1/2}', '1,2', '0,12', '1,12', '{11/12}'], ratt: 2, fast: true,
+          ledtrad: 'Vilka av talen är mindre än 1? Jämför dem.',
+          losning: ['{1/2} = 0,50. {11/12} är nästan 1.', '0,50 är mer än 0,12.', '0,12 är minst.'] },
+        { typ: 'svar', text: 'I en skål ligger några vindruvor. Astrid äter upp en femtedel av dem. Sedan äter Katia upp en fjärdedel av de vindruvor som finns kvar. Katia åt 12 vindruvor. Hur många vindruvor fanns det från början?', papper: true,
+          falt: [{ typ: 'tal', svar: '60', enhet: 'st' }],
+          ledtrad: 'Börja bakifrån. Katia åt en fjärdedel av det som fanns kvar, och det var 12 vindruvor. Hur många fanns kvar innan Katia åt?',
+          losning: ['Katia åt {1/4} av det som var kvar, och det var 12. Då var det 4 · 12 = 48 kvar efter Astrid.', 'Astrid åt {1/5}. Då är 48 lika med {4/5} av alla vindruvor.', '{1/5} är 48 / 4 = 12. Alla vindruvor: 5 · 12 = 60.', 'Kolla: Astrid äter 12, och 48 är kvar. Katia äter {1/4} av 48, alltså 12. Det stämmer!'] }
+      ] },
+      { id: 'klurigt', titel: 'Klurigt: tiondelar och hundradelar', under: 'Extra träning på kronor, bråk och decimaler', gen: ['brak_dec', 'kronor', 'platsvarde', 'jamfor', 'brak_dec', 'kronor', 'dec_brak'], antal: 8 },
+      { id: 'ova', titel: 'Träna mer', under: 'Nya liknande frågor varje gång', gen: ['jamfor', 'figur', 'brak_dec', 'dec_brak', 'kronor', 'avrunda', 'platsvarde', 'x_brak', 'tallinje', 'andel_kvar', 'ko', 'hiss', 'storst'], antal: 8 }
+    ]
+  },
+  {
+    id: 'kemi', amne: 'no', titel: 'Kemi och miljö', under: 'Instuderingsfrågor åk 5',
+    pass: [
+      { id: 's1', titel: 'Vad är kemi?', fragor: [
+        { typ: 'val', text: 'Vad handlar kemi om?', alt: ['Vad ämnen består av och hur de kan förändras', 'Hur planeterna rör sig i rymden', 'Hur man räknar med bråk'], ratt: 0, ledtrad: 'Kemi handlar om ämnen, till exempel vatten, järn och luft.', losning: ['Kemi handlar om **vad olika ämnen består av** och **hur de kan förändras** och bli nya ämnen.'] },
+        { typ: 'val', text: 'Vad är en kemist?', alt: ['En person som forskar om ämnen', 'En person som bygger hus', 'En person som studerar stjärnor'], ratt: 0, ledtrad: 'Ordet kemist kommer från kemi.', losning: ['En kemist **forskar om ämnen** och om vad som händer när de reagerar med varandra.'] },
+        { typ: 'val', text: 'Vad är en alkemist?', alt: ['En tidig kemist för länge sedan', 'En kemist som bara jobbar med alkohol', 'En robot som blandar ämnen'], ratt: 0, ledtrad: 'Alkemisterna levde för flera hundra år sedan.', losning: ['En alkemist var en slags **tidig kemist för länge sedan**. Alkemisterna försökte bland annat **göra guld** av andra metaller.'] },
+        { typ: 'val', text: 'Vad försökte alkemisterna göra?', alt: ['Göra guld av andra metaller', 'Bygga de första raketerna', 'Hitta nya djurarter'], ratt: 0, ledtrad: 'Tänk på en dyr, gul metall.', losning: ['Alkemisterna försökte göra **guld** av andra metaller.'] }
+      ] },
+      { id: 's2', titel: 'Atomer och molekyler', fragor: [
+        { typ: 'val', text: 'Vad är en atom?', alt: ['Den minsta byggstenen som allt är uppbyggt av', 'Ett annat ord för en cell', 'En sorts liten bakterie'], ratt: 0, ledtrad: 'Allt omkring oss är byggt av dem.', losning: ['En atom är den **minsta byggstenen**. Allt omkring oss är uppbyggt av atomer.'] },
+        { typ: 'val', text: 'Vad är en molekyl?', alt: ['Två eller flera atomer som sitter ihop', 'En halv atom', 'Ett annat ord för grundämne'], ratt: 0, ledtrad: 'Vatten, H₂O, är ett exempel.', losning: ['En molekyl är **två eller flera atomer som sitter ihop**, till exempel vatten, H₂O.'] },
+        { typ: 'val', text: 'Vad är skillnaden mellan en atom och en molekyl?', alt: ['En atom är en byggsten. En molekyl är flera atomer ihop.', 'En molekyl är mindre än en atom.', 'Det finns ingen skillnad.'], ratt: 0, ledtrad: 'Vilken av dem består av flera delar?', losning: ['En atom är **en enda byggsten**. En molekyl är **flera atomer som sitter ihop**.'] },
+        { typ: 'val', text: 'Vad består en atom av?', alt: ['En kärna med protoner och neutroner, och elektroner runt', 'Små molekyler', 'Celler och vatten'], ratt: 0, ledtrad: 'I mitten av atomen finns en kärna.', losning: ['En atom har en **kärna** med **protoner** och **neutroner**. Runt kärnan rör sig **elektroner**.'] },
+        { typ: 'val', text: 'Vad heter de små delarna som rör sig runt atomkärnan?', alt: ['Elektroner', 'Protoner', 'Molekyler'], ratt: 0, ledtrad: 'Ordet börjar på e.', losning: ['Runt kärnan rör sig **elektroner**. Protonerna sitter inne i kärnan.'] },
+        { typ: 'val', text: 'Vad är ett grundämne?', alt: ['Ett ämne med bara en sorts atomer', 'Ett ämne med många olika sorters atomer', 'Ett ämne som bara finns i marken'], ratt: 0, ledtrad: 'Syre och guld är grundämnen.', losning: ['Ett grundämne består av **bara en sorts atomer**. Exempel: syre, järn och guld.'] },
+        { typ: 'val', text: 'Vilket av dessa är ett grundämne?', alt: ['Syre', 'Vatten', 'Koldioxid'], ratt: 0, ledtrad: 'Ett grundämne har bara en sorts atomer.', losning: ['**Syre** har bara en sorts atomer. Vatten och koldioxid är kemiska föreningar.'] },
+        { typ: 'val', text: 'Vad är en kemisk förening?', alt: ['Ett ämne med två eller flera olika sorters atomer', 'En klubb för kemister', 'Ett ämne med bara en sorts atomer'], ratt: 0, ledtrad: 'Vatten är en kemisk förening. Det har både väte och syre.', losning: ['En kemisk förening består av **två eller flera olika sorters atomer** som sitter ihop. Exempel: vatten och koldioxid.'] },
+        { typ: 'val', text: 'Vatten (H₂O) är …', alt: ['en kemisk förening', 'ett grundämne', 'en enda atom'], ratt: 0, ledtrad: 'H₂O har två sorters atomer: väte (H) och syre (O).', losning: ['Vatten har två olika sorters atomer, så det är en **kemisk förening**.'] },
+        { typ: 'val', text: 'Vad händer med atomerna när nya ämnen bildas?', alt: ['De byter plats och sätter ihop sig på nya sätt', 'De försvinner', 'De blir till ljus'], ratt: 0, ledtrad: 'Atomer kan inte försvinna.', losning: ['Atomerna **försvinner inte**. De **byter plats** och sätter ihop sig på nya sätt.'] }
+      ] },
+      { id: 's3', titel: 'Kemiska reaktioner', fragor: [
+        { typ: 'val', text: 'Vad är en kemisk reaktion?', alt: ['När ämnen förändras och nya ämnen bildas', 'När något flyttas till en annan plats', 'När något blir kallare'], ratt: 0, ledtrad: 'Efteråt finns det något helt nytt.', losning: ['En kemisk reaktion är när ämnen förändras och **nya ämnen bildas**.'] },
+        { typ: 'val', text: 'Vilket är ett exempel på en kemisk reaktion i vardagen?', alt: ['Ved brinner i en brasa', 'Is smälter i solen', 'Vatten kokar i en kastrull'], ratt: 0, ledtrad: 'Vid vilken av dem bildas ett helt nytt ämne?', losning: ['När ved brinner bildas nya ämnen, som aska och rök. Fler exempel: man **bakar en kaka**, eller en **banan blir brun**.', 'Is och vattenånga är fortfarande vatten.'] },
+        { typ: 'val', text: 'Vad händer när järn rostar?', alt: ['Järnet reagerar med syre och vatten, och rost bildas', 'Järnet smälter', 'Järnet blir till guld'], ratt: 0, ledtrad: 'Rost är ett nytt ämne.', losning: ['Järnet reagerar med **syre och vatten** i luften. Då bildas ett nytt ämne: **rost**.'] },
+        { typ: 'val', text: 'Vad behöver järn för att rosta?', alt: ['Syre och vatten', 'Socker och salt', 'Bara mörker'], ratt: 0, ledtrad: 'Båda finns i luften omkring oss.', losning: ['Järn rostar när det reagerar med **syre och vatten**.'] },
+        { typ: 'val', text: 'Vad är skillnaden mellan en kemisk reaktion och en förändring där inget nytt ämne bildas?', alt: ['Vid en kemisk reaktion bildas ett nytt ämne', 'Vid en kemisk reaktion blir allt varmare', 'Det är samma sak'], ratt: 0, ledtrad: 'Tänk på is som smälter. Är det fortfarande vatten?', losning: ['Vid en kemisk reaktion **bildas ett nytt ämne**. När is smälter är det **fortfarande samma ämne**, vatten.'] },
+        { typ: 'val', text: 'Is smälter till vatten. Vad är det?', alt: ['En förändring där inget nytt ämne bildas', 'En kemisk reaktion', 'En ny sorts atom'], ratt: 0, ledtrad: 'Är smält is fortfarande vatten?', losning: ['Smält is är fortfarande vatten. Inget nytt ämne bildas.'] }
+      ] },
+      { id: 's4', titel: 'Fast, flytande och gasform', fragor: [
+        { typ: 'val', text: 'Vilka tre former kan ett ämne finnas i?', alt: ['Fast form, flytande form och gasform', 'Stor form, liten form och mellanform', 'Varm form, kall form och ljum form'], ratt: 0, ledtrad: 'Tänk på is, vatten och ånga.', losning: ['Ett ämne kan finnas i **fast form**, **flytande form** och **gasform**.'] },
+        { typ: 'val', text: 'Vad händer med vatten när det fryser?', alt: ['Det blir is, alltså fast form', 'Det blir vattenånga', 'Det försvinner'], ratt: 0, ledtrad: 'Tänk på en isbit.', losning: ['Vatten blir **is** när det fryser. Det sker vid **0 °C**.'] },
+        { typ: 'val', text: 'Vid hur många grader fryser vatten?', alt: ['0 °C', '10 °C', '100 °C'], ratt: 0, ledtrad: 'Det är när det börjar bli minusgrader.', losning: ['Vatten fryser vid **0 °C**.'] },
+        { typ: 'val', text: 'Vad händer när vatten kokar?', alt: ['Det blir vattenånga, alltså gasform', 'Det blir is', 'Det blir salt'], ratt: 0, ledtrad: 'Titta på en kastrull med kokande vatten. Vad stiger upp?', losning: ['Kokande vatten blir **vattenånga**, alltså gasform. Det sker vid **100 °C**.'] },
+        { typ: 'val', text: 'Vid hur många grader kokar vatten?', alt: ['100 °C', '50 °C', '0 °C'], ratt: 0, ledtrad: 'Det är ett jämnt hundratal.', losning: ['Vatten kokar vid **100 °C**.'] },
+        { typ: 'val', text: 'Vad menas med avdunstning?', alt: ['När vatten långsamt blir gas utan att koka', 'När vatten fryser till is', 'När vatten blir smutsigt'], ratt: 0, ledtrad: 'Tänk på en vattenpöl som torkar i solen.', losning: ['Avdunstning är när vatten **långsamt blir gas utan att koka**, till exempel när en vattenpöl torkar.'] },
+        { typ: 'val', text: 'Hur kan vatten gå från gasform till flytande form?', alt: ['Ångan kyls ner och blir vattendroppar', 'Ångan värms upp ännu mer', 'Det går inte'], ratt: 0, ledtrad: 'Tänk på imma på en kall spegel.', losning: ['När vattenånga **kyls ner** blir den vatten igen. Det kallas **kondensation**.'] },
+        { typ: 'val', text: 'Vad kallas det när vattenånga blir vatten igen?', alt: ['Kondensation', 'Avdunstning', 'Smältning'], ratt: 0, ledtrad: 'Det är motsatsen till avdunstning.', losning: ['Det kallas **kondensation**. Avdunstning är tvärtom: vatten blir gas.'] }
+      ] },
+      { id: 's5', titel: 'Syror och baser', fragor: [
+        { typ: 'val', text: 'Vad är en syra?', alt: ['Ett surt ämne med pH under 7, till exempel citronsaft', 'Ett ämne som alltid är varmt', 'Ett ämne med pH över 7, till exempel tvål'], ratt: 0, ledtrad: 'Syror smakar surt. Men smaka aldrig på okända ämnen!', losning: ['En syra är **sur** och har **pH under 7**. Exempel: **citronsaft** och **ättika**.'] },
+        { typ: 'val', text: 'Vad är en bas?', alt: ['Motsatsen till en syra, med pH över 7, till exempel tvål', 'En syra som är extra stark', 'Ett instrument i ett band'], ratt: 0, ledtrad: 'I kemi är en bas motsatsen till en syra.', losning: ['En bas är **motsatsen till en syra** och har **pH över 7**. Exempel: **tvål**, **natron** och många rengöringsmedel.'] },
+        { typ: 'val', text: 'Vilket av dessa är surt?', alt: ['Citronsaft', 'Tvål', 'Rent vatten'], ratt: 0, ledtrad: 'Vilket smakar surt?', losning: ['**Citronsaft** är en syra. Tvål är en bas, och rent vatten är neutralt.'] },
+        { typ: 'val', text: 'Vad betyder det att ett ämne är neutralt?', alt: ['Det är varken surt eller basiskt', 'Det är både surt och basiskt', 'Det är giftigt'], ratt: 0, ledtrad: 'Rent vatten är neutralt.', losning: ['Neutralt betyder **varken surt eller basiskt**. Det har **pH 7**, som rent vatten.'] },
+        { typ: 'val', text: 'Vilket pH har ett neutralt ämne?', alt: ['7', '1', '14'], ratt: 0, ledtrad: 'Det ligger mitt på pH-skalan.', losning: ['Neutralt är **pH 7**. Under 7 är surt, och över 7 är basiskt.'] },
+        { typ: 'val', text: 'Vad används indikatorer till?', alt: ['Att visa om något är surt eller basiskt genom att byta färg', 'Att göra vatten varmare', 'Att mäta hur tungt något är'], ratt: 0, ledtrad: 'Tänk på pH-papper och rödkålssaft.', losning: ['En indikator **byter färg** och visar om något är **surt eller basiskt**. Exempel: pH-papper och rödkålssaft.'] },
+        { typ: 'val', text: 'Vad kan hända när en syra och en bas blandas?', alt: ['De kan ta ut varandra så att det blir neutralt', 'Det blir alltid en explosion', 'Blandningen blir dubbelt så sur'], ratt: 0, ledtrad: 'Syra och bas är motsatser.', losning: ['Syran och basen kan **ta ut varandra** så att blandningen blir **neutral**. Det kallas **neutralisation**.'] },
+        { typ: 'val', text: 'Vad betyder det att mark eller vatten försuras?', alt: ['Att det blir surare, till exempel av surt regn', 'Att det blir saltare', 'Att det fryser till is'], ratt: 0, ledtrad: 'Ordet försuras har ordet sur i sig.', losning: ['Marken eller vattnet **blir surare**, ofta på grund av **surt regn**. Det kan skada fiskar, djur och växter.'] }
+      ] },
+      { id: 's6', titel: 'Vårt avfall och återvinning', fragor: [
+        { typ: 'val', text: 'Vad menas med avfall?', alt: ['Det vi slänger, till exempel sopor och matrester', 'Saker vi köper i affären', 'Löv som faller av träden'], ratt: 0, ledtrad: 'Det hamnar ofta i soppåsen.', losning: ['Avfall är **det vi slänger**, till exempel sopor, förpackningar och matrester.'] },
+        { typ: 'val', text: 'Varför är det viktigt att sortera våra sopor?', alt: ['Så att material kan bli nytt och farligt avfall inte skadar naturen', 'Så att soppåsen blir tyngre', 'Det spelar ingen roll'], ratt: 0, ledtrad: 'Vad kan hända med en gammal burk om den sorteras rätt?', losning: ['Sorterade sopor kan **återvinnas och bli nya saker**, och **farligt avfall skadar inte naturen**.'] },
+        { typ: 'val', text: 'Vad betyder återvinning?', alt: ['Att gammalt material blir till nya saker', 'Att vinna en tävling en gång till', 'Att slänga saker i havet'], ratt: 0, ledtrad: 'Det handlar om sopor, inte om tävlingar.', losning: ['Återvinning betyder att gammalt material tas om hand och **blir till nya saker**.'] },
+        { typ: 'val', text: 'Vad kan hända med material som lämnas till återvinning?', alt: ['Det smälts eller mals ner och blir nya produkter', 'Det grävs ner och försvinner', 'Det skickas till månen'], ratt: 0, ledtrad: 'En gammal burk kan bli en ny burk.', losning: ['Materialet sorteras, **smälts eller mals ner** och blir **nya produkter**.'] },
+        { typ: 'val', text: 'Vad kan matavfall bli när det återvinns?', alt: ['Biogas och gödsel', 'Nya glasburkar', 'Plastpåsar'], ratt: 0, ledtrad: 'Det kan bli bränsle till bussar.', losning: ['Matavfall kan bli **biogas** och **gödsel**.'] },
+        { typ: 'val', text: 'Varför ska batterier och farligt avfall sorteras separat?', alt: ['De har giftiga ämnen som kan skada natur och människor', 'De är för tunga för soppåsen', 'De luktar illa'], ratt: 0, ledtrad: 'Det heter farligt avfall av en anledning.', losning: ['Batterier och farligt avfall innehåller **giftiga ämnen** som kan **läcka ut** och skada djur, natur och människor.'] },
+        { typ: 'val', text: 'Var ska ett gammalt batteri lämnas?', alt: ['I en batteriholk eller på återvinningscentralen', 'I den vanliga soppåsen', 'I komposten'], ratt: 0, ledtrad: 'Batterier är farligt avfall.', losning: ['Batterier ska lämnas i en **batteriholk** eller på **återvinningscentralen**.'] },
+        { typ: 'val', text: 'Vad kan vi göra för att minska mängden avfall?', alt: ['Laga saker och inte slänga mat', 'Köpa nya saker oftare', 'Slänga allt i samma påse'], ratt: 0, ledtrad: 'Vilket gör att vi slänger mindre?', losning: ['Vi kan **köpa mindre**, **återanvända**, **laga** saker som gått sönder och **inte slänga mat**.'] }
+      ] },
+      { id: 's7', titel: 'Plast', fragor: [
+        { typ: 'val', text: 'Vad är plast oftast tillverkat av?', alt: ['Olja', 'Sand', 'Ull'], ratt: 0, ledtrad: 'Det pumpas upp ur marken.', losning: ['Plast tillverkas oftast av **olja**. Det finns också plast som görs av **växter**.'] },
+        { typ: 'val', text: 'Varför används plast till så många olika saker?', alt: ['Den är billig, lätt och tålig och kan formas till nästan allt', 'Den är gjord av guld', 'Den växer på träd'], ratt: 0, ledtrad: 'Tänk på allt som är gjort av plast hemma.', losning: ['Plast är **billig**, **lätt** och **tålig**, och den kan **formas till nästan vad som helst**.'] },
+        { typ: 'val', text: 'Vilka problem kan plast orsaka i naturen?', alt: ['Djur kan äta den eller fastna i den', 'Blommor växer snabbare', 'Plasten smälter när det regnar'], ratt: 0, ledtrad: 'Tänk på fåglar och fiskar.', losning: ['Djur kan **äta plast** eller **fastna i den**. Plast bryts ner **väldigt långsamt** och skräpar ner.'] },
+        { typ: 'val', text: 'Vad är mikroplast?', alt: ['Jättesmå bitar av plast', 'Plast som bara finns i mikrovågsugnar', 'En sorts fisk'], ratt: 0, ledtrad: 'Mikro betyder jätteliten.', losning: ['Mikroplast är **jättesmå bitar av plast**. De bildas när plast slits och går sönder.'] },
+        { typ: 'val', text: 'Mikroplast är plastbitar som är mindre än …', alt: ['5 millimeter', '5 meter', '5 kilometer'], ratt: 0, ledtrad: 'Bitarna är jättesmå.', losning: ['Mikroplast är mindre än **5 millimeter**.'] },
+        { typ: 'val', text: 'Hur kan plast hamna i haven?', alt: ['Skräp blåser eller spolas ut i floder och följer med vattnet', 'Fiskar tillverkar plast', 'Plast regnar ner från molnen'], ratt: 0, ledtrad: 'Vart rinner bäckar och floder?', losning: ['Skräp som slängs i naturen kan **blåsa eller spolas ut** i bäckar och floder och **följa med vattnet** ut i havet.'] },
+        { typ: 'val', text: 'Hur kan vi minska användningen av plast?', alt: ['Använda tygpåse och egen vattenflaska', 'Köpa en ny plastpåse varje gång', 'Slänga plast i naturen'], ratt: 0, ledtrad: 'Vilket gör att vi använder mindre ny plast?', losning: ['Vi kan använda **tygpåse** och **egen vattenflaska**, **återanvända** saker och **sortera** plasten.'] }
+      ] },
+      { id: 's8', titel: 'Människan påverkar miljön', fragor: [
+        { typ: 'val', text: 'Vilket är ett exempel på hur människan påverkar miljön?', alt: ['Bilar och fabriker släpper ut avgaser', 'Fåglar bygger bon', 'Solen går upp på morgonen'], ratt: 0, ledtrad: 'Vilket av dem gör människor?', losning: ['Bilar och fabriker släpper ut **avgaser**. Vi **skräpar ner**, **hugger ner skog** och **fiskar för mycket**.'] },
+        { typ: 'val', text: 'Vad kan utsläpp från industrier och trafik orsaka?', alt: ['Surt regn, luftföroreningar och varmare klimat', 'Mer fisk i sjöarna', 'Att plast försvinner'], ratt: 0, ledtrad: 'Avgaserna hamnar i luften.', losning: ['Utsläppen kan ge **luftföroreningar**, **surt regn** och ett **varmare klimat**.'] },
+        { typ: 'val', text: 'Vad är surt regn?', alt: ['Regn som blivit surt av avgaser i luften', 'Regn som smakar citron', 'Regn som bara faller på natten'], ratt: 0, ledtrad: 'Det har med utsläpp att göra.', losning: ['Surt regn är regn som är **surare än vanligt** på grund av **avgaser** i luften.'] },
+        { typ: 'val', text: 'Hur bildas surt regn?', alt: ['Avgaser från fabriker och bilar blandas med vattnet i luften', 'Molnen blir för kalla', 'Solen skiner för mycket'], ratt: 0, ledtrad: 'Vad kommer ut ur bilarnas avgasrör?', losning: ['Surt regn bildas när **avgaser** från till exempel fabriker och bilar **blandas med vattnet i luften**.'] },
+        { typ: 'val', text: 'Vad kan vi människor göra för att skydda miljön?', alt: ['Cykla, återvinna och spara el', 'Åka bil överallt', 'Låta lamporna lysa hela tiden'], ratt: 0, ledtrad: 'Vilket ger minst utsläpp och sopor?', losning: ['Vi kan **cykla eller gå**, åka buss och tåg, **återvinna**, **spara el och vatten** och köpa mindre.'] },
+        { typ: 'val', text: 'Du ska till en kompis som bor nära. Vad är bäst för miljön?', alt: ['Cykla eller gå', 'Bli skjutsad med bil', 'Åka taxi'], ratt: 0, ledtrad: 'Vilket ger inga avgaser alls?', losning: ['Att **cykla eller gå** ger inga avgaser.'] }
+      ] },
+      { id: 's9', titel: 'Att konservera mat', fragor: [
+        { typ: 'val', text: 'Vad betyder det att konservera mat?', alt: ['Att få maten att hålla längre utan att bli dålig', 'Att äta upp maten snabbt', 'Att värma maten i mikron'], ratt: 0, ledtrad: 'Tänk på mat i burk som håller länge.', losning: ['Att konservera mat betyder att göra så att maten **håller längre** utan att bli dålig.'] },
+        { typ: 'val', text: 'Varför behöver vi konservera vissa livsmedel?', alt: ['Bakterier och mögel gör annars maten dålig', 'Maten blir godare av att bli gammal', 'Annars blir maten för tung'], ratt: 0, ledtrad: 'Vad händer med en macka som ligger framme i en vecka?', losning: ['**Bakterier och mögel** gör maten dålig. Konserverad mat **håller längre**, så vi slipper slänga den.'] },
+        { typ: 'val', text: 'Varför håller maten längre i kylskåpet?', alt: ['Bakterierna växer långsammare när det är kallt', 'Kylan gör maten tyngre', 'Kylan dödar alla bakterier'], ratt: 0, ledtrad: 'Bakterierna finns kvar, men något händer med dem.', losning: ['Kylan dödar inte bakterierna, men de **växer mycket långsammare**.'] },
+        { typ: 'val', text: 'Vilket är ett sätt att konservera mat?', alt: ['Salta den', 'Ha den i en varm ficka', 'Skölja den i ljummet vatten'], ratt: 0, ledtrad: 'Tänk på saltad fisk och skinka.', losning: ['Att **salta** gör att maten håller längre.'] },
+        { typ: 'val', text: 'Vilket av dessa är också ett sätt att konservera mat?', alt: ['Frysa den', 'Ha den i en varm bil', 'Blöta ner den'], ratt: 0, ledtrad: 'Tänk på frysen hemma.', losning: ['Att **frysa** maten gör att den håller länge.'] },
+        { typ: 'val', text: 'Vilken lista innehåller bara sätt att konservera mat?', alt: ['Kyla, frysa, torka, salta och sylta', 'Kyla, värma, blöta och skaka', 'Salta, tappa, kasta och gömma'], ratt: 0, ledtrad: 'Alla sätten ska få maten att hålla längre.', losning: ['Man kan **kyla**, **frysa**, **torka**, **salta**, **sylta** med socker, lägga in i **ättika**, **röka** eller **koka in** i burk.'] }
+      ] },
+      { id: 's10', titel: 'Repetera och förklara', fragor: [
+        { typ: 'val', text: 'Vilken mening stämmer?', alt: ['En molekyl är flera atomer ihop. Ett grundämne har bara en sorts atomer.', 'En atom är flera molekyler ihop.', 'Ett grundämne har många olika sorters atomer.'], ratt: 0, ledtrad: 'Atomen är den minsta byggstenen.', losning: ['**Atom**: den minsta byggstenen. **Molekyl**: två eller flera atomer ihop. **Grundämne**: bara en sorts atomer, som syre eller guld.'] },
+        { typ: 'val', text: 'Vad händer när vatten avdunstar och sedan kondenserar?', alt: ['Det blir vattenånga och sedan vattendroppar igen', 'Det blir is och sedan salt', 'Det försvinner för alltid'], ratt: 0, ledtrad: 'Avdunsta = bli gas. Kondensera = bli vätska igen.', losning: ['När vatten **avdunstar** blir det **vattenånga**. När ångan **kyls ner kondenserar** den och blir **vattendroppar** igen, som imma eller moln.'] },
+        { typ: 'val', text: 'Varför är det viktigt att återvinna material?', alt: ['Gamla saker blir nya, och det blir mindre sopor', 'Då får man fler sopor', 'Det gör ingen skillnad'], ratt: 0, ledtrad: 'Vad händer med en gammal burk som återvinns?', losning: ['Gamla material kan **bli nya saker**. Vi behöver ta mindre nytt från naturen, och det blir **mindre sopor**.'] },
+        { typ: 'val', text: 'Hur kan plast påverka djur och natur?', alt: ['Djur kan äta plast eller fastna i den', 'Djur blir starkare av plast', 'Plast är bra mat för fiskar'], ratt: 0, ledtrad: 'Plast är inte mat.', losning: ['Djur kan **äta plast** eller **fastna i den**. Plast blir **mikroplast** som hamnar i vatten och mat.'] },
+        { typ: 'val', text: 'Vilka tre saker kan du själv göra för en bättre miljö?', alt: ['Sortera sopor, ta egen vattenflaska och cykla', 'Slänga mat, köpa nytt och åka bil', 'Låta lampan lysa, duscha länge och skräpa ner'], ratt: 0, ledtrad: 'Alla tre sakerna ska vara bra för miljön.', losning: ['Till exempel: **sortera soporna**, använda **egen vattenflaska** och **cykla eller gå** i stället för att åka bil.'] },
+        { typ: 'val', text: 'Vad bildas när vattenånga kyls ner?', alt: ['Vattendroppar', 'Salt', 'Rost'], ratt: 0, ledtrad: 'Tänk på en kall spegel i badrummet.', losning: ['Vattenångan kondenserar och blir **vattendroppar**.'] }
+      ] },
+      { id: 'forhor', titel: 'Blandat förhör', under: '10 frågor från alla stationer', pool: true, antal: 10 }
+    ]
+  },
+  {
+    id: 'laxa2', amne: 'matte', titel: 'Läxa 2', under: 'Efter avsnitt 1.3',
+    pass: [
+      { id: 'sida1', titel: 'Sida 1', under: 'Storleksordning, andelar och bråkform', fragor: [
+        { typ: 'ordna', text: 'Skriv talen i storleksordning. Börja med det största.', items: ['{1/3}', '{1/5}', '{1/6}', '{1/10}', '{1/100}'], etiketter: ['Störst', 'Minst'],
+          ledtrad: 'Ju fler delar det hela delas i, desto mindre blir varje del. Vilken bit är störst: en tredjedel eller en tiondel av en pizza?',
+          losning: ['Alla bråken har 1 i täljaren. Då är det nämnaren som avgör.', 'Ju större nämnare, desto mindre del.', '{1/3}, {1/5}, {1/6}, {1/10}, {1/100}'] },
+        { typ: 'svar', text: 'Hur stor andel av bilden är färgad? Svara i både bråkform och decimalform.',
+          figur: { form: 'cirkel', delar: 2, fargade: [0] },
+          falt: [{ etikett: 'Bråkform', typ: 'brak', svar: '1/2' }, { etikett: 'Decimalform', typ: 'tal', svar: '0,5' }],
+          ledtrad: 'Hur många lika stora delar är cirkeln delad i?',
+          losning: ['Cirkeln har 2 lika stora delar och 1 är färgad: {1/2}.', '{1/2} = {5/10} = 0,5'] },
+        { typ: 'svar', text: 'Hur stor andel av bilden är färgad? Svara i både bråkform och decimalform.',
+          figur: { form: 'rutor', rader: 2, kol: 2, fargade: [3] },
+          falt: [{ etikett: 'Bråkform', typ: 'brak', svar: '1/4' }, { etikett: 'Decimalform', typ: 'tal', svar: '0,25' }],
+          ledtrad: 'Tänk på pengar: en fjärdedel av en krona är 25 öre.',
+          losning: ['4 rutor, och 1 är färgad: {1/4}.', '{1/4} = {25/100} = 0,25'] },
+        { typ: 'svar', text: 'Hur stor andel av bilden är färgad? Svara i både bråkform och decimalform.',
+          figur: { form: 'rutor', rader: 2, kol: 5, fargade: [0, 1, 2, 3, 5, 6, 7] },
+          falt: [{ etikett: 'Bråkform', typ: 'brak', svar: '7/10' }, { etikett: 'Decimalform', typ: 'tal', svar: '0,7' }],
+          ledtrad: 'Räkna alla rutor och de färgade rutorna.',
+          losning: ['10 rutor, och 7 är färgade: {7/10}.', '{7/10} = sju tiondelar = 0,7'] },
+        { typ: 'svar', text: 'Skriv talen i bråkform.',
+          falt: [{ etikett: 'a) 0,03', typ: 'brak', svar: '3/100' }, { etikett: 'b) 0,9', typ: 'brak', svar: '9/10' }, { etikett: 'c) 0,017', typ: 'brak', svar: '17/1000' }],
+          ledtrad: 'En decimal betyder tiondelar, två decimaler hundradelar och tre decimaler tusendelar.',
+          losning: ['0,03 = tre hundradelar = {3/100}', '0,9 = nio tiondelar = {9/10}', '0,017 = sjutton tusendelar = {17/1000}'] },
+        { typ: 'svar', text: 'På ett fat ligger 12 plommon. Mia äter 2, Leo äter 3 och Damon äter 4. Hur stor andel av plommonen finns kvar på fatet? Svara i bråkform.', papper: true,
+          falt: [{ typ: 'brak', svar: '3/12' }],
+          ledtrad: 'Hur många plommon äter de tillsammans? Hur många är kvar av 12?',
+          losning: ['De äter 2 + 3 + 4 = 9 plommon.', 'Kvar: 12 − 9 = 3 plommon.', 'Andelen som är kvar är {3/12}. Det är samma sak som {1/4}.'] },
+        { typ: 'svar', text: 'Gustav II Adolf dog den 6 november 1632. I december samma år skulle han ha fyllt 38 år. Vilket år föddes han?', papper: true,
+          falt: [{ typ: 'tal', svar: '1594' }],
+          ledtrad: 'Räkna bakåt 38 år från 1632.',
+          losning: ['1632 − 38 = 1594', 'Han dog innan han hann fylla 38 i december, men födelseåret blir ändå 1594.'] }
+      ] },
+      { id: 'sida2', titel: 'Sida 2', under: 'Rest, siffror och problemlösning', fragor: [
+        { typ: 'svar', text: 'Vilket tal är x?', papper: true,
+          falt: [{ etikett: 'a) {35/8} = 4 rest x', typ: 'tal', svar: '3' }, { etikett: 'b) {46/7} = x rest 4', typ: 'tal', svar: '6' }, { etikett: 'c) {50/x} = 8 rest 2', typ: 'tal', svar: '6' }],
+          ledtrad: 'Rest är det som blir över. Använd multiplikationstabellen.',
+          losning: ['a) 4 · 8 = 32 och 35 − 32 = 3, så x = 3.', 'b) 46 − 4 = 42 och 6 · 7 = 42, så x = 6.', 'c) 50 − 2 = 48 och 8 · 6 = 48, så x = 6.'] },
+        { typ: 'svar', text: 'Siffrorna är 5, 9, 3, 2 och 6. Använd alla siffrorna en gång var.', papper: true,
+          falt: [{ etikett: 'a) Det näst minsta talet som går', typ: 'tal', svar: '23596' }, { etikett: 'b) Ett tal så nära 60 000 som möjligt', typ: 'tal', svar: '59632' }, { etikett: 'c) Summan av svaren i a och b', typ: 'tal', svar: '83228' }],
+          ledtrad: 'Det minsta talet får man när siffrorna står från minst till störst.',
+          losning: ['a) Det minsta talet är 23 569. Byt plats på de två sista siffrorna: 23 596.', 'b) 59 632 ligger 368 från 60 000. Börjar talet med 6 blir det minst 62 359, och det ligger längre bort.', 'c) 23 596 + 59 632 = 83 228'] },
+        { typ: 'svar', text: 'Astrid och Hugo bar tillsammans ner 42 kg potatis i källaren. Hugo bar dubbelt så mycket som Astrid. Hur många kilogram bar var och en?', papper: true,
+          falt: [{ etikett: 'Astrid', typ: 'tal', svar: '14', enhet: 'kg' }, { etikett: 'Hugo', typ: 'tal', svar: '28', enhet: 'kg' }],
+          ledtrad: 'Astrid bär 1 del och Hugo bär 2 delar. Hur många delar blir det tillsammans?',
+          losning: ['Astrid = 1 del, Hugo = 2 delar. Tillsammans 3 delar.', '1 del = {42/3} = 14 kg', 'Astrid bar 14 kg och Hugo 2 · 14 = 28 kg. Kolla: 14 + 28 = 42.'] },
+        { typ: 'svar', text: 'Tre lika tunga påsar med äpplen väger tillsammans 6 kg. Äpplena kostar 18 kr per kilogram. Emma köper två påsar. Hur mycket får hon tillbaka om hon betalar med en hundralapp?', papper: true,
+          falt: [{ typ: 'tal', svar: '28', enhet: 'kr' }],
+          ledtrad: 'Hur mycket väger en påse? Hur mycket väger då två?',
+          losning: ['En påse väger {6/3} = 2 kg.', 'Två påsar väger 2 · 2 = 4 kg.', '4 kg kostar 4 · 18 = 72 kr.', 'Tillbaka: 100 − 72 = 28 kr.'] }
+      ] },
+      { id: 'veckans', titel: 'Veckans problem', under: 'Talföljder', fragor: [
+        { typ: 'svar', text: 'Vilka tal ska stå i stället för frågetecknen?', uttryck: '5,   25,   45,   ?,   85,   ?',
+          falt: [{ etikett: 'Första ?', typ: 'tal', svar: '65' }, { etikett: 'Andra ?', typ: 'tal', svar: '105' }],
+          ledtrad: 'Hur mycket ökar talen varje gång?',
+          losning: ['Talen ökar med 20 varje gång.', '45 + 20 = 65 och 85 + 20 = 105.'] },
+        { typ: 'svar', text: 'Vilka tal ska stå i stället för frågetecknen?', uttryck: '1,   2,   4,   ?,   16,   ?',
+          falt: [{ etikett: 'Första ?', typ: 'tal', svar: '8' }, { etikett: 'Andra ?', typ: 'tal', svar: '32' }],
+          ledtrad: 'Vad händer med talet varje gång? Plus eller gånger?',
+          losning: ['Talen blir dubbelt så stora varje gång.', '4 · 2 = 8 och 16 · 2 = 32.'] },
+        { typ: 'svar', text: 'Vilka tal ska stå i stället för frågetecknen?', uttryck: '100,   99,   ?,   94,   ?,   85',
+          falt: [{ etikett: 'Första ?', typ: 'tal', svar: '97' }, { etikett: 'Andra ?', typ: 'tal', svar: '90' }],
+          ledtrad: 'Hur mycket minskar talet första gången? Är det samma varje gång?',
+          losning: ['Talen minskar med 1, sedan 2, sedan 3 och så vidare.', '99 − 2 = 97, 97 − 3 = 94, 94 − 4 = 90 och 90 − 5 = 85.'] }
+      ] },
+      { id: 'ova', titel: 'Träna mer', under: 'Nya liknande frågor varje gång', gen: ['ordna_brak', 'figur', 'dec_brak', 'andel_kvar', 'rest', 'siffror', 'dubbelt', 'handla', 'talfoljd'], antal: 8 }
+    ]
+  },
+  {
+    id: 'pilkast', amne: 'matte', titel: 'Uppställning och pilkast', under: 'Räkna på papper',
+    pass: [
+      { id: 'laxan', titel: 'Läxan', under: 'Räkna ut och kasta pil', fragor: [
+        { typ: 'svar', text: 'Räkna ut.', uttryck: '{825/5}', papper: true, falt: [{ typ: 'tal', svar: '165' }],
+          ledtrad: 'Dela upp 825 i delar som är lätta att dela med 5, till exempel 500 + 300 + 25.',
+          losning: ['825 = 500 + 300 + 25', '{500/5} = 100,  {300/5} = 60,  {25/5} = 5', '100 + 60 + 5 = 165'] },
+        { typ: 'svar', text: 'Räkna ut.', uttryck: '6 · 247', papper: true, falt: [{ typ: 'tal', svar: '1482' }],
+          ledtrad: 'Dela upp 247 i 200 + 40 + 7 och multiplicera var för sig.',
+          losning: ['247 = 200 + 40 + 7', '6 · 200 + 6 · 40 + 6 · 7', '= 1200 + 240 + 42', '= 1482'] },
+        { typ: 'svar', text: 'Räkna ut.', uttryck: '423 − 274', papper: true, falt: [{ typ: 'tal', svar: '149' }],
+          ledtrad: 'Ställ upp talen under varandra och börja med entalen. Går det inte, får du växla.',
+          losning: ['Ental: 3 − 4 går inte. Växla en tia: 13 − 4 = 9.', 'Tiotal: efter växlingen är det 1 kvar. 1 − 7 går inte. Växla ett hundratal: 11 − 7 = 4.', 'Hundratal: efter växlingen är det 3 kvar. 3 − 2 = 1.', 'Svar: 423 − 274 = 149'] },
+        { typ: 'pil', text: 'Wilma och Ari kastar sex pilar var. Wilma träffar tavlan med alla sina pilar och får 111 poäng. Hur kan Wilmas pilar ha träffat?', pilar: 6, mal: 111, varden: [1, 5, 20, 25, 50],
+          ledtrad: '111 slutar på 1. Vilken ring måste en pil ha träffat för att summan ska sluta på 1?',
+          losning: ['En pil måste ha träffat 1:an. Annars slutar summan på 0 eller 5.', 'Ett sätt: 25 + 25 + 20 + 20 + 20 + 1 = 111.', 'Ett annat sätt: 50 + 25 + 25 + 5 + 5 + 1 = 111.'] },
+        { typ: 'pil', text: 'Ari missar tavlan en gång, men får ändå lika många poäng som Wilma: 111. Hur kan Aris fem pilar ha träffat?', pilar: 5, mal: 111, varden: [1, 5, 20, 25, 50],
+          ledtrad: 'En av pilarna måste vara 1:an. Vilka fyra pilar blir 110 tillsammans?',
+          losning: ['En pil träffar 1:an. De andra fyra ska bli 110 tillsammans.', 'Ett sätt: 50 + 20 + 20 + 20 + 1 = 111.', 'Ett annat sätt: 50 + 50 + 5 + 5 + 1 = 111.'] }
+      ] },
+      { id: 'ova', titel: 'Träna mer', under: 'Nya liknande frågor varje gång', gen: ['uppstallning', 'uppstallning', 'pil', 'rest', 'uppstallning'], antal: 6 }
+    ]
+  }
+];
+if (typeof module !== 'undefined') module.exports = LAXOR;
+
+</script>
+<script>
+/* ===== Läxgympan: appen ===== */
+(function () {
+  'use strict';
+  var L = Lx;
+  var $ = function (s, el) { return (el || document).querySelector(s); };
+  var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
+  var app = $('#app');
+  var RED = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+
+  // ---------- Lagring (bara på den här plattan) ----------
+  var NYCKEL = 'laxgympan.v1';
+  function standard() { return { v: 1, namn: '', kompis: '', vanner: '', skin: 'rosa', ljud: true, uppl: true, stjarnor: 0, pass: {}, missade: [] }; }
+  var S = (function () {
+    try { var raw = localStorage.getItem(NYCKEL); if (raw) return Object.assign(standard(), JSON.parse(raw)); } catch (e) { }
+    return standard();
+  })();
+  function spara() { try { localStorage.setItem(NYCKEL, JSON.stringify(S)); } catch (e) { } }
+
+  var RORELSER = [
+    { id: 'hopp', namn: 'Hopp', kravs: 0 }, { id: 'piruett', namn: 'Piruett', kravs: 15 }, { id: 'hjula', namn: 'Hjula', kravs: 40 },
+    { id: 'volt', namn: 'Volt', kravs: 80 }, { id: 'splitt', namn: 'Splitthopp', kravs: 130 }, { id: 'band', namn: 'Bandsnurr', kravs: 200 }
+  ];
+  function upplasta() { return RORELSER.filter(function (r) { return S.stjarnor >= r.kravs; }); }
+  var POANG = { ratt: 2, ratt2: 1, miss: 0, kunde: 2, nastan: 1, inte: 0 };
+  var BEROM = ['Rätt!', 'Snyggt!', 'Klockrent!', 'Perfekt landning!', 'Tio av tio!', 'Grymt!', 'Japp, rätt!', 'Stark!'];
+  var PRAT = ['Vilken läxa kör vi i dag?', 'Matte är som att hjula. Det blir lättare för varje gång!', 'Fel svar är bara träning. Då lär sig hjärnan!', 'Tryck på mig, så gör jag en rörelse!', 'Räkna på papper, så kollar jag svaret.', 'Ju fler stjärnor, desto fler rörelser lär jag mig.'];
+  var KOMPISNAMN = ['Pirra', 'Smilla', 'Volta', 'Glitter', 'Fia', 'Nova'];
+
+  function kompisNamn() { return S.kompis || 'Kompisen'; }
+  function vanner() { return (S.vanner || '').split(/[,\n]/).map(function (s) { return s.trim().slice(0, 20); }).filter(Boolean).slice(0, 8); }
+  function ctx() { return { lista: vanner() }; }
+
+  // ---------- Text ----------
+  function esc(s) { return String(s === undefined || s === null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function rt(s) {
+    return esc(s)
+      .replace(/\{([^{}\/]+)\/([^{}]+)\}/g, function (m, a, b) { return '<span class="br" role="img" aria-label="' + esc(L.brakOrd(a, b)) + '"><span>' + a + '</span><span>' + b + '</span></span>'; })
+      .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  }
+  function rtUttryck(s) { return rt(s).replace(/\?/g, '<span class="lucka">?</span>'); }
+
+  // ---------- Ikoner ----------
+  var IK = {
+    stjarna: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.8 5.8 6.4.9-4.6 4.5 1.1 6.3L12 17.1l-5.7 3 1.1-6.3L2.8 9.3l6.4-.9z" fill="var(--guld)" stroke="color-mix(in srgb,var(--guld) 60%,#000)" stroke-width="1.2" stroke-linejoin="round"/></svg>',
+    kugge: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3h0a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8v0a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>',
+    tillbaka: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+    kryss: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+    hogtalare: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor" fill-opacity=".15"/><path d="M15.5 9a4 4 0 0 1 0 6M18.2 6.5a7.5 7.5 0 0 1 0 11"/></svg>',
+    penna: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.2-4.6L16.4 4.2a2 2 0 0 1 2.8 0l.6.6a2 2 0 0 1 0 2.8L8.6 18.8z" fill="var(--guld)" fill-opacity=".5"/><path d="M14.5 6l3.5 3.5"/></svg>',
+    lampa: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" fill="var(--guld)" fill-opacity=".55"/></svg>',
+    pil: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    bock: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--ratt)"/><path d="M7 12.5l3.2 3.2L17.5 8.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    hmm: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--fel)"/><path d="M8 15.5c2.5-1.6 5.5-1.6 8 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="8.6" cy="9.5" r="1.4" fill="#fff"/><circle cx="15.4" cy="9.5" r="1.4" fill="#fff"/></svg>',
+    info: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="var(--pop2)"/><path d="M12 11v6" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="7.3" r="1.6" fill="#fff"/></svg>',
+    radera: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11v14H9l-6-7z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/></svg>',
+    igen: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5.3M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-14 5.3M4 20v-4h4"/></svg>',
+    oandlig: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 12c-2-2.6-3.6-4-5.5-4a4 4 0 0 0 0 8c1.9 0 3.5-1.4 5.5-4zm0 0c2 2.6 3.6 4 5.5 4a4 4 0 0 0 0-8c-1.9 0-3.5 1.4-5.5 4z"/></svg>',
+    kolv: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4.6 18.2A1.9 1.9 0 0 0 6.2 21h11.6a1.9 1.9 0 0 0 1.6-2.8L14 9V3"/><path d="M7 15h10" /><path d="M6.4 16.5h11.2l1.8 2.4a1 1 0 0 1-.8 1.6H5.4a1 1 0 0 1-.8-1.6z" fill="currentColor" fill-opacity=".3" stroke="none"/></svg>',
+    blixt: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="currentColor" fill-opacity=".2"/></svg>'
+  };
+
+  // ---------- Ljud ----------
+  var ac = null;
+  function ljud(typ) {
+    if (!S.ljud) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (ac.state === 'suspended') ac.resume();
+      var t = ac.currentTime;
+      var ton = function (f, start, dur, form, vol) {
+        var o = ac.createOscillator(), g = ac.createGain();
+        o.type = form || 'sine'; o.frequency.setValueAtTime(f, t + start);
+        g.gain.setValueAtTime(0.0001, t + start);
+        g.gain.exponentialRampToValueAtTime(vol || 0.16, t + start + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + start + dur);
+        o.connect(g); g.connect(ac.destination); o.start(t + start); o.stop(t + start + dur + 0.05);
+      };
+      if (typ === 'ratt') { ton(880, 0, 0.16, 'triangle'); ton(1318.5, 0.09, 0.28, 'triangle'); }
+      else if (typ === 'fel') { ton(330, 0, 0.2, 'sine', 0.12); ton(262, 0.13, 0.28, 'sine', 0.12); }
+      else if (typ === 'tap') { ton(700, 0, 0.05, 'square', 0.035); }
+      else if (typ === 'pil') { ton(150, 0, 0.09, 'triangle', 0.25); ton(95, 0.03, 0.12, 'sine', 0.2); }
+      else if (typ === 'medalj') { [523, 659, 784, 1046].forEach(function (f, i) { ton(f, i * 0.11, 0.35, 'triangle', 0.14); }); ton(1318.5, 0.5, 0.6, 'triangle', 0.1); }
+      else if (typ === 'boing') { var o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(300, t); o.frequency.exponentialRampToValueAtTime(900, t + 0.18); g.gain.setValueAtTime(0.12, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3); o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t + 0.32); }
+    } catch (e) { }
+  }
+
+
+  // ---------- Konfetti ----------
+  var fx = $('#fx'), g2 = fx.getContext('2d'), delar = [], raf = 0, dpr = 1;
+  function storlek() { dpr = Math.min(2, window.devicePixelRatio || 1); fx.width = innerWidth * dpr; fx.height = innerHeight * dpr; g2.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  function konfetti(x, y, mangd, spridning) {
+    if (RED.matches) mangd = Math.min(mangd, 10);
+    storlek();
+    var cs = getComputedStyle(document.documentElement);
+    var farger = ['--rosa', '--bla', '--guld', '--ratt', '--pop'].map(function (v) { return cs.getPropertyValue(v).trim(); }).filter(Boolean);
+    for (var i = 0; i < mangd; i++) {
+      delar.push({ x: x + (Math.random() - 0.5) * (spridning || 0), y: y, vx: (Math.random() - 0.5) * 11, vy: -Math.random() * 11 - 4, r: Math.random() * 6.3, vr: (Math.random() - 0.5) * 0.35, w: 6 + Math.random() * 6, h: 9 + Math.random() * 9, c: farger[i % farger.length], band: Math.random() < 0.25, liv: 0, fas: Math.random() * 6 });
+    }
+    if (!raf) raf = requestAnimationFrame(steg);
+  }
+  function steg() {
+    g2.clearRect(0, 0, fx.width, fx.height);
+    delar = delar.filter(function (p) { return p.y < innerHeight + 40 && p.liv < 260; });
+    delar.forEach(function (p) {
+      p.liv++; p.vy += 0.3; p.vx *= 0.985; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      g2.save(); g2.translate(p.x, p.y); g2.rotate(p.r); g2.fillStyle = p.c; g2.strokeStyle = p.c;
+      if (p.band) { g2.lineWidth = 3; g2.beginPath(); for (var i = 0; i <= 12; i++) { var yy = i * 2 - 12, xx = Math.sin(i * 0.8 + p.fas + p.liv * 0.2) * 4; if (i) g2.lineTo(xx, yy); else g2.moveTo(xx, yy); } g2.stroke(); }
+      else { g2.scale(1, Math.cos(p.liv * 0.12 + p.fas)); g2.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); }
+      g2.restore();
+    });
+    raf = delar.length ? requestAnimationFrame(steg) : 0;
+    if (!raf) g2.clearRect(0, 0, fx.width, fx.height);
+  }
+  function rekt(el) { if (!el) return null; var b = el.getBoundingClientRect(); return b.width ? b : null; }
+  function konfettiFran(el, mangd) {
+    var b = el && el.left !== undefined ? el : rekt(el);
+    if (!b) return konfetti(innerWidth / 2, innerHeight / 2, mangd || 60);
+    konfetti(b.left + b.width / 2, b.top + b.height / 2, mangd || 60, b.width * 0.6);
+  }
+
+  function toast(text) {
+    var t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = text;
+    document.body.appendChild(t); setTimeout(function () { t.remove(); }, 2700);
+  }
+
+  // ---------- Kompisen (SVG) ----------
+  var uid = 0;
+  function kompisSVG(min) {
+    var id = 'k' + (++uid);
+    return '<svg class="kompis" viewBox="-40 0 240 196" data-min="' + (min || 'glad') + '" role="img" aria-label="' + esc(kompisNamn()) + ', en katt i gympadräkt">' +
+      '<ellipse class="k-skugga" cx="80" cy="184" rx="40" ry="6" fill="var(--skugga)"/>' +
+      '<defs><clipPath id="' + id + '"><path d="M58 108 C64 98 96 98 102 108 L106 146 C98 154 62 154 54 146 Z"/></clipPath></defs>' +
+      '<g class="k-hel">' +
+        '<g class="k-ben-v"><rect x="63" y="138" width="15" height="38" rx="7.5" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/><ellipse cx="68" cy="177" rx="10" ry="5.5" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/></g>' +
+        '<g class="k-ben-h"><rect x="82" y="138" width="15" height="38" rx="7.5" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/><ellipse cx="92" cy="177" rx="10" ry="5.5" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/></g>' +
+        '<path d="M58 108 C64 98 96 98 102 108 L106 146 C98 154 62 154 54 146 Z" fill="var(--pop)"/>' +
+        '<g clip-path="url(#' + id + ')"><path d="M30 146 L130 92 L130 110 L30 164 Z" fill="var(--pop2)"/><path d="M30 158 L130 104 L130 108 L30 162 Z" fill="#fff" opacity=".7"/></g>' +
+        '<path d="M58 108 C64 98 96 98 102 108 L106 146 C98 154 62 154 54 146 Z" fill="none" stroke="var(--kontur)" stroke-width="3" stroke-linejoin="round"/>' +
+        '<path d="M70 120 l2 4.5 4.5 2 -4.5 2 -2 4.5 -2 -4.5 -4.5 -2 4.5 -2z" fill="#fff" opacity=".9"/>' +
+        '<g class="k-arm-v"><path d="M60 112 L40 136" stroke="var(--kontur)" stroke-width="15" stroke-linecap="round"/><path d="M60 112 L40 136" stroke="var(--fur)" stroke-width="9" stroke-linecap="round"/></g>' +
+        '<g class="k-arm-h"><path d="M100 112 L122 102" stroke="var(--kontur)" stroke-width="15" stroke-linecap="round"/><path d="M100 112 L122 102" stroke="var(--fur)" stroke-width="9" stroke-linecap="round"/>' +
+          '<g class="k-band"><path d="M122 102 L142 74" stroke="var(--kontur)" stroke-width="3.5" stroke-linecap="round"/>' +
+          '<path d="M142 74 C156 56 166 92 178 70 S 194 62 198 82" fill="none" stroke="var(--pop2)" stroke-width="6" stroke-linecap="round">' +
+            '<animate attributeName="d" dur="1.6s" repeatCount="indefinite" values="M142 74 C156 56 166 92 178 70 S 194 62 198 82;M142 74 C154 90 168 56 180 80 S 196 92 198 66;M142 74 C156 56 166 92 178 70 S 194 62 198 82"/></path></g>' +
+        '</g>' +
+        '<g class="k-huvud">' +
+          '<path d="M48 48 L50 12 L76 34 Z" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3" stroke-linejoin="round"/><path d="M53 40 L54 22 L67 33 Z" fill="var(--rosa)" opacity=".55"/>' +
+          '<path d="M112 48 L110 12 L84 34 Z" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3" stroke-linejoin="round"/><path d="M107 40 L106 22 L93 33 Z" fill="var(--rosa)" opacity=".55"/>' +
+          '<circle cx="80" cy="66" r="38" fill="var(--fur)" stroke="var(--kontur)" stroke-width="3"/>' +
+          '<g><path d="M58 31 L42 21 L44 42 Z" fill="var(--pop2)" stroke="var(--kontur)" stroke-width="2.5" stroke-linejoin="round"/><path d="M58 31 L74 21 L72 42 Z" fill="var(--pop2)" stroke="var(--kontur)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="58" cy="31" r="5" fill="var(--pop)" stroke="var(--kontur)" stroke-width="2.5"/></g>' +
+          '<g class="k-ogon"><ellipse cx="66" cy="66" rx="6" ry="8" fill="var(--kontur)"/><ellipse cx="94" cy="66" rx="6" ry="8" fill="var(--kontur)"/><circle cx="68.5" cy="62.5" r="2.4" fill="#fff"/><circle cx="96.5" cy="62.5" r="2.4" fill="#fff"/></g>' +
+          '<ellipse cx="53" cy="79" rx="7.5" ry="4.5" fill="var(--rosa)" opacity=".38"/><ellipse cx="107" cy="79" rx="7.5" ry="4.5" fill="var(--rosa)" opacity=".38"/>' +
+          '<path d="M76.5 74 L83.5 74 L80 78.5 Z" fill="var(--rosa)" stroke="var(--kontur)" stroke-width="1.5" stroke-linejoin="round"/>' +
+          '<path class="m m-glad" d="M71 81 Q75.5 87 80 81 Q84.5 87 89 81" fill="none" stroke="var(--kontur)" stroke-width="2.5" stroke-linecap="round"/>' +
+          '<g class="m m-jubel"><path d="M70 80 Q80 98 90 80 Z" fill="var(--kontur)" stroke="var(--kontur)" stroke-width="2" stroke-linejoin="round"/><ellipse cx="80" cy="89" rx="5" ry="3" fill="var(--rosa)"/></g>' +
+          '<path class="m m-hmm" d="M73 85 Q80 80 87 85" fill="none" stroke="var(--kontur)" stroke-width="2.5" stroke-linecap="round"/>' +
+          '<g stroke="var(--kontur)" stroke-width="1.6" stroke-linecap="round" opacity=".55"><path d="M44 76 L30 72M44 81 L30 83M116 76 L130 72M116 81 L130 83"/></g>' +
+        '</g>' +
+      '</g></svg>';
+  }
+  function miniKompis() {
+    return '<svg viewBox="36 8 88 96" aria-hidden="true"><path d="M48 48 L50 12 L76 34 Z" fill="var(--fur)" stroke="var(--kontur)" stroke-width="4" stroke-linejoin="round"/><path d="M112 48 L110 12 L84 34 Z" fill="var(--fur)" stroke="var(--kontur)" stroke-width="4" stroke-linejoin="round"/><circle cx="80" cy="66" r="36" fill="var(--fur)" stroke="var(--kontur)" stroke-width="4"/><ellipse cx="66" cy="66" rx="6" ry="8" fill="var(--kontur)"/><ellipse cx="94" cy="66" rx="6" ry="8" fill="var(--kontur)"/><path d="M71 81 Q75.5 87 80 81 Q84.5 87 89 81" fill="none" stroke="var(--kontur)" stroke-width="3" stroke-linecap="round"/><path d="M58 31 L42 21 L44 42 Z M58 31 L74 21 L72 42 Z" fill="var(--pop2)" stroke="var(--kontur)" stroke-width="3" stroke-linejoin="round"/></svg>';
+  }
+  var blinkTimer = 0;
+  function startaBlink() {
+    clearTimeout(blinkTimer);
+    var tick = function () {
+      $$('.kompis').forEach(function (k) { k.classList.add('blink'); setTimeout(function () { k.classList.remove('blink'); }, 130); });
+      blinkTimer = setTimeout(tick, 2600 + Math.random() * 2600);
+    };
+    blinkTimer = setTimeout(tick, 1800);
+  }
+  function rorelse(id) {
+    $$('.kompis').forEach(function (k) {
+      clearTimeout(k._rt);
+      RORELSER.concat([{ id: 'tap' }, { id: 'hmm' }]).forEach(function (r) { k.classList.remove('r-' + r.id); });
+      void k.getBoundingClientRect();
+      k.classList.add('r-' + id);
+      k._rt = setTimeout(function () { k.classList.remove('r-' + id); }, 1700);
+    });
+    if (id !== 'tap' && id !== 'hmm') ljud('boing');
+  }
+  function minSpel(min, ms) {
+    $$('.kompis').forEach(function (k) { k.setAttribute('data-min', min); });
+    if (ms) setTimeout(function () { $$('.kompis').forEach(function (k) { k.setAttribute('data-min', 'glad'); }); }, ms);
+  }
+  function slumpRorelse() { var u = upplasta(); return u[Math.floor(Math.random() * u.length)].id; }
+
+  // ---------- Medaljer ----------
+  var METALL = { guld: ['#FFD54F', '#D99A14', 'Guld'], silver: ['#EEF1F6', '#9AA3B6', 'Silver'], brons: ['#F3B482', '#B26B36', 'Brons'] };
+  function medaljSVG(typ, stor) {
+    var m = METALL[typ] || METALL.brons;
+    return '<svg viewBox="0 0 60 100" aria-hidden="true"><path d="M8 0 H26 L36 50 L22 54 Z" fill="var(--pop)"/><path d="M52 0 H34 L24 50 L38 54 Z" fill="var(--pop2)"/>' +
+      '<circle cx="30" cy="72" r="' + (stor ? 23 : 22) + '" fill="' + m[0] + '" stroke="' + m[1] + '" stroke-width="3"/><circle cx="30" cy="72" r="15" fill="none" stroke="' + m[1] + '" stroke-width="1.5" opacity=".7"/>' +
+      '<path d="M30 61.5l3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.3-6.2 3.3 1.2-6.8-5-4.9 6.9-1z" fill="' + m[1] + '" opacity=".85"/><ellipse cx="22" cy="63" rx="5" ry="3" fill="#fff" opacity=".5" transform="rotate(-30 22 63)"/></svg>';
+  }
+
+  // ---------- Figurer ----------
+  function figurSVG(f) {
+    var s = '', i, j, n;
+    if (f.form === 'rutor') {
+      var c = 56, w = f.kol * c, h = f.rader * c;
+      for (i = 0; i < f.rader; i++) for (j = 0; j < f.kol; j++) { n = i * f.kol + j; s += '<rect class="fig-del' + (f.fargade.indexOf(n) >= 0 ? ' farg' : '') + '" x="' + (j * c) + '" y="' + (i * c) + '" width="' + c + '" height="' + c + '"/>'; }
+      return '<svg viewBox="-4 -4 ' + (w + 8) + ' ' + (h + 8) + '" width="' + (w + 8) + '" role="img" aria-label="En figur med ' + (f.rader * f.kol) + ' rutor">' + s + '</svg>';
+    }
+    if (f.form === 'cirkel') {
+      var r = 76, cx = 80, cy = 80;
+      for (i = 0; i < f.delar; i++) {
+        var a1 = -Math.PI / 2 + i * 2 * Math.PI / f.delar, a2 = a1 + 2 * Math.PI / f.delar;
+        s += '<path class="fig-del' + (f.fargade.indexOf(i) >= 0 ? ' farg' : '') + '" d="M' + cx + ' ' + cy + ' L' + (cx + r * Math.cos(a1)).toFixed(2) + ' ' + (cy + r * Math.sin(a1)).toFixed(2) + ' A' + r + ' ' + r + ' 0 0 1 ' + (cx + r * Math.cos(a2)).toFixed(2) + ' ' + (cy + r * Math.sin(a2)).toFixed(2) + ' Z"/>';
+      }
+      return '<svg viewBox="0 0 160 160" width="170" role="img" aria-label="En cirkel i ' + f.delar + ' delar">' + s + '</svg>';
+    }
+    if (f.form === 'triangel') {
+      var R = f.rader, W = 240, sid = W / R, hh = sid * Math.sqrt(3) / 2, idx = 0, P = function (x, y) { return x.toFixed(1) + ' ' + y.toFixed(1); };
+      for (i = 0; i < R; i++) {
+        for (j = 0; j < 2 * i + 1; j++) {
+          var k = Math.floor(j / 2), y0 = i * hh, y1 = (i + 1) * hh, d;
+          if (j % 2 === 0) d = 'M' + P(W / 2 - i * sid / 2 + k * sid, y0) + ' L' + P(W / 2 - (i + 1) * sid / 2 + k * sid, y1) + ' L' + P(W / 2 - (i + 1) * sid / 2 + (k + 1) * sid, y1) + ' Z';
+          else d = 'M' + P(W / 2 - i * sid / 2 + k * sid, y0) + ' L' + P(W / 2 - i * sid / 2 + (k + 1) * sid, y0) + ' L' + P(W / 2 - (i + 1) * sid / 2 + (k + 1) * sid, y1) + ' Z';
+          s += '<path class="fig-del' + (f.fargade.indexOf(idx) >= 0 ? ' farg' : '') + '" d="' + d + '"/>'; idx++;
+        }
+      }
+      return '<svg viewBox="-4 -4 ' + (W + 8) + ' ' + (R * hh + 8).toFixed(1) + '" width="250" role="img" aria-label="En triangel delad i ' + idx + ' små trianglar">' + s + '</svg>';
+    }
+    if (f.form === 'tallinje') {
+      var VW = 680, m0 = 30, y = 92, sp = f.till - f.fran, X = function (v) { return m0 + (v - f.fran) / sp * (VW - 2 * m0 - 20); };
+      s += '<line class="tl-linje" x1="' + (m0 - 10) + '" y1="' + y + '" x2="' + (VW - 14) + '" y2="' + y + '"/><path class="tl-pil" d="M' + (VW - 4) + ' ' + y + ' l-16 -8 v16 z" style="fill:var(--ink)"/>';
+      var tot = sp * f.delar;
+      for (i = 0; i <= tot; i++) {
+        var v = f.fran + i / f.delar, x = X(v), stor = i % f.delar === 0;
+        s += '<line class="tl-streck" x1="' + x.toFixed(1) + '" y1="' + (y - (stor ? 14 : 7)) + '" x2="' + x.toFixed(1) + '" y2="' + (y + (stor ? 14 : 7)) + '"/>';
+        if (stor) s += '<text class="tl-text" x="' + x.toFixed(1) + '" y="' + (y + 38) + '">' + L.fmt(v) + '</text>';
+      }
+      f.pilar.forEach(function (p) {
+        var px = X(p.varde);
+        s += '<path class="tl-pil" d="M' + px.toFixed(1) + ' ' + (y - 16) + ' l-9 -14 h6 v-18 h6 v18 h6 z"/>';
+        if (p.namn) s += '<text class="tl-pilnamn" x="' + px.toFixed(1) + '" y="' + (y - 56) + '">' + esc(p.namn) + '</text>';
+      });
+      return '<svg viewBox="0 0 ' + VW + ' 140" style="min-width:520px" role="img" aria-label="En tallinje från ' + f.fran + ' till ' + f.till + '">' + s + '</svg>';
+    }
+    return '';
+  }
+
+  // ---------- Pilkastningstavla ----------
+  var RINGAR = [{ r: 120, v: 1, f: '#3B7FD9', t: '#fff' }, { r: 94, v: 5, f: '#E5484D', t: '#fff' }, { r: 68, v: 20, f: '#2FA36B', t: '#fff' }, { r: 42, v: 25, f: '#FFC531', t: '#3A2A00' }, { r: 18, v: 50, f: '#FF5C9E', t: '#fff' }];
+  function tavlaSVG(pilar) {
+    var s = '';
+    RINGAR.forEach(function (rg, i) {
+      s += '<circle cx="130" cy="130" r="' + rg.r + '" fill="' + rg.f + '" stroke="#1D2250" stroke-width="2.5"/>';
+      var inre = RINGAR[i + 1] ? RINGAR[i + 1].r : 0, ly = 130 - (rg.r + inre) / 2;
+      s += '<text x="130" y="' + (ly + 6).toFixed(1) + '" text-anchor="middle" style="font:800 ' + (i === 4 ? 15 : 18) + 'px var(--display)" fill="' + rg.t + '">' + rg.v + '</text>';
+    });
+    pilar.forEach(function (p) {
+      s += '<g class="pilen"><line x1="' + p.x + '" y1="' + p.y + '" x2="' + (p.x + 16) + '" y2="' + (p.y - 16) + '" stroke="#1D2250" stroke-width="4" stroke-linecap="round"/><path d="M' + (p.x + 14) + ' ' + (p.y - 22) + ' l8 0 l0 -8 z" fill="var(--rosa)"/><circle cx="' + p.x + '" cy="' + p.y + '" r="5" fill="#1D2250" stroke="#fff" stroke-width="2"/></g>';
+    });
+    return '<svg class="tavla" id="tavla" viewBox="0 0 260 260" role="img" aria-label="Piltavla. Tryck på en ring för att kasta en pil.">' + s + '</svg>';
+  }
+
+  // ---------- Navigering ----------
+  var vy = 'hem', aktivtSet = null, P = null, inst = false, nollstallFraga = false;
+  function hittaSet(id) { return LAXOR.filter(function (s) { return s.id === id; })[0]; }
+  function passNyckel(setId, passId) { return setId + '/' + passId; }
+  function fastaPass(set) { return set.pass.filter(function (p) { return p.fragor; }); }
+
+  function visa(ny) {
+    vy = ny;
+    render();
+  }
+  function render() {
+    document.documentElement.setAttribute('data-skin', S.skin || 'rosa');
+    var html = vy === 'hem' ? vyHem() : vy === 'set' ? vySet() : vy === 'pass' ? vyPass() : vyKlar();
+    app.innerHTML = html + (inst ? vyInst() : '');
+    startaBlink();
+    if (vy === 'pass') efterPass();
+    if (vy === 'klar') efterKlar();
+    if (vy === 'hem') setTimeout(function () { $$('.hang:not(.tom)').forEach(function (h, i) { setTimeout(function () { h.classList.add('dangla'); }, i * 90); }); }, 250);
+  }
+
+  // ---------- Vy: Hem ----------
+  function vyHem() {
+    var medaljer = Object.keys(S.pass).map(function (k) { return { k: k, p: S.pass[k] }; }).filter(function (x) { return x.p.medalj; }).sort(function (a, b) { return (b.p.senast || 0) - (a.p.senast || 0); }).slice(0, 7);
+    var rack = medaljer.length ? medaljer.map(function (x) {
+      var d = x.k.split('/'), set = hittaSet(d[0]), pass = set && set.pass.filter(function (p) { return p.id === d[1]; })[0];
+      var namn = (set ? set.titel : '') + (pass ? ', ' + pass.titel : '');
+      return '<button class="hang" data-act="medalj" aria-label="' + esc(METALL[x.p.medalj][2] + ': ' + namn) + '">' + medaljSVG(x.p.medalj) + '</button>';
+    }).join('') : [0, 1, 2].map(function () { return '<span class="hang tom" aria-hidden="true"><svg viewBox="0 0 60 100"><path d="M8 0 H26 L36 50 L22 54 Z M52 0 H34 L24 50 L38 54 Z" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 4"/><circle cx="30" cy="72" r="20" fill="none" stroke="var(--line)" stroke-width="3" stroke-dasharray="5 5"/></svg></span>'; }).join('');
+
+    var bubbla;
+    if (!S.kompis) {
+      bubbla = '<div class="pratbubbla"><form data-form="kompis"><span>Hej! Jag ska träna med dig. <strong>Vad ska jag heta?</strong></span><input id="onb-kompis" type="text" maxlength="16" placeholder="Skriv ett namn" autocomplete="off"><div class="forslag">' + KOMPISNAMN.map(function (n) { return '<button type="button" data-act="onb-forslag" data-n="' + n + '">' + n + '</button>'; }).join('') + '</div><button class="knapp" type="submit">Klar</button></form></div>';
+    } else if (!S.namn) {
+      bubbla = '<div class="pratbubbla"><form data-form="namn"><span>Jag heter ' + esc(S.kompis) + '! <strong>Vad heter du?</strong></span><input id="onb-namn" type="text" maxlength="20" placeholder="Ditt namn" autocomplete="off"><button class="knapp" type="submit">Klar</button></form></div>';
+    } else {
+      bubbla = '<div class="pratbubbla" id="prat">' + esc(PRAT[Math.floor(Math.random() * PRAT.length)]) + '</div>';
+    }
+    var u = upplasta(), nasta = RORELSER.filter(function (r) { return S.stjarnor < r.kravs; })[0];
+    var rorelser = RORELSER.map(function (r) { return S.stjarnor >= r.kravs ? '<button class="rorelse" data-act="rorelse" data-r="' + r.id + '">' + r.namn + '</button>' : '<span class="rorelse last">' + r.namn + ' · ' + r.kravs + '</span>'; }).join('');
+
+    var kort = LAXOR.map(function (set) {
+      var fasta = fastaPass(set), klara = fasta.filter(function (p) { return S.pass[passNyckel(set.id, p.id)]; }).length;
+      var andel = fasta.length ? klara / fasta.length : 0, omk = 2 * Math.PI * 22;
+      var ny = !fasta.some(function (p) { return S.pass[passNyckel(set.id, p.id)]; });
+      return '<button class="laxkort" data-act="oppna" data-set="' + set.id + '">' +
+        '<span class="amnesruta ' + set.amne + '">' + (set.amne === 'no' ? IK.kolv : '<span aria-hidden="true">÷</span>') + '</span>' +
+        '<span><span class="rad"><span class="chip ' + set.amne + '">' + (set.amne === 'no' ? 'NO' : 'Matte') + '</span></span><h3>' + esc(set.titel) + '</h3><p>' + esc(set.under) + (ny ? '' : ' · ' + klara + ' av ' + fasta.length + ' pass klara') + '</p></span>' +
+        '<svg class="ring" viewBox="0 0 54 54" aria-label="' + klara + ' av ' + fasta.length + ' pass klara"><circle class="bak" cx="27" cy="27" r="22" fill="none" stroke-width="6"/><circle class="fram" cx="27" cy="27" r="22" fill="none" stroke-width="6" stroke-linecap="round" stroke-dasharray="' + omk.toFixed(1) + '" stroke-dashoffset="' + (omk * (1 - andel)).toFixed(1) + '" transform="rotate(-90 27 27)"/><text x="27" y="31.5" text-anchor="middle">' + klara + '/' + fasta.length + '</text></svg>' +
+        '</button>';
+    }).join('');
+    if (S.missade.length) {
+      kort = '<button class="laxkort" data-act="igen"><span class="amnesruta igen">' + IK.igen + '</span><span><span class="rad"><span class="chip papper">Öva igen</span></span><h3>Kluriga frågor</h3><p>' + S.missade.length + ' ' + (S.missade.length === 1 ? 'fråga' : 'frågor') + ' som var svåra förra gången</p></span><span class="kor" style="font:800 18px var(--display);color:var(--pop-deep)">Kör!</span></button>' + kort;
+    }
+
+    return '<div class="vy"><div class="inre">' +
+      '<header class="topp"><div class="halsning"><h1>Hej' + (S.namn ? ' <em>' + esc(S.namn) + '</em>' : '') + '!</h1><p>Dags att träna hjärnan.</p></div>' +
+      '<button class="stjarnor" data-act="stjarnor" aria-label="' + S.stjarnor + ' stjärnor">' + IK.stjarna + '<span id="antal-stjarnor">' + S.stjarnor + '</span></button>' +
+      '<button class="ikon-knapp" data-act="inst" aria-label="Inställningar">' + IK.kugge + '</button></header>' +
+      '<div class="hem-grid">' +
+        '<section class="scen" aria-label="Din kompis">' +
+          '<div class="rack"><div class="rack-hangen">' + rack + '</div>' + (medaljer.length ? '' : '<p class="rack-text">Här hänger dina medaljer.</p>') + '</div>' +
+          '<div class="kompis-scen">' + bubbla + '<button class="kompis-knapp" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG() + '</button><div class="matta"></div>' + (S.kompis ? '<div class="namnskylt">' + esc(S.kompis) + '</div>' : '') + '</div>' +
+          '<div class="rorelser" aria-label="Rörelser">' + rorelser + '</div>' +
+          '<p class="nasta-rorelse">' + (nasta ? (nasta.kravs - S.stjarnor) + ' stjärnor kvar till ' + nasta.namn + '.' : 'Alla rörelser är upplåsta!') + '</p>' +
+        '</section>' +
+        '<section class="laxor"><h2>Dina läxor</h2>' + kort + '</section>' +
+      '</div></div></div>';
+  }
+
+  // ---------- Vy: Läxa ----------
+  function vySet() {
+    var set = hittaSet(aktivtSet), nr = 0;
+    var lista = set.pass.map(function (p) {
+      var res = S.pass[passNyckel(set.id, p.id)], gen = !p.fragor;
+      if (!gen) nr++;
+      var under = p.under || (p.fragor.length + ' frågor');
+      if (!gen && p.under) under += ' · ' + p.fragor.length + ' frågor';
+      if (!gen && !p.under) under = p.fragor.length + ' frågor';
+      return '<li><button class="station' + (gen ? ' gen' : '') + (res ? ' klar' : '') + '" data-act="starta" data-set="' + set.id + '" data-pass="' + p.id + '">' +
+        '<span class="nr">' + (gen ? (p.pool ? IK.blixt : IK.oandlig) : nr) + '</span>' +
+        '<span><h3>' + esc(p.titel) + '</h3><p>' + esc(under) + '</p></span>' +
+        (res && res.medalj ? '<span class="mini-medalj" aria-label="' + METALL[res.medalj][2] + '">' + medaljSVG(res.medalj) + '</span>' : '<span class="kor">Kör ' + IK.pil.replace('<svg', '<svg style="width:20px;height:20px"') + '</span>') +
+        '</button></li>';
+    }).join('');
+    return '<div class="vy"><div class="inre">' +
+      '<header class="setvy-topp"><button class="ikon-knapp" data-act="hem" aria-label="Tillbaka">' + IK.tillbaka + '</button><div><span class="chip ' + set.amne + '">' + (set.amne === 'no' ? 'NO' : 'Matte') + '</span><h1>' + esc(set.titel) + '</h1><p>' + esc(set.under) + '</p></div></header>' +
+      '<ol class="stationer">' + lista + '</ol></div></div>';
+  }
+
+  // ---------- Pass ----------
+  function hamtaRef(ref) {
+    var d = ref.split('/'), set = hittaSet(d[0]); if (!set) return null;
+    var p = set.pass.filter(function (x) { return x.id === d[1]; })[0]; if (!p || !p.fragor || !p.fragor[+d[2]]) return null;
+    return Object.assign({}, p.fragor[+d[2]], { ref: ref, amne: set.amne });
+  }
+  function startaPass(setId, passId) {
+    var fragor, set = hittaSet(setId), pass;
+    if (setId === 'igen') {
+      fragor = S.missade.slice(0, 8).map(function (m) { return m.ref ? hamtaRef(m.ref) : m.q; }).filter(Boolean);
+      pass = { id: 'igen', titel: 'Öva igen' };
+    } else {
+      pass = set.pass.filter(function (p) { return p.id === passId; })[0];
+      if (pass.gen) fragor = L.genPass(pass.gen, pass.antal || 8, ctx()).map(function (q) { q.amne = set.amne; return q; });
+      else if (pass.pool) {
+        var alla = [];
+        set.pass.forEach(function (p) { if (p.fragor) p.fragor.forEach(function (q, i) { if (q.typ !== 'kort') alla.push(Object.assign({}, q, { ref: passNyckel(set.id, p.id) + '/' + i, amne: set.amne })); }); });
+        fragor = L.blanda(Math.random, alla).slice(0, pass.antal || 10);
+      } else fragor = pass.fragor.map(function (q, i) { return Object.assign({}, q, { ref: passNyckel(setId, passId) + '/' + i, amne: set.amne }); });
+    }
+    if (!fragor.length) { toast('Det finns inga frågor att öva på just nu.'); return visa('hem'); }
+    if (setId !== 'igen') aktivtSet = setId;
+    P = { setId: setId, passId: passId, titel: pass.titel, fragor: fragor, i: 0, resultat: [], stjarnorIPass: 0, rorelserFore: upplasta().length };
+    nyFraga();
+    visa('pass');
+  }
+  function nyFraga() {
+    var q = P.fragor[P.i];
+    P.q = q; P.forsok = 0; P.ledtrad = false; P.klar = false; P.utfall = null; P.besked = null; P.faltStatus = null; P.losning = false;
+    P.svar = q.typ === 'svar' ? q.falt.map(function () { return ''; }) : null;
+    P.aktivt = 0; P.ordning = []; P.pilar = []; P.valda = []; P.kortVisat = false; P.not = '';
+    if (q.typ === 'val') P.alt = q.fast ? L.range(q.alt.length) : L.blanda(Math.random, L.range(q.alt.length));
+    if (q.typ === 'ordna') { var b; do { b = L.blanda(Math.random, L.range(q.items.length)); } while (b.every(function (v, i) { return v === i; })); P.blandning = b; }
+  }
+
+  function vyPass() {
+    var q = P.q, n = P.fragor.length, andel = P.i / n;
+    var prickar = P.fragor.map(function (_, i) { return '<i class="' + (P.resultat[i] ? ({ ratt: 'ratt', kunde: 'ratt', ratt2: 'ratt2', nastan: 'ratt2', miss: 'miss', inte: 'miss' })[P.resultat[i]] : '') + '"></i>'; }).join('');
+    var amne = q.amne || 'matte';
+    var meta = '<span class="chip ' + amne + '">' + (amne === 'no' ? 'NO' : 'Matte') + '</span>' +
+      (q.papper ? '<span class="chip papper">' + IK.penna + 'Räkna på papper</span>' : '') +
+      (q.typ === 'kort' ? '<span class="chip papper">' + IK.penna + 'Förklara med egna ord</span>' : '') +
+      '<button class="liten-kompis" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG() + '</button>';
+    return '<div class="vy"><div class="inre">' +
+      '<header class="pass-topp"><button class="ikon-knapp" data-act="avbryt" aria-label="Avsluta passet">' + IK.kryss + '</button>' +
+        '<div class="bom" role="progressbar" aria-valuemin="0" aria-valuemax="' + n + '" aria-valuenow="' + P.i + '" aria-label="Fråga ' + (P.i + 1) + ' av ' + n + '"><div class="bom-yta"><div class="bom-fyll" style="width:' + (andel * 100).toFixed(1) + '%"></div></div><div class="bom-prickar">' + prickar + '</div><div class="bom-kompis hoppa" style="left:' + (4 + andel * 92).toFixed(1) + '%">' + miniKompis() + '</div></div>' +
+        '<span class="raknare">' + (P.i + 1) + '/' + n + '</span></header>' +
+      '<div class="pass-grid"><article class="fraga-kort in" id="fraga">' +
+        '<div class="fraga-meta">' + meta + '</div>' +
+        '<h2 class="fraga-text">' + rt(q.text) + '</h2>' +
+        (q.uttryck ? '<div class="uttryck">' + rtUttryck(q.uttryck) + '</div>' : '') +
+        (q.figur ? '<div class="figur">' + figurSVG(q.figur) + '</div>' : '') +
+        '<div id="svar-yta"></div><div class="aterkoppling" id="aterkoppling" aria-live="polite"></div><div class="knapp-rad" id="knapp-rad"></div>' +
+      '</article>' +
+      '<aside class="pass-kompis"><button class="kompis-knapp" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG() + '</button><div class="matta"></div></aside></div>' +
+      '</div></div>';
+  }
+  function efterPass() { ritaInteraktion(); }
+
+  function ritaInteraktion() {
+    var q = P.q, yta = $('#svar-yta'), ak = $('#aterkoppling'), kr = $('#knapp-rad');
+    if (!yta) return;
+    // Svarsytan
+    if (q.typ === 'val') {
+      yta.innerHTML = '<div class="alternativ">' + P.alt.map(function (ai, pos) {
+        var cls = P.valda.indexOf(ai) >= 0 ? ' fel' : (P.klar && ai === q.ratt ? ' ratt' : '');
+        return '<button class="alt' + cls + '" data-act="val" data-i="' + ai + '"' + (P.klar || P.valda.indexOf(ai) >= 0 ? ' disabled' : '') + '><span class="bokstav">' + 'ABCDE'[pos] + '</span><span>' + rt(q.alt[ai]) + '</span></button>';
+      }).join('') + '</div>';
+    } else if (q.typ === 'svar') {
+      var harTal = q.falt.some(function (f) { return f.typ !== 'text'; }), harBrak = q.falt.some(function (f) { return f.typ === 'brak'; });
+      var falt = q.falt.map(function (f, i) {
+        var st = P.faltStatus && P.faltStatus[i] ? (P.faltStatus[i].format ? '' : P.faltStatus[i].ok ? ' ok' : ' nej') : '';
+        var etikett = '<span class="etikett">' + (f.etikett ? rt(f.etikett) : (q.falt.length > 1 ? '' : 'Ditt svar')) + '</span>';
+        if (f.typ === 'text') return '<label class="falt' + st + '">' + etikett + '<input id="falt-' + P.i + '-' + i + '" data-text="' + i + '" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" value="' + esc(P.svar[i]) + '"' + (P.klar ? ' disabled' : '') + ' enterkeyhint="done"></label>';
+        var v = P.svar[i];
+        var visas = v ? esc(v.replace('.', ',')).replace(/(\d+)\/(\d*)/, function (m, a, b) { return '<span class="br"><span>' + a + '</span><span>' + (b || '&nbsp;') + '</span></span>'; }) : '<span class="tomt">?</span>';
+        return '<button class="falt' + (i === P.aktivt && !P.klar ? ' aktiv' : '') + st + '" data-act="falt" data-i="' + i + '" aria-label="' + esc(L.talbart(f.etikett || 'Svar')) + ': ' + esc(v || 'tomt') + '"' + (P.klar ? ' disabled' : '') + '>' + etikett + '<span class="ruta"><span>' + visas + '</span>' + (f.enhet ? '<span class="enhet">' + esc(f.enhet) + '</span>' : '') + '</span></button>';
+      }).join('');
+      var tangenter = '';
+      if (harTal && !P.klar) {
+        var tk = ['7', '8', '9', '4', '5', '6', '1', '2', '3', ',', '0', 'del'];
+        if (harBrak) tk = ['7', '8', '9', '/', '4', '5', '6', ',', '1', '2', '3', 'del', '0'];
+        tangenter = '<div class="tangenter' + (harBrak ? ' med-snedstreck' : '') + '">' + tk.map(function (k) {
+          if (k === 'del') return '<button class="tangent extra" data-act="tangent" data-k="del" aria-label="Sudda">' + IK.radera + '</button>';
+          return '<button class="tangent' + (k === '/' || k === ',' ? ' extra' : '') + '" data-act="tangent" data-k="' + k + '"' + (k === '0' && harBrak ? ' style="grid-column:span 4"' : '') + ' aria-label="' + (k === '/' ? 'Bråkstreck' : k === ',' ? 'Komma' : k) + '">' + k + '</button>';
+        }).join('') + '</div>';
+      }
+      yta.innerHTML = '<div class="falten">' + falt + '</div>' + tangenter;
+    } else if (q.typ === 'ordna') {
+      var platser = q.items.map(function (_, pos) { var it = P.ordning[pos]; return it === undefined ? '<span class="plats" aria-label="Tom plats"></span>' : '<button class="plats fylld" data-act="ordna-bort" data-pos="' + pos + '"' + (P.klar ? ' disabled' : '') + '>' + rt(q.items[it]) + '</button>'; }).join('');
+      var pool = P.blandning.filter(function (i) { return P.ordning.indexOf(i) < 0; }).map(function (i) { return '<button class="bricka" data-act="ordna-ta" data-i="' + i + '">' + rt(q.items[i]) + '</button>'; }).join('');
+      yta.innerHTML = '<div class="ordna"><div class="ordna-rad"><span class="rand">' + esc(q.etiketter[0]) + '</span>' + platser + '<span class="rand">' + esc(q.etiketter[1]) + '</span></div><div class="ordna-pool">' + (P.klar ? '' : pool) + '</div></div>';
+    } else if (q.typ === 'pil') {
+      var sum = P.pilar.reduce(function (a, p) { return a + p.v; }, 0);
+      yta.innerHTML = '<div class="pilkast">' + tavlaSVG(P.pilar) + '<div class="pil-info"><div class="pil-summa">' + sum + ' <small>av ' + q.mal + ' poäng · ' + P.pilar.length + ' av ' + q.pilar + ' pilar</small></div><div class="traffar">' + P.pilar.map(function (p) { return '<span>' + p.v + '</span>'; }).join('') + '</div>' +
+        (P.klar ? '' : '<div class="pil-knappar"><button class="knapp sek" data-act="pil-angra"' + (P.pilar.length ? '' : ' disabled') + '>Ångra pil</button><button class="knapp sek" data-act="pil-rensa"' + (P.pilar.length ? '' : ' disabled') + '>Börja om</button></div>') + '</div></div>';
+    } else if (q.typ === 'kort') {
+      if (!P.kortVisat) yta.innerHTML = '<p class="kort-hjalp">' + IK.lampa + '<span>Tänk ut ett svar med egna ord. Säg det högt eller skriv det på papper. Tryck sedan på <b>Visa svaret</b>.</span></p>';
+      else yta.innerHTML = '<div class="kort-svar">' + rt(q.svar) + '</div>' + (P.klar ? '' : '<p style="font-weight:600">Hur gick det?</p><div class="bedom"><button class="kunde" data-act="kort-bedom" data-v="kunde">Jag kunde det!<small>2 stjärnor</small></button><button class="nastan" data-act="kort-bedom" data-v="nastan">Nästan<small>1 stjärna</small></button><button class="inte" data-act="kort-bedom" data-v="inte">Inte än<small>Den kommer igen</small></button></div>');
+    }
+    // Återkoppling
+    var h = '';
+    if (P.besked) {
+      var b = P.besked;
+      if (b.typ === 'ratt') h += '<div class="besked ratt">' + IK.bock + '<span><strong>' + esc(b.text) + '</strong>' + (b.note ? '<br><span>' + rt(b.note) + '</span>' : '') + '</span>' + (b.plus ? '<span class="plus">+' + b.plus + IK.stjarna + '</span>' : '') + '</div>';
+      else if (b.typ === 'fel') h += '<div class="besked fel">' + IK.hmm + '<span>' + rt(b.text) + '</span></div>';
+      else h += '<div class="besked info">' + IK.info + '<span>' + rt(b.text) + '</span></div>';
+    }
+    if (P.ledtrad && q.ledtrad && !P.klar) h += '<div class="ledtradsruta">' + IK.lampa + '<span><b>Ledtråd:</b> ' + rt(q.ledtrad) + '</span></div>';
+    if (P.losning && q.losning) {
+      h += '<div class="losning"><h3>' + (P.utfall === 'miss' ? 'Så här kan man tänka' : 'Så här räknar man') + '</h3><ol>' + q.losning.map(function (s) { return '<li><span>' + rt(s) + '</span></li>'; }).join('') + '</ol>' +
+        (P.utfall === 'miss' && L.facit(q) ? '<p class="facit">Rätt svar: ' + rt(L.facit(q)) + '</p>' : '') + '</div>';
+    }
+    ak.innerHTML = h;
+    var pr = $$('.bom-prickar i')[P.i];
+    if (pr && P.utfall) pr.className = ({ ratt: 'ratt', kunde: 'ratt', ratt2: 'ratt2', nastan: 'ratt2', miss: 'miss', inte: 'miss' })[P.utfall] || '';
+    // Knappar
+    var k = '';
+    if (!P.klar) {
+      if (q.ledtrad && !P.ledtrad && q.typ !== 'kort') k += '<button class="knapp tips" data-act="ledtrad">' + IK.lampa + 'Ledtråd</button>';
+      if (q.typ === 'svar' || q.typ === 'ordna' || q.typ === 'pil') k += '<button class="knapp" data-act="ratta">' + (P.forsok ? 'Rätta igen' : 'Rätta') + '</button>';
+      if (q.typ === 'kort' && !P.kortVisat) k += '<button class="knapp" data-act="kort-visa">Visa svaret</button>';
+    } else {
+      if (!P.losning && q.losning && q.typ !== 'kort') k += '<button class="knapp sek" data-act="visa-losning">Visa hur man räknar</button>';
+      k += '<button class="knapp nasta" data-act="nasta">' + (P.i + 1 < P.fragor.length ? 'Nästa' : 'Klar!') + IK.pil + '</button>';
+    }
+    kr.innerHTML = k;
+  }
+
+  function skaka() { var f = $('#fraga'); if (!f) return; f.classList.remove('in', 'skaka'); void f.offsetWidth; f.classList.add('skaka'); }
+  function laggTillStjarnor(n) {
+    if (!n) return;
+    S.stjarnor += n; P.stjarnorIPass += n; spara();
+  }
+  function nyckelFor(q) { return q.ref || ('gen:' + q.text + '|' + (q.uttryck || '') + '|' + JSON.stringify(q.figur || '') + '|' + JSON.stringify(q.falt || q.alt || q.items || q.mal || '')); }
+  function laggTillMissad(q) {
+    var n = nyckelFor(q);
+    if (S.missade.some(function (m) { return m.nyckel === n; })) return;
+    S.missade.unshift(q.ref ? { nyckel: n, ref: q.ref } : { nyckel: n, q: q });
+    S.missade = S.missade.slice(0, 30); spara();
+  }
+  function taBortMissad(q) { var n = nyckelFor(q); S.missade = S.missade.filter(function (m) { return m.nyckel !== n; }); spara(); }
+
+  function lyckat(note, elFran) {
+    var fran = rekt(elFran);
+    var p = (P.forsok === 0 && !P.ledtrad) ? 2 : 1;
+    P.klar = true; P.utfall = p === 2 ? 'ratt' : 'ratt2'; P.resultat[P.i] = P.utfall;
+    laggTillStjarnor(p);
+    if (P.setId === 'igen') taBortMissad(P.q);
+    P.besked = { typ: 'ratt', text: BEROM[Math.floor(Math.random() * BEROM.length)], note: note, plus: p };
+    ljud('ratt');
+    ritaInteraktion();
+    konfettiFran(fran || $('.besked.ratt'), p === 2 ? 70 : 40);
+    minSpel('jubel', 1400); rorelse(slumpRorelse());
+  }
+  function misslyckat(res) {
+    P.forsok++;
+    if (P.forsok === 1) {
+      P.ledtrad = true;
+      var txt = 'Inte riktigt än. Här är en ledtråd. Försök igen!';
+      if (res && res.sum !== undefined) txt = 'Summan blev ' + res.sum + ', inte ' + P.q.mal + '. Här är en ledtråd.';
+      if (P.q.typ === 'svar' && P.q.falt.length > 1 && res && res.falt) { var r = res.falt.filter(function (x) { return x.ok; }).length; if (r) txt = r + ' av ' + P.q.falt.length + ' är rätt. Ändra de röda rutorna. Här är en ledtråd.'; }
+      P.besked = { typ: 'fel', text: txt };
+      ljud('fel'); minSpel('hmm', 1500); rorelse('hmm'); skaka();
+    } else {
+      P.klar = true; P.utfall = 'miss'; P.resultat[P.i] = 'miss'; P.losning = true;
+      laggTillMissad(P.q);
+      P.besked = { typ: 'info', text: 'Bra kämpat! Den här frågan kommer tillbaka senare, så får du öva mer på den.' };
+      ljud('fel');
+    }
+    ritaInteraktion();
+  }
+  function ratta() {
+    var q = P.q; if (P.klar) return;
+    var svar = q.typ === 'svar' ? P.svar : q.typ === 'ordna' ? P.ordning.slice() : P.pilar.map(function (p) { return p.v; });
+    var res = L.kolla(q, svar);
+    if (res.format) { P.besked = { typ: 'info', text: res.msg }; P.faltStatus = res.falt || null; ritaInteraktion(); skaka(); return; }
+    P.faltStatus = res.falt || null;
+    if (res.ok) return lyckat(res.note, $('#knapp-rad .knapp'));
+    misslyckat(res);
+  }
+  function nasta() {
+    if (P.i + 1 >= P.fragor.length) return avsluta();
+    P.i++; nyFraga(); render();
+  }
+  function avsluta() {
+    var poang = P.resultat.reduce(function (s, u) { return s + (POANG[u] || 0); }, 0), max = P.fragor.length * 2, andel = max ? poang / max : 0;
+    var medalj = andel >= 0.9 ? 'guld' : andel >= 0.7 ? 'silver' : 'brons', rank = { brons: 1, silver: 2, guld: 3 };
+    if (P.setId !== 'igen') {
+      var key = passNyckel(P.setId, P.passId), prev = S.pass[key];
+      S.pass[key] = { medalj: !prev || rank[medalj] > rank[prev.medalj] ? medalj : prev.medalj, bast: Math.max(andel, prev ? prev.bast : 0), senast: Date.now(), ggr: (prev ? prev.ggr : 0) + 1 };
+    }
+    spara();
+    var u = upplasta();
+    P.slut = { poang: poang, max: max, andel: andel, medalj: medalj, ratt: P.resultat.filter(function (x) { return x === 'ratt' || x === 'kunde'; }).length, nya: u.slice(P.rorelserFore) };
+    visa('klar');
+  }
+
+  // ---------- Vy: Klar ----------
+  function vyKlar() {
+    var s = P.slut, bas = 5 + s.andel * 5;  // domarna ger 5,0–10,0
+    var dom = [0, 1, 2].map(function (i) { var d = s.andel === 1 ? 10 : Math.max(0, Math.min(10, bas + (Math.random() * 0.3 - 0.15))); return '<div class="tavla-domare"><span>Domare ' + (i + 1) + '</span><b>' + L.fmtN(Math.round(d * 10) / 10, 1) + '</b></div>'; }).join('');
+    var rubrik = { guld: 'Guld!', silver: 'Silver!', brons: 'Brons!' }[s.medalj];
+    var under = { guld: 'Perfekt landning! Du kan det här.', silver: 'Snyggt jobbat! Nästan hela vägen.', brons: 'Bra kämpat! Kör igen, så blir det ännu bättre.' }[s.medalj];
+    var set = hittaSet(P.setId), harOva = set && set.pass.some(function (p) { return p.gen; }) && !(set.pass.filter(function (p) { return p.id === P.passId; })[0] || {}).gen;
+    var ny = s.nya.length ? '<div class="ny-rorelse">' + esc(kompisNamn()) + ' har lärt sig en ny rörelse: <strong>' + esc(s.nya[s.nya.length - 1].namn) + '</strong>! Tryck på ' + esc(kompisNamn()) + ' för att se den.</div>' : '';
+    return '<div class="vy"><div class="inre klar">' +
+      '<button class="klar-medalj" data-act="medalj" aria-label="' + METALL[s.medalj][2] + '">' + medaljSVG(s.medalj, true) + '</button>' +
+      '<h1>' + rubrik + '</h1><p class="under">' + esc(P.titel ? (P.setId === 'igen' ? 'Öva igen' : (set ? set.titel + ', ' : '') + P.titel) : '') + ' är klart. ' + esc(under) + '</p>' +
+      '<div class="domare" aria-label="Domarnas poäng">' + dom + '</div>' +
+      '<div class="klar-stats"><span>' + IK.stjarna + '+' + P.stjarnorIPass + ' stjärnor</span><span>' + s.ratt + ' av ' + P.fragor.length + ' rätt direkt</span></div>' + ny +
+      '<button class="kompis-knapp" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG('jubel') + '</button>' +
+      '<div class="klar-knappar"><button class="knapp sek" data-act="hem">Till start</button><button class="knapp sek" data-act="kor-igen">Kör igen</button>' + (harOva ? '<button class="knapp" data-act="ova-mer">Träna mer på samma sak</button>' : '') + '</div>' +
+      '</div></div>';
+  }
+  function efterKlar() {
+    ljud('medalj');
+    setTimeout(function () { konfetti(innerWidth * 0.25, innerHeight * 0.3, 60, 120); konfetti(innerWidth * 0.75, innerHeight * 0.3, 60, 120); }, 600);
+    setTimeout(function () { rorelse(P.slut.nya.length ? P.slut.nya[P.slut.nya.length - 1].id : slumpRorelse()); }, 1500);
+  }
+
+  // ---------- Vy: Inställningar ----------
+  function vyInst() {
+    return '<div class="overlay" data-act="inst-bakgrund"><div class="panel" role="dialog" aria-modal="true" aria-labelledby="inst-rubrik">' +
+      '<h2 id="inst-rubrik">Inställningar</h2>' +
+      '<label for="s-namn">Ditt namn<input id="s-namn" type="text" maxlength="20" value="' + esc(S.namn) + '" autocomplete="off"></label>' +
+      '<label for="s-kompis">Kompisens namn<input id="s-kompis" type="text" maxlength="16" value="' + esc(S.kompis) + '" autocomplete="off"></label>' +
+      '<label for="s-vanner">Kompisar i textuppgifterna<small>Skriv några namn med komma emellan. De dyker upp i de nya mattefrågorna. Namnen stannar på den här plattan.</small><input id="s-vanner" type="text" maxlength="160" value="' + esc(S.vanner) + '" placeholder="Till exempel: Saga, Elsa, Maja" autocomplete="off"></label>' +
+      '<div><p style="font-weight:600;margin-bottom:8px">Färger</p><div class="teman">' + [['rosa', 'Rosa'], ['ljusbla', 'Ljusblå'], ['randig', 'Blårandig']].map(function (t) { return '<button class="tema ' + t[0] + '" data-act="skin" data-s="' + t[0] + '" aria-pressed="' + (S.skin === t[0]) + '"><i></i>' + t[1] + '</button>'; }).join('') + '</div></div>' +
+      '<div class="vaxel"><span>Ljud</span><button data-act="vaxla" data-k="ljud" aria-pressed="' + !!S.ljud + '" aria-label="Ljud"></button></div>' +
+      '<div class="farozon">' + (nollstallFraga ? '<p><b>Är du säker?</b> Alla stjärnor, medaljer och rörelser försvinner.</p><div class="rad"><button class="knapp" data-act="nollstall-ja">Ja, börja om</button><button class="knapp sek" data-act="nollstall-nej">Nej</button></div>' : '<p>Vill du börja om från noll? Stjärnor och medaljer nollställs.</p><div class="rad"><button class="knapp sek" data-act="nollstall">Börja om från noll</button></div>') + '</div>' +
+      '<button class="knapp" data-act="inst-stang">Klar</button></div></div>';
+  }
+  function sparaInst() {
+    var a = $('#s-namn'), b = $('#s-kompis'), c = $('#s-vanner');
+    if (a) S.namn = a.value.trim().slice(0, 20);
+    if (b) S.kompis = b.value.trim().slice(0, 16);
+    if (c) S.vanner = c.value.slice(0, 160);
+    spara();
+  }
+
+  // ---------- Händelser ----------
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-act]'); if (!el) return;
+    var act = el.getAttribute('data-act');
+    if (act === 'inst-bakgrund' && e.target !== el) return;
+    switch (act) {
+      case 'oppna': ljud('tap'); aktivtSet = el.getAttribute('data-set'); visa('set'); break;
+      case 'hem': ljud('tap'); visa('hem'); break;
+      case 'starta': ljud('tap'); startaPass(el.getAttribute('data-set'), el.getAttribute('data-pass')); break;
+      case 'igen': ljud('tap'); startaPass('igen', 'igen'); break;
+      case 'avbryt': ljud('tap'); visa(P && P.setId !== 'igen' ? 'set' : 'hem'); break;
+      case 'kor-igen': startaPass(P.setId, P.passId); break;
+      case 'ova-mer': { var set = hittaSet(P.setId), g = set.pass.filter(function (p) { return p.gen; }); startaPass(set.id, g[g.length - 1].id); break; }
+      case 'kompis': rorelse(slumpRorelse()); minSpel('jubel', 1200); { var pr = $('#prat'); if (pr) pr.textContent = PRAT[Math.floor(Math.random() * PRAT.length)]; } break;
+      case 'rorelse': rorelse(el.getAttribute('data-r')); minSpel('jubel', 1200); break;
+      case 'medalj': ljud('tap'); el.classList.remove('dangla'); void el.offsetWidth; el.classList.add('dangla'); break;
+      case 'stjarnor': ljud('boing'); el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); konfettiFran(el, 24); break;
+      case 'onb-forslag': { var inp = $('#onb-kompis'); if (inp) { inp.value = el.getAttribute('data-n'); inp.focus(); } ljud('tap'); break; }
+      case 'inst': inst = true; nollstallFraga = false; render(); setTimeout(function () { var f = $('#s-namn'); if (f) f.focus(); }, 50); break;
+      case 'inst-bakgrund': case 'inst-stang': sparaInst(); inst = false; render(); break;
+      case 'skin': sparaInst(); S.skin = el.getAttribute('data-s'); spara(); render(); break;
+      case 'vaxla': sparaInst(); { var k = el.getAttribute('data-k'); S[k] = !S[k]; spara(); render(); } break;
+      case 'nollstall': sparaInst(); nollstallFraga = true; render(); break;
+      case 'nollstall-nej': nollstallFraga = false; render(); break;
+      case 'nollstall-ja': { var beh = { namn: S.namn, kompis: S.kompis, vanner: S.vanner, skin: S.skin, ljud: S.ljud, uppl: S.uppl }; S = Object.assign(standard(), beh); spara(); nollstallFraga = false; inst = false; toast('Klart! Allt är nollställt.'); render(); break; }
+      // Pass
+      case 'val': {
+        var i = +el.getAttribute('data-i'); if (P.klar || P.valda.indexOf(i) >= 0) return;
+        if (i === P.q.ratt) { lyckat(null, el); }
+        else { P.valda.push(i); if (P.q.alt.length - P.valda.length <= 1) P.forsok = Math.max(P.forsok, 1); misslyckat(); }
+        break;
+      }
+      case 'falt': { var fi = +el.getAttribute('data-i'); if (P.faltStatus && P.faltStatus[fi] && !P.faltStatus[fi].ok && !P.faltStatus[fi].format) { P.svar[fi] = ''; P.faltStatus[fi] = null; } P.aktivt = fi; ljud('tap'); ritaInteraktion(); break; }
+      case 'tangent': skriv(el.getAttribute('data-k')); break;
+      case 'ratta': ratta(); break;
+      case 'ledtrad': P.ledtrad = true; P.ledtradVisad = true; ljud('tap'); ritaInteraktion(); break;
+      case 'visa-losning': P.losning = true; ritaInteraktion(); break;
+      case 'nasta': ljud('tap'); nasta(); break;
+      case 'ordna-ta': if (!P.klar) { P.ordning.push(+el.getAttribute('data-i')); ljud('tap'); ritaInteraktion(); } break;
+      case 'ordna-bort': if (!P.klar) { P.ordning.splice(+el.getAttribute('data-pos'), 1); ljud('tap'); ritaInteraktion(); } break;
+      case 'pil-angra': P.pilar.pop(); ritaInteraktion(); break;
+      case 'pil-rensa': P.pilar = []; ritaInteraktion(); break;
+      case 'kort-visa': P.kortVisat = true; ljud('tap'); ritaInteraktion(); break;
+      case 'kort-bedom': {
+        var v = el.getAttribute('data-v'); P.klar = true; P.utfall = v; P.resultat[P.i] = v; laggTillStjarnor(POANG[v]);
+        if (v === 'inte') { laggTillMissad(P.q); P.besked = { typ: 'info', text: 'Bra att du är ärlig! Kortet kommer tillbaka senare.' }; minSpel('hmm', 1200); }
+        else { if (P.setId === 'igen') taBortMissad(P.q); P.besked = { typ: 'ratt', text: v === 'kunde' ? BEROM[Math.floor(Math.random() * BEROM.length)] : 'Bra! Snart sitter det.', plus: POANG[v] }; ljud('ratt'); minSpel('jubel', 1200); rorelse(v === 'kunde' ? slumpRorelse() : 'tap'); }
+        ritaInteraktion();
+        if (v === 'kunde') konfettiFran($('.besked.ratt'), 50);
+        break;
+      }
+    }
+  });
+
+  // Pilkastning: tryck på tavlan
+  document.addEventListener('pointerdown', function (e) {
+    var sv = e.target.closest && e.target.closest('#tavla'); if (!sv || !P || P.klar || P.q.typ !== 'pil') return;
+    if (P.pilar.length >= P.q.pilar) { toast('Alla ' + P.q.pilar + ' pilar är kastade. Tryck på Rätta.'); return; }
+    var pt = sv.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    var p = pt.matrixTransform(sv.getScreenCTM().inverse()), d = Math.hypot(p.x - 130, p.y - 130), v = null;
+    for (var i = RINGAR.length - 1; i >= 0; i--) if (d <= RINGAR[i].r) { v = RINGAR[i].v; break; }
+    if (v === null) { toast('Pilen missade tavlan. Försök igen!'); return; }
+    P.pilar.push({ v: v, x: Math.round(p.x), y: Math.round(p.y) }); ljud('pil'); ritaInteraktion();
+  });
+
+  function skriv(k) {
+    if (!P || P.klar || P.q.typ !== 'svar') return;
+    var f = P.q.falt[P.aktivt]; if (!f || f.typ === 'text') return;
+    var v = P.svar[P.aktivt] || '';
+    if (k === 'del') v = v.slice(0, -1);
+    else if (k === ',' ) { if (v.indexOf(',') < 0 && v.indexOf('/') < 0) v = (v || '0') + ','; }
+    else if (k === '/') { if (v && v.indexOf('/') < 0 && v.indexOf(',') < 0) v += '/'; }
+    else if (v.length < 9) v += k;
+    P.svar[P.aktivt] = v;
+    if (P.faltStatus) P.faltStatus[P.aktivt] = null;
+    ljud('tap'); ritaInteraktion();
+  }
+
+  document.addEventListener('input', function (e) {
+    var t = e.target;
+    if (t.hasAttribute && t.hasAttribute('data-text') && P) { P.svar[+t.getAttribute('data-text')] = t.value; }
+  });
+  document.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target.getAttribute('data-form');
+    if (f === 'kompis') { var v = ($('#onb-kompis').value || '').trim().slice(0, 16); if (!v) { toast('Skriv ett namn eller välj ett förslag.'); return; } S.kompis = v; spara(); ljud('ratt'); render(); setTimeout(function () { rorelse('hopp'); minSpel('jubel', 1300); }, 100); }
+    if (f === 'namn') { var n = ($('#onb-namn').value || '').trim().slice(0, 20); if (!n) { toast('Skriv ditt namn först.'); return; } S.namn = n; spara(); ljud('ratt'); render(); setTimeout(function () { rorelse('hopp'); konfettiFran($('.kompis-knapp'), 50); }, 100); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (inst && e.key === 'Escape') { sparaInst(); inst = false; render(); return; }
+    if (vy !== 'pass' || !P) return;
+    var t = e.target;
+    if (t && t.tagName === 'INPUT') { if (e.key === 'Enter' && !P.klar) { e.preventDefault(); ratta(); } return; }
+    if (P.klar && e.key === 'Enter') { e.preventDefault(); nasta(); return; }
+    if (P.q.typ === 'svar') {
+      if (/^[0-9]$/.test(e.key)) { skriv(e.key); e.preventDefault(); }
+      else if (e.key === ',' || e.key === '.') { skriv(','); e.preventDefault(); }
+      else if (e.key === '/') { skriv('/'); e.preventDefault(); }
+      else if (e.key === 'Backspace') { skriv('del'); e.preventDefault(); }
+      else if (e.key === 'Enter') { ratta(); e.preventDefault(); }
+      else if (e.key === 'Tab' && P.q.falt.length > 1) { P.aktivt = (P.aktivt + 1) % P.q.falt.length; ritaInteraktion(); e.preventDefault(); }
+    }
+  });
+  window.addEventListener('resize', function () { if (raf) storlek(); });
+
+  render();
+})();
+
+</script>
+</body></html>
