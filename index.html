@@ -441,6 +441,30 @@ p{margin:0}
 .tavla-domare span{display:block;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media (max-width:480px){.hang{width:42px;height:76px}.figur-val{gap:6px}.figur-knapp{font-size:13px}}
 
+/* ---------- Bonusspel ---------- */
+.spel-knapp{background:var(--guld);color:#2B2100;box-shadow:0 5px 0 color-mix(in srgb,var(--guld) 55%,#000),0 10px 22px var(--skugga);animation:nastaPuls 1.6s ease-in-out infinite}
+.spelvy{display:flex;flex-direction:column;overflow:hidden}
+.spel-topp{display:flex;align-items:center;gap:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 12px}
+.spel-tid{flex:1;height:14px;border-radius:7px;background:var(--line);overflow:hidden;min-width:60px}
+#spel-tidfyll{height:100%;width:0;background:var(--pop);border-radius:7px}
+.spel-hjartan{display:flex;gap:2px}.spel-hjartan svg{width:28px;height:28px}
+.spel-stj{display:inline-flex;align-items:center;gap:4px;font:800 22px var(--display);font-variant-numeric:tabular-nums;background:var(--guld-soft);padding:4px 12px 4px 6px;border-radius:999px}
+.spel-stj svg{width:26px;height:26px}
+.spelplan{position:relative;flex:1;min-height:320px;margin-left:max(16px,env(safe-area-inset-left,0px));margin-right:max(16px,env(safe-area-inset-right,0px));margin-bottom:16px;border-radius:28px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:0 3px 0 var(--line),0 14px 30px var(--skugga);background:var(--surface)}
+.spelplan.skaka{animation:skaka .4s}
+#spelduk{position:absolute;inset:0;width:100%;height:100%;display:block}
+.spel-figur{position:absolute;left:0;top:0;will-change:transform;pointer-events:none;z-index:2}
+.spel-figur .kompis{width:100%}
+.spel-figur.skyddad{animation:blinkFig .24s steps(2) infinite}
+@keyframes blinkFig{50%{opacity:.25}}
+.spel-overlay{position:absolute;inset:0;z-index:3;display:grid;place-items:center;padding:16px;background:color-mix(in srgb,var(--bg) 62%,transparent)}
+.spel-ruta{background:var(--surface);border-radius:26px;padding:22px;max-width:440px;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 18px 44px var(--skugga);animation:bubbla .4s cubic-bezier(.3,1.6,.5,1)}
+.spel-ruta h2{font-size:30px;color:var(--pop-deep)}
+.spel-ruta p{font-size:18px}
+.spel-liten{color:var(--muted);font-size:15px!important}
+.spel-resultat{display:inline-flex;align-items:center;gap:6px;font:800 30px var(--display)}
+.spel-resultat svg{width:34px;height:34px}
+
 </style>
 <div id="app" class="app"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
@@ -1675,16 +1699,18 @@ var Gubbar = (function () {
   function fastaPass(set) { return set.pass.filter(function (p) { return p.fragor; }); }
 
   function visa(ny) {
+    if (vy === 'spel' && ny !== 'spel') stoppaSpel();
     vy = ny;
     render();
   }
   function render() {
     document.documentElement.setAttribute('data-skin', S.skin || 'rosa');
-    var html = vy === 'hem' ? vyHem() : vy === 'set' ? vySet() : vy === 'pass' ? vyPass() : vyKlar();
+    var html = vy === 'hem' ? vyHem() : vy === 'set' ? vySet() : vy === 'pass' ? vyPass() : vy === 'spel' ? vySpel() : vyKlar();
     app.innerHTML = html + (inst ? vyInst() : '');
     startaBlink();
     if (vy === 'pass') efterPass();
     if (vy === 'klar') efterKlar();
+    if (vy === 'spel') efterSpel();
     if (vy === 'hem') setTimeout(function () { $$('.hang:not(.tom)').forEach(function (h, i) { setTimeout(function () { h.classList.add('dangla'); }, i * 90); }); }, 250);
   }
 
@@ -1773,7 +1799,7 @@ var Gubbar = (function () {
   function startaPass(setId, passId) {
     var fragor, set = hittaSet(setId), pass;
     if (setId === 'igen') {
-      fragor = S.missade.slice(0, 8).map(function (m) { return m.ref ? hamtaRef(m.ref) : m.q; }).filter(Boolean);
+      fragor = L.blanda(Math.random, S.missade.slice(0, 8).map(function (m) { return m.ref ? hamtaRef(m.ref) : m.q; }).filter(Boolean));
       pass = { id: 'igen', titel: 'Öva igen' };
     } else {
       pass = set.pass.filter(function (p) { return p.id === passId; })[0];
@@ -1782,7 +1808,7 @@ var Gubbar = (function () {
         var alla = [];
         set.pass.forEach(function (p) { if (p.fragor) p.fragor.forEach(function (q, i) { if (q.typ !== 'kort') alla.push(Object.assign({}, q, { ref: passNyckel(set.id, p.id) + '/' + i, amne: set.amne })); }); });
         fragor = L.blanda(Math.random, alla).slice(0, pass.antal || 10);
-      } else fragor = pass.fragor.map(function (q, i) { return Object.assign({}, q, { ref: passNyckel(setId, passId) + '/' + i, amne: set.amne }); });
+      } else fragor = L.blanda(Math.random, pass.fragor.map(function (q, i) { return Object.assign({}, q, { ref: passNyckel(setId, passId) + '/' + i, amne: set.amne }); }));
     }
     if (!fragor.length) { toast('Det finns inga frågor att öva på just nu.'); return visa('hem'); }
     if (setId !== 'igen') aktivtSet = setId;
@@ -1811,7 +1837,7 @@ var Gubbar = (function () {
       '<header class="pass-topp"><button class="ikon-knapp" data-act="avbryt" aria-label="Avsluta passet">' + IK.kryss + '</button>' +
         '<div class="bom" role="progressbar" aria-valuemin="0" aria-valuemax="' + n + '" aria-valuenow="' + P.i + '" aria-label="Fråga ' + (P.i + 1) + ' av ' + n + '"><div class="bom-yta"><div class="bom-fyll" style="width:' + (andel * 100).toFixed(1) + '%"></div></div><div class="bom-prickar">' + prickar + '</div><div class="bom-kompis hoppa" style="left:' + (4 + andel * 92).toFixed(1) + '%">' + miniKompis() + '</div></div>' +
         '<span class="raknare">' + (P.i + 1) + '/' + n + '</span></header>' +
-      '<div class="pass-grid"><article class="fraga-kort in" id="fraga">' +
+      '<div class="pass-grid"><article class="fraga-kort in" id="fraga" data-ref="' + esc(q.ref || '') + '">' +
         '<div class="fraga-meta">' + meta + '</div>' +
         '<h2 class="fraga-text">' + rt(q.text) + '</h2>' +
         (q.uttryck ? '<div class="uttryck">' + rtUttryck(q.uttryck) + '</div>' : '') +
@@ -1977,6 +2003,7 @@ var Gubbar = (function () {
       '<div class="domare" aria-label="Domarnas poäng">' + dom + '</div>' +
       '<div class="klar-stats"><span>' + IK.stjarna + '+' + P.stjarnorIPass + ' stjärnor</span><span>' + s.ratt + ' av ' + P.fragor.length + ' rätt direkt</span></div>' + ny +
       '<button class="kompis-knapp" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG('jubel') + '</button>' +
+      (P.spelat ? '' : '<button class="knapp spel-knapp" data-act="spel">' + IK.stjarna + 'Bonusspel: ' + SPELNAMN[spelTyp()] + '</button>') +
       '<div class="klar-knappar"><button class="knapp sek" data-act="hem">Till start</button><button class="knapp sek" data-act="kor-igen">Kör igen</button>' + (harOva ? '<button class="knapp" data-act="ova-mer">Träna mer på samma sak</button>' : '') + '</div>' +
       '</div></div>';
   }
@@ -1985,6 +2012,222 @@ var Gubbar = (function () {
     setTimeout(function () { konfetti(innerWidth * 0.25, innerHeight * 0.3, 60, 120); konfetti(innerWidth * 0.75, innerHeight * 0.3, 60, 120); }, 600);
     setTimeout(function () { rorelse(P.slut.nya.length ? P.slut.nya[P.slut.nya.length - 1].id : slumpRorelse()); }, 1500);
   }
+
+  // ---------- Bonusspel efter ett klarat pass ----------
+  // Två spel som turas om: "Akta dig!" (dra figuren, undvik det som faller) och "Hinderhoppet" (tryck för att hoppa).
+  var SPELTID = 30, MAX_SPELSTJ = 5, SPEL = null;
+  var SPELNAMN = { regn: 'Akta dig!', hopp: 'Hinderhoppet' };
+  function spelTyp() { return S.nastaSpel === 'hopp' ? 'hopp' : 'regn'; }
+  var HJARTA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 5.3 3.1 1.7-1.9 3.2-3.1 5.3-3.1 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z" fill="var(--rod)" stroke="color-mix(in srgb,var(--rod) 60%,#000)" stroke-width="1.2"/></svg>';
+
+  function vySpel() {
+    var typ = spelTyp(), namn = esc(kompisNamn());
+    var instr = typ === 'hopp' ? 'Tryck på skärmen för att hoppa över häckarna och plintarna. Tryck en gång till i luften för ett extra högt hopp. Ta stjärnorna på vägen!' : 'Dra ' + namn + ' med fingret och akta dig för snöbollarna och kottarna. Fånga stjärnorna!';
+    return '<div class="vy spelvy"><div class="spel-topp"><button class="ikon-knapp" data-act="spel-avsluta" aria-label="Avsluta spelet">' + IK.kryss + '</button>' +
+      '<div class="spel-tid" aria-hidden="true"><div id="spel-tidfyll"></div></div><span class="spel-hjartan" id="spel-hjartan" aria-label="3 liv kvar">' + HJARTA + HJARTA + HJARTA + '</span>' +
+      '<span class="spel-stj" aria-live="polite">' + IK.stjarna + '<b id="spel-stj">0</b></span></div>' +
+      '<div class="spelplan ' + typ + '" id="spelplan"><canvas id="spelduk"></canvas><div class="spel-figur" id="spelfigur">' + kompisSVG('glad') + '</div>' +
+      '<div class="spel-overlay" id="spel-overlay"><div class="spel-ruta"><h2>' + SPELNAMN[typ] + '</h2><p>' + instr + '</p><p class="spel-liten">Du har tre liv, och spelet tar ' + SPELTID + ' sekunder. Du kan få upp till ' + MAX_SPELSTJ + ' stjärnor.</p><button class="knapp" data-act="spel-start">Starta!</button></div></div></div></div>';
+  }
+  function spelFarger() {
+    var cs = getComputedStyle(document.documentElement), f = {};
+    ['bg', 'surface', 'ink', 'muted', 'line', 'pop', 'pop2', 'pop-soft', 'pop2-soft', 'guld', 'matta', 'matta-kant', 'bom', 'rod'].forEach(function (k) { f[k] = cs.getPropertyValue('--' + k).trim() || '#888'; });
+    return f;
+  }
+  function efterSpel() {
+    var plan = $('#spelplan'), duk = $('#spelduk'), typ = spelTyp();
+    SPEL = { typ: typ, plan: plan, duk: duk, g: duk.getContext('2d'), fig: $('#spelfigur'), igang: false, slut: false, t: 0, liv: 3, stj: 0, stjUte: 0, saker: [], nasta: 0.9, skydd: 0, raf: 0, hopp: 0, vy: 0, markX: 0, moln: [], farg: spelFarger() };
+    for (var i = 0; i < 4; i++) SPEL.moln.push({ x: Math.random(), y: 0.08 + Math.random() * 0.3, s: 0.6 + Math.random() * 0.8 });
+    storlekSpel(true); ritaSpel(); placeraFigur();
+    plan.addEventListener('pointerdown', spelPek);
+    plan.addEventListener('pointermove', spelDra);
+  }
+  function storlekSpel(forsta) {
+    var s = SPEL; if (!s) return;
+    var W = s.plan.clientWidth, H = s.plan.clientHeight, d = Math.min(2, window.devicePixelRatio || 1);
+    var fx = forsta ? 0.5 : (s.W ? s.x / s.W : 0.5), fy = forsta ? 1 : (s.H ? s.y / s.H : 1);
+    s.W = W; s.H = H; s.duk.width = W * d; s.duk.height = H * d; s.g.setTransform(d, 0, 0, d, 0, 0);
+    s.skala = Math.max(0.7, Math.min(1.3, H / 800)); s.skalaX = Math.max(0.6, Math.min(1.3, W / 800));
+    s.fw = Math.max(90, Math.min(s.typ === 'hopp' ? 150 : 170, W * (s.typ === 'hopp' ? 0.22 : 0.26))); s.fh = s.fw * 196 / 240;
+    s.fig.style.width = s.fw + 'px';
+    s.mark = H - 46 * s.skala;
+    if (s.typ === 'hopp') { s.x = W * 0.2; s.y = forsta ? s.mark : Math.min(s.mark, fy * H); }
+    else { s.x = fx * W; s.y = forsta ? H - 14 : fy * H; s.mx = s.x; s.my = s.y; }
+    s.hoppV = Math.sqrt(2 * 2400 * 150) * s.skala;
+  }
+  function placeraFigur() {
+    var s = SPEL; if (!s) return;
+    var rot = s.typ === 'hopp' && s.hopp ? Math.max(-25, Math.min(25, s.vy / 40)) : (s.typ === 'regn' ? Math.max(-14, Math.min(14, (s.mx - s.x) / 12)) : 0);
+    s.fig.style.transform = 'translate(' + (s.x - s.fw * 0.5).toFixed(1) + 'px,' + (s.y - s.fh * 0.94).toFixed(1) + 'px) rotate(' + rot.toFixed(1) + 'deg)';
+  }
+  function hitbox(s) { return { x1: s.x - s.fw * 0.16, x2: s.x + s.fw * 0.16, y1: s.y - s.fh * 0.86, y2: s.y - s.fh * 0.08 }; }
+  function cirkelTraff(o, r) { var cx = Math.max(r.x1, Math.min(o.x, r.x2)), cy = Math.max(r.y1, Math.min(o.y, r.y2)); return Math.hypot(o.x - cx, o.y - cy) < o.r * 0.85; }
+  function rektTraff(a, b) { return a.x1 < b.x2 && a.x2 > b.x1 && a.y1 < b.y2 && a.y2 > b.y1; }
+
+  function spelPos(e) { var b = SPEL.plan.getBoundingClientRect(); return { x: e.clientX - b.left, y: e.clientY - b.top }; }
+  function spelPek(e) {
+    var s = SPEL; if (!s || !s.igang || s.slut) return;
+    if (e.target.closest && e.target.closest('.spel-overlay')) return;
+    if (s.typ === 'hopp') { hoppa(); e.preventDefault(); return; }
+    var p = spelPos(e); satMal(p);
+  }
+  function spelDra(e) {
+    var s = SPEL; if (!s || !s.igang || s.slut || s.typ !== 'regn') return;
+    if (e.pointerType === 'mouse' && !e.buttons) return;
+    satMal(spelPos(e));
+  }
+  function satMal(p) {
+    var s = SPEL;
+    s.mx = Math.max(s.fw * 0.2, Math.min(s.W - s.fw * 0.2, p.x));
+    s.my = Math.max(s.H * 0.42, Math.min(s.H - 10, p.y + s.fh * 0.45));
+  }
+  function hoppa() {
+    var s = SPEL; if (s.hopp >= 2) return;
+    s.vy = -s.hoppV * (s.hopp ? 0.8 : 1); s.hopp++; ljud('boing');
+  }
+
+  function spelStart() {
+    var s = SPEL; if (!s || s.slut) return;
+    $('#spel-overlay').hidden = true;
+    if (!s.startad) { s.startad = true; S.nastaSpel = s.typ === 'hopp' ? 'regn' : 'hopp'; if (P) P.spelat = true; spara(); }
+    s.igang = true; s.pausad = false; s.sist = 0;
+    cancelAnimationFrame(s.raf); s.raf = requestAnimationFrame(spelSteg);
+  }
+  function spelSteg(ts) {
+    var s = SPEL; if (!s || s.slut || s.pausad) return;
+    var dt = s.sist ? Math.min(0.05, (ts - s.sist) / 1000) : 0; s.sist = ts;
+    s.t += dt; s.skydd = Math.max(0, s.skydd - dt);
+    if (s.typ === 'regn') uppdRegn(s, dt); else uppdHopp(s, dt);
+    if (s.slut) return;
+    s.fig.classList.toggle('skyddad', s.skydd > 0);
+    ritaSpel(); placeraFigur();
+    var tf = $('#spel-tidfyll'); if (tf) tf.style.width = Math.min(100, s.t / SPELTID * 100).toFixed(1) + '%';
+    if (s.t >= SPELTID) { slutSpel(true); return; }
+    s.raf = requestAnimationFrame(spelSteg);
+  }
+  function uppdRegn(s, dt) {
+    var k = Math.min(1, dt * 12);
+    s.x += (s.mx - s.x) * k; s.y += (s.my - s.y) * k;
+    s.nasta -= dt;
+    if (s.nasta <= 0) {
+      var stjarna = s.stj + s.stjUte < MAX_SPELSTJ && Math.random() < 0.2, r = stjarna ? 20 : (15 + Math.random() * 12) * s.skala;
+      s.saker.push({ x: r + Math.random() * (s.W - 2 * r), y: -r, r: r, v: (stjarna ? 150 : 190 + s.t * 9) * s.skala * (0.85 + Math.random() * 0.3), typ: stjarna ? 'stjarna' : (Math.random() < 0.5 ? 'snoboll' : 'kotte'), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 3 });
+      if (stjarna) s.stjUte++;
+      s.nasta = Math.max(0.3, 0.95 - s.t * 0.022);
+    }
+    var hb = hitbox(s);
+    s.saker = s.saker.filter(function (o) {
+      o.y += o.v * dt; o.rot += o.vr * dt;
+      if (cirkelTraff(o, hb)) {
+        if (o.typ === 'stjarna') { fangaStjarna(o); return false; }
+        if (s.skydd <= 0) { traffad(); return false; }
+      }
+      if (o.y - o.r > s.H + 10) { if (o.typ === 'stjarna') s.stjUte--; return false; }
+      return true;
+    });
+  }
+  function uppdHopp(s, dt) {
+    var g = 2400 * s.skala, fart = (300 + s.t * 7) * s.skalaX;
+    s.vy += g * dt; s.y += s.vy * dt;
+    if (s.y >= s.mark) { s.y = s.mark; s.vy = 0; s.hopp = 0; }
+    s.markX = (s.markX + fart * dt) % 56;
+    s.moln.forEach(function (m) { m.x -= dt * 0.02 * m.s; if (m.x < -0.2) m.x = 1.1; });
+    s.nasta -= dt;
+    if (s.nasta <= 0) {
+      var typ = Math.random() < 0.55 ? 'hack' : 'plint';
+      s.saker.push({ typ: typ, x: s.W + 40, w: (typ === 'hack' ? 28 : 64) * s.skalaX, h: (typ === 'hack' ? 54 : 58) * s.skala });
+      if (s.stj + s.stjUte < MAX_SPELSTJ && Math.random() < 0.6) { s.saker.push({ typ: 'stjarna', x: s.W + 40 + (90 + Math.random() * 90) * s.skalaX, y: s.mark - (120 + Math.random() * 80) * s.skala, r: 18 }); s.stjUte++; }
+      s.nasta = Math.max(0.85, 1.7 - s.t * 0.025) * (0.8 + Math.random() * 0.5);
+    }
+    var hb = hitbox(s);
+    s.saker = s.saker.filter(function (o) {
+      o.x -= fart * dt;
+      if (o.typ === 'stjarna') {
+        if (cirkelTraff(o, hb)) { fangaStjarna(o); return false; }
+        if (o.x < -40) { s.stjUte--; return false; }
+        return true;
+      }
+      if (!o.traffad && rektTraff({ x1: o.x + 4, x2: o.x + o.w - 4, y1: s.mark - o.h + 4, y2: s.mark }, hb) && s.skydd <= 0) { o.traffad = true; traffad(); }
+      return o.x + o.w > -40;
+    });
+  }
+  function fangaStjarna(o) {
+    var s = SPEL; s.stjUte = Math.max(0, s.stjUte - 1);
+    if (s.stj >= MAX_SPELSTJ) return;
+    s.stj++; var el = $('#spel-stj'); if (el) el.textContent = s.stj;
+    ljud('ratt');
+    var b = s.plan.getBoundingClientRect(); konfetti(b.left + o.x, b.top + o.y, 14, 10);
+  }
+  function traffad() {
+    var s = SPEL; s.liv--; s.skydd = 1.3;
+    var h = $('#spel-hjartan'); if (h) { h.innerHTML = new Array(Math.max(0, s.liv) + 1).join(HJARTA); h.setAttribute('aria-label', Math.max(0, s.liv) + ' liv kvar'); }
+    ljud('fel'); minSpel('hmm', 900);
+    var p = s.plan; p.classList.remove('skaka'); void p.offsetWidth; p.classList.add('skaka');
+    if (s.liv <= 0) slutSpel(false);
+  }
+  function slutSpel(klarade) {
+    var s = SPEL; if (!s || s.slut) return;
+    s.slut = true; s.igang = false; cancelAnimationFrame(s.raf); s.fig.classList.remove('skyddad');
+    S.stjarnor += s.stj; spara();
+    var sek = Math.min(SPELTID, Math.floor(s.t));
+    var o = $('#spel-overlay');
+    o.innerHTML = '<div class="spel-ruta"><h2>' + (klarade ? 'Grymt! Du klarade hela spelet!' : 'Bra kämpat!') + '</h2>' +
+      '<p>' + (klarade ? esc(kompisNamn()) + ' klarade sig i alla ' + SPELTID + ' sekunder.' : esc(kompisNamn()) + ' klarade sig i ' + sek + ' sekunder.') + '</p>' +
+      '<p class="spel-resultat">' + IK.stjarna + '<b>+' + s.stj + '</b> ' + (s.stj === 1 ? 'stjärna' : 'stjärnor') + '</p>' +
+      '<p class="spel-liten">Klara ett pass till, så får du spela igen. Nästa gång blir det ' + SPELNAMN[spelTyp()] + '.</p>' +
+      '<button class="knapp" data-act="hem">Till start</button></div>';
+    o.hidden = false;
+    if (klarade || s.stj) { minSpel('jubel', 1500); rorelse(slumpRorelse()); konfettiFran($('.spel-resultat'), 60); ljud('medalj'); }
+  }
+  function stoppaSpel() { if (SPEL) { cancelAnimationFrame(SPEL.raf); SPEL = null; } }
+
+  function stjarnform(g, x, y, r) {
+    g.beginPath();
+    for (var i = 0; i < 10; i++) { var a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * 0.45 : r; g.lineTo(x + rr * Math.cos(a), y + rr * Math.sin(a)); }
+    g.closePath();
+  }
+  function rundRekt(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+  function ritaSpel() {
+    var s = SPEL, g = s.g, f = s.farg, W = s.W, H = s.H;
+    var bg = g.createLinearGradient(0, 0, 0, H); bg.addColorStop(0, f['pop2-soft']); bg.addColorStop(1, f.surface);
+    g.fillStyle = bg; g.fillRect(0, 0, W, H);
+    g.fillStyle = f.surface; g.globalAlpha = 0.85;
+    s.moln.forEach(function (m) { var x = m.x * W, y = m.y * H, r = 22 * m.s * s.skala; g.beginPath(); g.arc(x, y, r, 0, 7); g.arc(x + r, y - r * 0.4, r * 1.2, 0, 7); g.arc(x + r * 2.2, y, r * 0.9, 0, 7); g.fill(); });
+    g.globalAlpha = 1;
+    if (s.typ === 'hopp') {
+      g.fillStyle = f.matta; g.fillRect(0, s.mark, W, H - s.mark);
+      g.fillStyle = f['matta-kant']; for (var x = -s.markX; x < W; x += 56) g.fillRect(x, s.mark + 10, 28, 6);
+      g.fillRect(0, s.mark, W, 4);
+    } else {
+      g.fillStyle = f.matta; g.fillRect(0, H - 22, W, 22); g.fillStyle = f['matta-kant']; g.fillRect(0, H - 22, W, 4);
+    }
+    s.saker.forEach(function (o) {
+      g.save();
+      if (o.typ === 'stjarna') {
+        g.translate(o.x, o.y); g.rotate(Math.sin(s.t * 3 + o.x) * 0.3);
+        stjarnform(g, 0, 0, o.r); g.fillStyle = f.guld; g.fill(); g.lineWidth = 2.5; g.strokeStyle = f.ink; g.stroke();
+      } else if (o.typ === 'snoboll') {
+        g.beginPath(); g.arc(o.x, o.y, o.r, 0, 7); g.fillStyle = '#FFFFFF'; g.fill(); g.lineWidth = 3; g.strokeStyle = '#7FA9DD'; g.stroke();
+        g.beginPath(); g.arc(o.x - o.r * 0.35, o.y - o.r * 0.35, o.r * 0.25, 0, 7); g.fillStyle = '#DCEBFF'; g.fill();
+      } else if (o.typ === 'kotte') {
+        g.translate(o.x, o.y); g.rotate(o.rot);
+        g.beginPath(); g.ellipse(0, 0, o.r * 0.72, o.r, 0, 0, 7); g.fillStyle = '#8A5A33'; g.fill(); g.lineWidth = 2.5; g.strokeStyle = '#4E3018'; g.stroke();
+        g.strokeStyle = '#C08A55'; g.lineWidth = 2;
+        for (var i = -2; i <= 2; i++) { g.beginPath(); g.moveTo(-o.r * 0.6, i * o.r * 0.32); g.quadraticCurveTo(0, i * o.r * 0.32 + o.r * 0.22, o.r * 0.6, i * o.r * 0.32); g.stroke(); }
+      } else if (o.typ === 'hack') {
+        var top = s.mark - o.h;
+        g.strokeStyle = f.ink; g.lineWidth = 5; g.lineCap = 'round';
+        g.beginPath(); g.moveTo(o.x + 4, s.mark); g.lineTo(o.x + 4, top + 6); g.moveTo(o.x + o.w - 4, s.mark); g.lineTo(o.x + o.w - 4, top + 6); g.stroke();
+        rundRekt(g, o.x - 6, top, o.w + 12, 12, 5); g.fillStyle = f.pop; g.fill(); g.lineWidth = 2.5; g.stroke();
+        g.fillStyle = '#FFFFFF'; g.fillRect(o.x + o.w * 0.2, top + 3, o.w * 0.22, 6); g.fillRect(o.x + o.w * 0.62, top + 3, o.w * 0.22, 6);
+      } else if (o.typ === 'plint') {
+        var lag = o.h / 3;
+        for (var j = 0; j < 3; j++) { var w = o.w - j * 6, x0 = o.x + j * 3; rundRekt(g, x0, s.mark - (j + 1) * lag, w, lag, 5); g.fillStyle = j === 2 ? f.pop : f.bom; g.fill(); g.lineWidth = 2.5; g.strokeStyle = f.ink; g.stroke(); }
+      }
+      g.restore();
+    });
+  }
+
 
   // ---------- Vy: Inställningar ----------
   function vyInst() {
@@ -2019,6 +2262,9 @@ var Gubbar = (function () {
       case 'igen': ljud('tap'); startaPass('igen', 'igen'); break;
       case 'avbryt': ljud('tap'); visa(P && P.setId !== 'igen' ? 'set' : 'hem'); break;
       case 'kor-igen': startaPass(P.setId, P.passId); break;
+      case 'spel': ljud('tap'); visa('spel'); break;
+      case 'spel-start': ljud('tap'); spelStart(); break;
+      case 'spel-avsluta': if (SPEL && SPEL.startad && !SPEL.slut) { S.stjarnor += SPEL.stj; spara(); } visa('hem'); break;
       case 'ova-mer': { var set = hittaSet(P.setId), g = set.pass.filter(function (p) { return p.gen; }); startaPass(set.id, g[g.length - 1].id); break; }
       case 'kompis': rorelse(slumpRorelse()); minSpel('jubel', 1200); { var pr = $('#prat'); if (pr) pr.textContent = PRAT[Math.floor(Math.random() * PRAT.length)]; } break;
       case 'rorelse': rorelse(el.getAttribute('data-r')); minSpel('jubel', 1200); break;
@@ -2100,6 +2346,7 @@ var Gubbar = (function () {
   });
   document.addEventListener('keydown', function (e) {
     if (inst && e.key === 'Escape') { sparaInst(); inst = false; render(); return; }
+    if (vy === 'spel' && SPEL && SPEL.igang && SPEL.typ === 'hopp' && (e.key === ' ' || e.key === 'ArrowUp')) { hoppa(); e.preventDefault(); return; }
     if (vy !== 'pass' || !P) return;
     var t = e.target;
     if (t && t.tagName === 'INPUT') { if (e.key === 'Enter' && !P.klar) { e.preventDefault(); ratta(); } return; }
@@ -2113,7 +2360,13 @@ var Gubbar = (function () {
       else if (e.key === 'Tab' && P.q.falt.length > 1) { P.aktivt = (P.aktivt + 1) % P.q.falt.length; ritaInteraktion(); e.preventDefault(); }
     }
   });
-  window.addEventListener('resize', function () { if (raf) storlek(); });
+  window.addEventListener('resize', function () { if (raf) storlek(); if (vy === 'spel' && SPEL) { storlekSpel(false); ritaSpel(); placeraFigur(); } });
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && vy === 'spel' && SPEL && SPEL.igang && !SPEL.slut) {
+      SPEL.pausad = true; SPEL.igang = false; cancelAnimationFrame(SPEL.raf);
+      var o = $('#spel-overlay'); if (o) { o.innerHTML = '<div class="spel-ruta"><h2>Paus</h2><p>Spelet väntar på dig.</p><button class="knapp" data-act="spel-start">Fortsätt</button></div>'; o.hidden = false; }
+    }
+  });
 
   render();
 })();
