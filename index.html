@@ -2038,12 +2038,28 @@ var Gubbar = (function () {
   function speltid() { return mittSpel() ? 20 : SPELTID; }
   function maxStj() { return mittSpel() ? 3 : MAX_SPELSTJ; }
   var SPELNAMN = { regn: 'Akta dig!', hopp: 'Hinderhoppet' };
+  /*HOPP-START*/
+  var HOPP = {
+    g: 2600, hojd: 150, andra: 0.72,
+    fart: function (t) { return 370 + t * 12; },
+    // Nästa hinder: höjder i px vid skala 1, avstånd i px vid skalaX 1
+    monster: function (t, rnd) {
+      var v = rnd(), h;
+      if (t > 5 && v < 0.2) h = [{ typ: 'boll', dx: 0, r: 17 }];
+      else if (t > 3 && v < 0.4) h = [{ typ: 'hack', dx: 0, w: 28, h: 60 }, { typ: 'hack', dx: 74, w: 28, h: 60 }];
+      else if (v < 0.58) h = [{ typ: 'hack', dx: 0, w: 28, h: 84 }];
+      else if (v < 0.8) h = [{ typ: 'plint', dx: 0, w: 66 + Math.round(rnd() * 44), h: 58 + Math.round(rnd() * 16) }];
+      else h = [{ typ: 'hack', dx: 0, w: 28, h: 62 }];
+      return { hinder: h, paus: Math.max(0.95, 1.45 - t * 0.02) * (0.9 + rnd() * 0.45) + (h[0].typ === 'boll' ? 0.25 : 0) };
+    }
+  };
+  /*HOPP-SLUT*/
   function spelTyp() { return S.nastaSpel === 'hopp' ? 'hopp' : 'regn'; }
   var HJARTA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 5.3 3.1 1.7-1.9 3.2-3.1 5.3-3.1 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z" fill="var(--rod)" stroke="color-mix(in srgb,var(--rod) 60%,#000)" stroke-width="1.2"/></svg>';
 
   function vySpel() {
     var typ = spelTyp(), namn = esc(kompisNamn());
-    var instr = typ === 'hopp' ? 'Tryck på skärmen för att hoppa över häckarna och plintarna. Tryck en gång till i luften för ett extra högt hopp. Ta stjärnorna på vägen!' : 'Sätt fingret var som helst, till exempel en bit under ' + namn + ', och dra. ' + namn + ' följer fingret utan att hoppa dit, så du ser hela tiden var du är. Akta dig för snöbollarna och kottarna, och fånga stjärnorna!';
+    var instr = typ === 'hopp' ? 'Tryck på skärmen för att hoppa över häckarna och plintarna. Tryck en gång till i luften för ett extra högt hopp. Se upp för bollarna som flyger: dem ska du inte hoppa in i! Ta stjärnorna på vägen.' : 'Sätt fingret var som helst, till exempel en bit under ' + namn + ', och dra. ' + namn + ' följer fingret utan att hoppa dit, så du ser hela tiden var du är. Akta dig för snöbollarna och kottarna, och fånga stjärnorna!';
     return '<div class="vy spelvy"><div class="spel-topp"><button class="ikon-knapp" data-act="spel-avsluta" aria-label="' + (mittSpel() ? 'Hoppa över spelet och fortsätt läxan' : 'Avsluta spelet') + '">' + IK.kryss + '</button>' +
       '<div class="spel-tid" aria-hidden="true"><div id="spel-tidfyll"></div></div><span class="spel-hjartan" id="spel-hjartan" aria-label="3 liv kvar">' + HJARTA + HJARTA + HJARTA + '</span>' +
       '<span class="spel-stj" aria-live="polite">' + IK.stjarna + '<b id="spel-stj">0</b></span></div>' +
@@ -2076,7 +2092,7 @@ var Gubbar = (function () {
     s.mark = H - 46 * s.skala;
     if (s.typ === 'hopp') { s.x = W * 0.2; s.y = forsta ? s.mark : Math.min(s.mark, fy * H); }
     else { s.x = fx * W; s.y = forsta ? H - 14 : fy * H; s.mx = s.x; s.my = s.y; }
-    s.hoppV = Math.sqrt(2 * 2400 * 150) * s.skala;
+    s.hoppV = Math.sqrt(2 * HOPP.g * HOPP.hojd) * s.skala;
   }
   function placeraFigur() {
     var s = SPEL; if (!s) return;
@@ -2106,7 +2122,7 @@ var Gubbar = (function () {
   function spelSlapp(e) { var s = SPEL; if (s && s.drag && e.pointerId === s.drag.id) s.drag = null; }
   function hoppa() {
     var s = SPEL; if (s.hopp >= 2) return;
-    s.vy = -s.hoppV * (s.hopp ? 0.8 : 1); s.hopp++; ljud('boing');
+    s.vy = -s.hoppV * (s.hopp ? HOPP.andra : 1); s.hopp++; ljud('boing');
   }
 
   function spelStart() {
@@ -2150,17 +2166,20 @@ var Gubbar = (function () {
     });
   }
   function uppdHopp(s, dt) {
-    var g = 2400 * s.skala, fart = (300 + s.t * 7) * s.skalaX;
+    var g = HOPP.g * s.skala, fart = HOPP.fart(s.t) * s.skalaX;
     s.vy += g * dt; s.y += s.vy * dt;
     if (s.y >= s.mark) { s.y = s.mark; s.vy = 0; s.hopp = 0; }
     s.markX = (s.markX + fart * dt) % 56;
     s.moln.forEach(function (m) { m.x -= dt * 0.02 * m.s; if (m.x < -0.2) m.x = 1.1; });
     s.nasta -= dt;
     if (s.nasta <= 0) {
-      var typ = Math.random() < 0.55 ? 'hack' : 'plint';
-      s.saker.push({ typ: typ, x: s.W + 40, w: (typ === 'hack' ? 28 : 64) * s.skalaX, h: (typ === 'hack' ? 54 : 58) * s.skala });
-      if (s.stj + s.stjUte < s.maxStj && Math.random() < 0.6) { s.saker.push({ typ: 'stjarna', x: s.W + 40 + (90 + Math.random() * 90) * s.skalaX, y: s.mark - (120 + Math.random() * 80) * s.skala, r: 18 }); s.stjUte++; }
-      s.nasta = Math.max(0.85, 1.7 - s.t * 0.025) * (0.8 + Math.random() * 0.5);
+      var m = HOPP.monster(s.t, Math.random);
+      m.hinder.forEach(function (o) {
+        if (o.typ === 'boll') s.saker.push({ typ: 'boll', x: s.W + 40 + o.dx * s.skalaX, r: o.r * s.skala, hojd: s.fh * 0.86 + o.r * s.skala + 16 * s.skala, rot: 0 });
+        else s.saker.push({ typ: o.typ, x: s.W + 40 + o.dx * s.skalaX, w: o.w * s.skalaX, h: o.h * s.skala });
+      });
+      if (m.hinder[0].typ !== 'boll' && s.stj + s.stjUte < s.maxStj && Math.random() < 0.6) { s.saker.push({ typ: 'stjarna', x: s.W + 40 + (90 + Math.random() * 90) * s.skalaX, y: s.mark - (120 + Math.random() * 80) * s.skala, r: 18 }); s.stjUte++; }
+      s.nasta = m.paus;
     }
     var hb = hitbox(s);
     s.saker = s.saker.filter(function (o) {
@@ -2169,6 +2188,11 @@ var Gubbar = (function () {
         if (cirkelTraff(o, hb)) { fangaStjarna(o); return false; }
         if (o.x < -40) { s.stjUte--; return false; }
         return true;
+      }
+      if (o.typ === 'boll') {
+        o.rot -= dt * 8; o.y = s.mark - o.hojd;
+        if (!o.traffad && cirkelTraff(o, hb) && s.skydd <= 0) { o.traffad = true; traffad(); }
+        return o.x + o.r > -40;
       }
       if (!o.traffad && rektTraff({ x1: o.x + 4, x2: o.x + o.w - 4, y1: s.mark - o.h + 4, y2: s.mark }, hb) && s.skydd <= 0) { o.traffad = true; traffad(); }
       return o.x + o.w > -40;
@@ -2237,6 +2261,13 @@ var Gubbar = (function () {
         g.beginPath(); g.ellipse(0, 0, o.r * 0.72, o.r, 0, 0, 7); g.fillStyle = '#8A5A33'; g.fill(); g.lineWidth = 2.5; g.strokeStyle = '#4E3018'; g.stroke();
         g.strokeStyle = '#C08A55'; g.lineWidth = 2;
         for (var i = -2; i <= 2; i++) { g.beginPath(); g.moveTo(-o.r * 0.6, i * o.r * 0.32); g.quadraticCurveTo(0, i * o.r * 0.32 + o.r * 0.22, o.r * 0.6, i * o.r * 0.32); g.stroke(); }
+      } else if (o.typ === 'boll') {
+        g.translate(o.x, o.y); g.rotate(o.rot);
+        g.beginPath(); g.arc(0, 0, o.r, 0, 7); g.fillStyle = f.pop; g.fill();
+        g.save(); g.beginPath(); g.arc(0, 0, o.r, 0, 7); g.clip();
+        g.fillStyle = f.guld; g.fillRect(-o.r, -o.r * 0.28, o.r * 2, o.r * 0.56); g.restore();
+        g.beginPath(); g.arc(0, 0, o.r, 0, 7); g.lineWidth = 2.5; g.strokeStyle = f.ink; g.stroke();
+        g.setLineDash([4, 5]); g.beginPath(); g.moveTo(o.r + 8, 0); g.lineTo(o.r + 26, 0); g.moveTo(o.r + 6, -7); g.lineTo(o.r + 18, -8); g.stroke(); g.setLineDash([]);
       } else if (o.typ === 'hack') {
         var top = s.mark - o.h;
         g.strokeStyle = f.ink; g.lineWidth = 5; g.lineCap = 'round';
@@ -2396,16 +2427,6 @@ var Gubbar = (function () {
 })();
 
 </script>
-<button id="installera" class="knapp installera" hidden>Lägg Läxgympan på startskärmen</button>
-<style>.installera{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:45;white-space:nowrap;max-width:calc(100% - 32px)}</style>
 <script>
-(function () {
-  var ev = null, b = document.getElementById('installera'), app = document.getElementById('app');
-  function uppdatera() { b.hidden = !ev || !document.querySelector('.halsning'); }
-  try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {}); } catch (e) {}
-  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); ev = e; uppdatera(); });
-  window.addEventListener('appinstalled', function () { ev = null; uppdatera(); });
-  b.addEventListener('click', function () { if (!ev) return; ev.prompt(); var klar = function () { ev = null; uppdatera(); }; ev.userChoice.then(klar, klar); });
-  if (window.MutationObserver && app) new MutationObserver(uppdatera).observe(app, { childList: true });
-})();
+try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {}); } catch (e) {}
 </script></body></html>
