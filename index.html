@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@600;800&family=Lexend:wght@400;500;600;700&display=swap">
-</head><body><style>
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"></head><body><style>
 /* Layout: gymnastiksal. Hem = scen med kompisen på mattan och medaljer som dinglar på en räcke, läxkorten bredvid.
    Pass = en bom överst som visar hur långt man kommit, frågekortet i mitten och kompisen vid sidan. */
 :root{
@@ -2374,4 +2374,16 @@ var Gubbar = (function () {
 })();
 
 </script>
-</body></html>
+<button id="installera" class="knapp installera" hidden>Lägg Läxgympan på startskärmen</button>
+<style>.installera{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:45;white-space:nowrap;max-width:calc(100% - 32px)}</style>
+<script>
+(function () {
+  var ev = null, b = document.getElementById('installera'), app = document.getElementById('app');
+  function uppdatera() { b.hidden = !ev || !document.querySelector('.halsning'); }
+  try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {}); } catch (e) {}
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); ev = e; uppdatera(); });
+  window.addEventListener('appinstalled', function () { ev = null; uppdatera(); });
+  b.addEventListener('click', function () { if (!ev) return; ev.prompt(); var klar = function () { ev = null; uppdatera(); }; ev.userChoice.then(klar, klar); });
+  if (window.MutationObserver && app) new MutationObserver(uppdatera).observe(app, { childList: true });
+})();
+</script></body></html>
