@@ -465,6 +465,8 @@ p{margin:0}
 .spel-resultat{display:inline-flex;align-items:center;gap:6px;font:800 30px var(--display)}
 .spel-resultat svg{width:34px;height:34px}
 
+.spel-paus{font:800 18px var(--display)!important;color:var(--ink);background:var(--guld-soft);padding:6px 14px;border-radius:999px}
+
 </style>
 <div id="app" class="app"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
@@ -1015,11 +1017,6 @@ var LAXOR = [
           falt: [{ etikett: 'a) 1 − x = {3/8}', typ: 'brak', svar: '5/8' }, { etikett: 'b) x + {5/7} = 1', typ: 'brak', svar: '2/7' }, { etikett: 'c) {4/5} = 1 − x', typ: 'brak', svar: '1/5' }],
           ledtrad: 'Skriv 1 som ett bråk med samma nämnare, till exempel 1 = {8/8}.',
           losning: ['a) {8/8} − {3/8} = {5/8}, så x = {5/8}', 'b) {7/7} − {5/7} = {2/7}, så x = {2/7}', 'c) {5/5} − {4/5} = {1/5}, så x = {1/5}'] },
-        { typ: 'svar', text: 'Vilka tal pekar pilarna på?',
-          figur: { form: 'tallinje', fran: 0, till: 10, delar: 5, pilar: [{ namn: 'a', varde: 1.6 }, { namn: 'b', varde: 3.8 }, { namn: 'c', varde: 5.2 }, { namn: 'd', varde: 7.6 }] },
-          falt: [{ etikett: 'a', typ: 'tal', svar: '1,6' }, { etikett: 'b', typ: 'tal', svar: '3,8' }, { etikett: 'c', typ: 'tal', svar: '5,2' }, { etikett: 'd', typ: 'tal', svar: '7,6' }],
-          ledtrad: 'Räkna de små strecken mellan två heltal. Hur mycket är ett litet steg värt?',
-          losning: ['Mellan två heltal finns 5 små steg, så ett litet steg är 0,2.', 'a: 1 + 3 · 0,2 = 1,6.   b: 3 + 4 · 0,2 = 3,8.', 'c: 5 + 1 · 0,2 = 5,2.   d: 7 + 3 · 0,2 = 7,6.'] },
         { typ: 'svar', text: 'Jonas äter upp tre femtedelar av en pizza. Hur stor andel av pizzan finns kvar? Svara i bråkform och decimalform.', papper: true,
           falt: [{ etikett: 'Bråkform', typ: 'brak', svar: '2/5' }, { etikett: 'Decimalform', typ: 'tal', svar: '0,4' }],
           ledtrad: 'Hela pizzan är {5/5}.',
@@ -1057,7 +1054,7 @@ var LAXOR = [
           losning: ['Katia åt {1/4} av det som var kvar, och det var 12. Då var det 4 · 12 = 48 kvar efter Astrid.', 'Astrid åt {1/5}. Då är 48 lika med {4/5} av alla vindruvor.', '{1/5} är 48 / 4 = 12. Alla vindruvor: 5 · 12 = 60.', 'Kolla: Astrid äter 12, och 48 är kvar. Katia äter {1/4} av 48, alltså 12. Det stämmer!'] }
       ] },
       { id: 'klurigt', titel: 'Klurigt: tiondelar och hundradelar', under: 'Extra träning på kronor, bråk och decimaler', gen: ['brak_dec', 'kronor', 'platsvarde', 'jamfor', 'brak_dec', 'kronor', 'dec_brak'], antal: 8 },
-      { id: 'ova', titel: 'Träna mer', under: 'Nya liknande frågor varje gång', gen: ['jamfor', 'figur', 'brak_dec', 'dec_brak', 'kronor', 'avrunda', 'platsvarde', 'x_brak', 'tallinje', 'andel_kvar', 'ko', 'hiss', 'storst'], antal: 8 }
+      { id: 'ova', titel: 'Träna mer', under: 'Nya liknande frågor varje gång', gen: ['jamfor', 'figur', 'brak_dec', 'dec_brak', 'kronor', 'avrunda', 'platsvarde', 'x_brak', 'andel_kvar', 'ko', 'hiss', 'storst'], antal: 8 }
     ]
   },
   {
@@ -1260,7 +1257,7 @@ var Gubbar = (function () {
   'use strict';
   var K = 'var(--kontur)', uid = 0;
   var LISTA = [
-    { id: 'mus', namn: 'Musen' }, { id: 'docka', namn: 'Dockan' }, { id: 'hast', namn: 'Hästen' },
+    { id: 'kanin', namn: 'Kaninen' }, { id: 'docka', namn: 'Dockan' }, { id: 'hast', namn: 'Hästen' },
     { id: 'tvatt', namn: 'Tvättbjörnen' }, { id: 'blaapa', namn: 'Blå apan', apa: true }, { id: 'ljusapa', namn: 'Ljusa apan', apa: true }
   ];
   var BODY = 'M58 108 C64 98 96 98 102 108 L106 146 C98 154 62 154 54 146 Z';
@@ -1296,16 +1293,18 @@ var Gubbar = (function () {
 
   // ---------- Huvuden ----------
   var HUVUD = {
-    mus: function () {
+    kanin: function () {
       var g = '#B9B5C9';
-      return '<circle cx="47" cy="40" r="19" fill="' + g + '" stroke="' + K + '" stroke-width="3"/><circle cx="47" cy="40" r="11" fill="#F7B5CD"/>' +
-        '<circle cx="113" cy="40" r="19" fill="' + g + '" stroke="' + K + '" stroke-width="3"/><circle cx="113" cy="40" r="11" fill="#F7B5CD"/>' +
+      // Långa hängande kaninöron med rosa insida, som Lovas gosedjur
+      return '<g transform="rotate(32 52 46)"><ellipse cx="52" cy="78" rx="12" ry="34" fill="' + g + '" stroke="' + K + '" stroke-width="3"/><ellipse cx="52" cy="80" rx="6.5" ry="26" fill="#F7B5CD"/></g>' +
+        '<g transform="rotate(-32 108 46)"><ellipse cx="108" cy="78" rx="12" ry="34" fill="' + g + '" stroke="' + K + '" stroke-width="3"/><ellipse cx="108" cy="80" rx="6.5" ry="26" fill="#F7B5CD"/></g>' +
         '<circle cx="80" cy="68" r="34" fill="' + g + '" stroke="' + K + '" stroke-width="3"/>' +
-        '<ellipse cx="80" cy="82" rx="23" ry="16" fill="#FFF6EC"/>' +
-        '<path d="M52 46 Q56 22 80 20 Q104 22 108 46 Q80 36 52 46 Z" fill="#CFCED8" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/><circle cx="80" cy="20" r="5" fill="#CFCED8" stroke="' + K + '" stroke-width="2.5"/>' +
+        '<ellipse cx="80" cy="83" rx="22" ry="16" fill="#FFF6EC"/>' +
+        '<path d="M50 48 Q54 22 78 18 Q98 14 112 4 Q104 22 110 48 Q80 38 50 48 Z" fill="#CFCED8" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/><circle cx="112" cy="5" r="5" fill="#CFCED8" stroke="' + K + '" stroke-width="2.5"/>' +
         '<ellipse cx="68" cy="61" rx="8.5" ry="10.5" fill="#fff" stroke="' + K + '" stroke-width="2"/><ellipse cx="92" cy="61" rx="8.5" ry="10.5" fill="#fff" stroke="' + K + '" stroke-width="2"/>' +
         ogon(69, 91, 63, 4.6, 6.2) +
-        '<ellipse cx="80" cy="75" rx="5.5" ry="4.2" fill="' + K + '"/>' + munnar(83, 9, true) + morrhar();
+        '<ellipse cx="80" cy="75" rx="5.5" ry="4.2" fill="' + K + '"/>' + munnar(83, 9, false) +
+        '<path d="M75.5 84.5 h9 v6.5 a1.5 1.5 0 0 1 -1.5 1.5 h-6 a1.5 1.5 0 0 1 -1.5 -1.5 z" fill="#fff" stroke="' + K + '" stroke-width="1.8"/><path d="M80 84.5 v8" stroke="' + K + '" stroke-width="1.5"/>' + morrhar();
     },
     docka: function () {
       var id = 'dk' + (++uid), lila = '#DCCDF6', svart = '#1C1830', prickar = '', x, y;
@@ -1387,9 +1386,9 @@ var Gubbar = (function () {
       '<path d="' + BODY + '" fill="none" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/>';
   }
   var KROPP = {
-    mus: function () {
+    kanin: function () {
       var g = '#B9B5C9';
-      return { bak: '', ben: ben(g, '#FFFFFF', '#24306F'), kropp: kropp('#1F2B6B', '<rect x="60" y="96" width="8" height="60" fill="#7CC4F2"/><rect x="76" y="96" width="8" height="60" fill="#7CC4F2"/><rect x="92" y="96" width="8" height="60" fill="#7CC4F2"/>') +
+      return { bak: '<circle cx="104" cy="146" r="11" fill="#FFF6EC" stroke="' + K + '" stroke-width="3"/>', ben: ben(g, '#FFFFFF', '#24306F'), kropp: kropp('#1F2B6B', '<rect x="60" y="96" width="8" height="60" fill="#7CC4F2"/><rect x="76" y="96" width="8" height="60" fill="#7CC4F2"/><rect x="92" y="96" width="8" height="60" fill="#7CC4F2"/>') +
         '<path d="M70 103 L80 114 L90 103" stroke="#fff" stroke-width="4" fill="none" stroke-linejoin="round"/><path d="M56 140 L104 140 L103 155 L84 157 L80 151 L76 157 L57 155 Z" fill="#1F2B6B" stroke="' + K + '" stroke-width="3" stroke-linejoin="round"/>',
         armar: ['#B9B5C9', '#FFFFFF'], arm: null };
     },
@@ -1429,7 +1428,7 @@ var Gubbar = (function () {
 
   function figur(id, min, opt) {
     opt = opt || {};
-    if (!HUVUD[id]) id = 'mus';
+    if (!HUVUD[id]) id = 'kanin';
     var k = KROPP[id](), lang = k.lang;
     var av = lang ? [60, 112, 36, 160] : [60, 112, 40, 136], ah = lang ? [100, 112, 128, 94] : [100, 112, 122, 102];
     var armH = '<g class="k-arm-h"><path d="M' + ah[0] + ' ' + ah[1] + ' L' + ah[2] + ' ' + ah[3] + '" stroke="' + K + '" stroke-width="15" stroke-linecap="round"/><path d="M' + ah[0] + ' ' + ah[1] + ' L' + ah[2] + ' ' + ah[3] + '" stroke="' + k.armar[0] + '" stroke-width="9" stroke-linecap="round"/>' +
@@ -1442,7 +1441,7 @@ var Gubbar = (function () {
       '<text class="k-fraga" x="132" y="34" aria-hidden="true">?</text></svg>';
   }
   function huvud(id) {
-    if (!HUVUD[id]) id = 'mus';
+    if (!HUVUD[id]) id = 'kanin';
     return '<svg viewBox="28 2 104 112" aria-hidden="true">' + HUVUD[id]().replace(/class="m m-(jubel|hmm)"/g, 'style="display:none"').replace(/class="m m-glad"/g, '') + '</svg>';
   }
   // Apa som hänger i räcket (används för aporna när de inte är huvudfigur)
@@ -1473,12 +1472,27 @@ var Gubbar = (function () {
 
   // ---------- Lagring (bara på den här plattan) ----------
   var NYCKEL = 'laxgympan.v1';
-  function standard() { return { v: 1, namn: '', figur: '', namnPa: {}, vanner: '', skin: 'rosa', ljud: true, stjarnor: 0, pass: {}, missade: [] }; }
+  function standard() { return { v: 2, namn: '', figur: '', namnPa: {}, vanner: '', skin: 'rosa', ljud: true, stjarnor: 0, pass: {}, missade: [] }; }
   var S = (function () {
     try { var raw = localStorage.getItem(NYCKEL); if (raw) return Object.assign(standard(), JSON.parse(raw)); } catch (e) { }
     return standard();
   })();
   function spara() { try { localStorage.setItem(NYCKEL, JSON.stringify(S)); } catch (e) { } }
+  (function flytta() {
+    var andrat = false;
+    if (S.figur === 'mus') { S.figur = 'kanin'; andrat = true; }
+    if (S.namnPa && S.namnPa.mus !== undefined) { if (S.namnPa.kanin === undefined) S.namnPa.kanin = S.namnPa.mus; delete S.namnPa.mus; andrat = true; }
+    if ((S.v || 1) < 2) {
+      S.missade = (S.missade || []).map(function (m) {
+        var d = m.ref ? m.ref.split('/') : null;
+        if (d && d[0] === 'kap1' && d[1] === 'del1') { var i = +d[2]; if (i === 10) return null; if (i > 10) { m.ref = 'kap1/del1/' + (i - 1); m.nyckel = m.ref; } }
+        if (m.q && (m.q.gen === 'tallinje' || (m.q.figur && m.q.figur.form === 'tallinje'))) return null;
+        return m;
+      }).filter(Boolean);
+      S.v = 2; andrat = true;
+    }
+    if (andrat) spara();
+  })();
 
   var RORELSER = [
     { id: 'hopp', namn: 'Hopp', kravs: 0 }, { id: 'piruett', namn: 'Piruett', kravs: 15 }, { id: 'hjula', namn: 'Hjula', kravs: 40 },
@@ -1587,7 +1601,7 @@ var Gubbar = (function () {
   }
 
   // ---------- Figurerna ----------
-  function figurId() { return S.figur || 'mus'; }
+  function figurId() { return S.figur || 'kanin'; }
   function kompisSVG(min, extra) { return Gubbar.figur(figurId(), min, { cls: 'huvudfigur' + (extra ? ' ' + extra : ''), label: esc(kompisNamn()) }); }
   function miniKompis() { return Gubbar.huvud(figurId()); }
   function ovriga() { return Gubbar.LISTA.filter(function (g) { return g.id !== figurId(); }); }
@@ -1973,7 +1987,10 @@ var Gubbar = (function () {
   }
   function nasta() {
     if (P.i + 1 >= P.fragor.length) return avsluta();
-    P.i++; nyFraga(); render();
+    var gjorda = P.i + 1;
+    P.i++; nyFraga();
+    if (gjorda % 3 === 0) { P.mittSpel = true; visa('spel'); return; }
+    render();
   }
   function avsluta() {
     var poang = P.resultat.reduce(function (s, u) { return s + (POANG[u] || 0); }, 0), max = P.fragor.length * 2, andel = max ? poang / max : 0;
@@ -2003,7 +2020,7 @@ var Gubbar = (function () {
       '<div class="domare" aria-label="Domarnas poäng">' + dom + '</div>' +
       '<div class="klar-stats"><span>' + IK.stjarna + '+' + P.stjarnorIPass + ' stjärnor</span><span>' + s.ratt + ' av ' + P.fragor.length + ' rätt direkt</span></div>' + ny +
       '<button class="kompis-knapp" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG('jubel') + '</button>' +
-      (P.spelat ? '' : '<button class="knapp spel-knapp" data-act="spel">' + IK.stjarna + 'Bonusspel: ' + SPELNAMN[spelTyp()] + '</button>') +
+      (P.spelat ? '' : '<button class="knapp spel-knapp" data-act="spel-slut">' + IK.stjarna + 'Bonusspel: ' + SPELNAMN[spelTyp()] + '</button>') +
       '<div class="klar-knappar"><button class="knapp sek" data-act="hem">Till start</button><button class="knapp sek" data-act="kor-igen">Kör igen</button>' + (harOva ? '<button class="knapp" data-act="ova-mer">Träna mer på samma sak</button>' : '') + '</div>' +
       '</div></div>';
   }
@@ -2016,6 +2033,10 @@ var Gubbar = (function () {
   // ---------- Bonusspel efter ett klarat pass ----------
   // Två spel som turas om: "Akta dig!" (dra figuren, undvik det som faller) och "Hinderhoppet" (tryck för att hoppa).
   var SPELTID = 30, MAX_SPELSTJ = 5, SPEL = null;
+  // Pausspel mitt i ett pass (efter var tredje fråga) är kortare
+  function mittSpel() { return !!(P && P.mittSpel); }
+  function speltid() { return mittSpel() ? 20 : SPELTID; }
+  function maxStj() { return mittSpel() ? 3 : MAX_SPELSTJ; }
   var SPELNAMN = { regn: 'Akta dig!', hopp: 'Hinderhoppet' };
   function spelTyp() { return S.nastaSpel === 'hopp' ? 'hopp' : 'regn'; }
   var HJARTA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 5.3 3.1 1.7-1.9 3.2-3.1 5.3-3.1 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z" fill="var(--rod)" stroke="color-mix(in srgb,var(--rod) 60%,#000)" stroke-width="1.2"/></svg>';
@@ -2023,11 +2044,11 @@ var Gubbar = (function () {
   function vySpel() {
     var typ = spelTyp(), namn = esc(kompisNamn());
     var instr = typ === 'hopp' ? 'Tryck på skärmen för att hoppa över häckarna och plintarna. Tryck en gång till i luften för ett extra högt hopp. Ta stjärnorna på vägen!' : 'Sätt fingret var som helst, till exempel en bit under ' + namn + ', och dra. ' + namn + ' följer fingret utan att hoppa dit, så du ser hela tiden var du är. Akta dig för snöbollarna och kottarna, och fånga stjärnorna!';
-    return '<div class="vy spelvy"><div class="spel-topp"><button class="ikon-knapp" data-act="spel-avsluta" aria-label="Avsluta spelet">' + IK.kryss + '</button>' +
+    return '<div class="vy spelvy"><div class="spel-topp"><button class="ikon-knapp" data-act="spel-avsluta" aria-label="' + (mittSpel() ? 'Hoppa över spelet och fortsätt läxan' : 'Avsluta spelet') + '">' + IK.kryss + '</button>' +
       '<div class="spel-tid" aria-hidden="true"><div id="spel-tidfyll"></div></div><span class="spel-hjartan" id="spel-hjartan" aria-label="3 liv kvar">' + HJARTA + HJARTA + HJARTA + '</span>' +
       '<span class="spel-stj" aria-live="polite">' + IK.stjarna + '<b id="spel-stj">0</b></span></div>' +
       '<div class="spelplan ' + typ + '" id="spelplan"><canvas id="spelduk"></canvas><div class="spel-figur" id="spelfigur">' + kompisSVG('glad') + '</div>' +
-      '<div class="spel-overlay" id="spel-overlay"><div class="spel-ruta"><h2>' + SPELNAMN[typ] + '</h2><p>' + instr + '</p><p class="spel-liten">Du har tre liv, och spelet tar ' + SPELTID + ' sekunder. Du kan få upp till ' + MAX_SPELSTJ + ' stjärnor.</p><button class="knapp" data-act="spel-start">Starta!</button></div></div></div></div>';
+      '<div class="spel-overlay" id="spel-overlay"><div class="spel-ruta">' + (mittSpel() ? '<p class="spel-paus">Tre frågor klara! Dags för en paus.</p>' : '') + '<h2>' + SPELNAMN[typ] + '</h2><p>' + instr + '</p><p class="spel-liten">Du har tre liv, och spelet tar ' + speltid() + ' sekunder. Du kan få upp till ' + maxStj() + ' stjärnor.</p><button class="knapp" data-act="spel-start">Starta!</button></div></div></div></div>';
   }
   function spelFarger() {
     var cs = getComputedStyle(document.documentElement), f = {};
@@ -2036,7 +2057,7 @@ var Gubbar = (function () {
   }
   function efterSpel() {
     var plan = $('#spelplan'), duk = $('#spelduk'), typ = spelTyp();
-    SPEL = { typ: typ, plan: plan, duk: duk, g: duk.getContext('2d'), fig: $('#spelfigur'), igang: false, slut: false, t: 0, liv: 3, stj: 0, stjUte: 0, saker: [], nasta: 0.9, skydd: 0, raf: 0, hopp: 0, vy: 0, markX: 0, moln: [], farg: spelFarger() };
+    SPEL = { mitt: mittSpel(), tid: speltid(), maxStj: maxStj(), typ: typ, plan: plan, duk: duk, g: duk.getContext('2d'), fig: $('#spelfigur'), igang: false, slut: false, t: 0, liv: 3, stj: 0, stjUte: 0, saker: [], nasta: 0.9, skydd: 0, raf: 0, hopp: 0, vy: 0, markX: 0, moln: [], farg: spelFarger() };
     for (var i = 0; i < 4; i++) SPEL.moln.push({ x: Math.random(), y: 0.08 + Math.random() * 0.3, s: 0.6 + Math.random() * 0.8 });
     storlekSpel(true); ritaSpel(); placeraFigur();
     plan.addEventListener('pointerdown', spelPek);
@@ -2091,7 +2112,7 @@ var Gubbar = (function () {
   function spelStart() {
     var s = SPEL; if (!s || s.slut) return;
     $('#spel-overlay').hidden = true;
-    if (!s.startad) { s.startad = true; S.nastaSpel = s.typ === 'hopp' ? 'regn' : 'hopp'; if (P) P.spelat = true; spara(); }
+    if (!s.startad) { s.startad = true; S.nastaSpel = s.typ === 'hopp' ? 'regn' : 'hopp'; if (P && !s.mitt) P.spelat = true; spara(); }
     s.igang = true; s.pausad = false; s.sist = 0;
     cancelAnimationFrame(s.raf); s.raf = requestAnimationFrame(spelSteg);
   }
@@ -2103,8 +2124,8 @@ var Gubbar = (function () {
     if (s.slut) return;
     s.fig.classList.toggle('skyddad', s.skydd > 0);
     ritaSpel(); placeraFigur();
-    var tf = $('#spel-tidfyll'); if (tf) tf.style.width = Math.min(100, s.t / SPELTID * 100).toFixed(1) + '%';
-    if (s.t >= SPELTID) { slutSpel(true); return; }
+    var tf = $('#spel-tidfyll'); if (tf) tf.style.width = Math.min(100, s.t / s.tid * 100).toFixed(1) + '%';
+    if (s.t >= s.tid) { slutSpel(true); return; }
     s.raf = requestAnimationFrame(spelSteg);
   }
   function uppdRegn(s, dt) {
@@ -2112,7 +2133,7 @@ var Gubbar = (function () {
     s.x += (s.mx - s.x) * k; s.y += (s.my - s.y) * k;
     s.nasta -= dt;
     if (s.nasta <= 0) {
-      var stjarna = s.stj + s.stjUte < MAX_SPELSTJ && Math.random() < 0.2, r = stjarna ? 20 : (15 + Math.random() * 12) * s.skala;
+      var stjarna = s.stj + s.stjUte < s.maxStj && Math.random() < 0.2, r = stjarna ? 20 : (15 + Math.random() * 12) * s.skala;
       s.saker.push({ x: r + Math.random() * (s.W - 2 * r), y: -r, r: r, v: (stjarna ? 150 : 190 + s.t * 9) * s.skala * (0.85 + Math.random() * 0.3), typ: stjarna ? 'stjarna' : (Math.random() < 0.5 ? 'snoboll' : 'kotte'), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 3 });
       if (stjarna) s.stjUte++;
       s.nasta = Math.max(0.3, 0.95 - s.t * 0.022);
@@ -2138,7 +2159,7 @@ var Gubbar = (function () {
     if (s.nasta <= 0) {
       var typ = Math.random() < 0.55 ? 'hack' : 'plint';
       s.saker.push({ typ: typ, x: s.W + 40, w: (typ === 'hack' ? 28 : 64) * s.skalaX, h: (typ === 'hack' ? 54 : 58) * s.skala });
-      if (s.stj + s.stjUte < MAX_SPELSTJ && Math.random() < 0.6) { s.saker.push({ typ: 'stjarna', x: s.W + 40 + (90 + Math.random() * 90) * s.skalaX, y: s.mark - (120 + Math.random() * 80) * s.skala, r: 18 }); s.stjUte++; }
+      if (s.stj + s.stjUte < s.maxStj && Math.random() < 0.6) { s.saker.push({ typ: 'stjarna', x: s.W + 40 + (90 + Math.random() * 90) * s.skalaX, y: s.mark - (120 + Math.random() * 80) * s.skala, r: 18 }); s.stjUte++; }
       s.nasta = Math.max(0.85, 1.7 - s.t * 0.025) * (0.8 + Math.random() * 0.5);
     }
     var hb = hitbox(s);
@@ -2155,7 +2176,7 @@ var Gubbar = (function () {
   }
   function fangaStjarna(o) {
     var s = SPEL; s.stjUte = Math.max(0, s.stjUte - 1);
-    if (s.stj >= MAX_SPELSTJ) return;
+    if (s.stj >= s.maxStj) return;
     s.stj++; var el = $('#spel-stj'); if (el) el.textContent = s.stj;
     ljud('ratt');
     var b = s.plan.getBoundingClientRect(); konfetti(b.left + o.x, b.top + o.y, 14, 10);
@@ -2171,13 +2192,13 @@ var Gubbar = (function () {
     var s = SPEL; if (!s || s.slut) return;
     s.slut = true; s.igang = false; cancelAnimationFrame(s.raf); s.fig.classList.remove('skyddad');
     S.stjarnor += s.stj; spara();
-    var sek = Math.min(SPELTID, Math.floor(s.t));
+    var sek = Math.min(s.tid, Math.floor(s.t));
     var o = $('#spel-overlay');
     o.innerHTML = '<div class="spel-ruta"><h2>' + (klarade ? 'Grymt! Du klarade hela spelet!' : 'Bra kämpat!') + '</h2>' +
-      '<p>' + (klarade ? esc(kompisNamn()) + ' klarade sig i alla ' + SPELTID + ' sekunder.' : esc(kompisNamn()) + ' klarade sig i ' + sek + ' sekunder.') + '</p>' +
+      '<p>' + (klarade ? esc(kompisNamn()) + ' klarade sig i alla ' + s.tid + ' sekunder.' : esc(kompisNamn()) + ' klarade sig i ' + sek + ' sekunder.') + '</p>' +
       '<p class="spel-resultat">' + IK.stjarna + '<b>+' + s.stj + '</b> ' + (s.stj === 1 ? 'stjärna' : 'stjärnor') + '</p>' +
-      '<p class="spel-liten">Klara ett pass till, så får du spela igen. Nästa gång blir det ' + SPELNAMN[spelTyp()] + '.</p>' +
-      '<button class="knapp" data-act="hem">Till start</button></div>';
+      (s.mitt ? '<p class="spel-liten">Nu fortsätter läxan. Efter tre frågor till blir det ' + SPELNAMN[spelTyp()] + '.</p><button class="knapp" data-act="spel-tillbaka">Fortsätt läxan</button></div>'
+              : '<p class="spel-liten">Klara ett pass till, så får du spela igen. Nästa gång blir det ' + SPELNAMN[spelTyp()] + '.</p><button class="knapp" data-act="hem">Till start</button></div>');
     o.hidden = false;
     if (klarade || s.stj) { minSpel('jubel', 1500); rorelse(slumpRorelse()); konfettiFran($('.spel-resultat'), 60); ljud('medalj'); }
   }
@@ -2264,9 +2285,10 @@ var Gubbar = (function () {
       case 'igen': ljud('tap'); startaPass('igen', 'igen'); break;
       case 'avbryt': ljud('tap'); visa(P && P.setId !== 'igen' ? 'set' : 'hem'); break;
       case 'kor-igen': startaPass(P.setId, P.passId); break;
-      case 'spel': ljud('tap'); visa('spel'); break;
       case 'spel-start': ljud('tap'); spelStart(); break;
-      case 'spel-avsluta': if (SPEL && SPEL.startad && !SPEL.slut) { S.stjarnor += SPEL.stj; spara(); } visa('hem'); break;
+      case 'spel-slut': ljud('tap'); if (P) P.mittSpel = false; visa('spel'); break;
+      case 'spel-avsluta': { var mitt = SPEL && SPEL.mitt; if (SPEL && SPEL.startad && !SPEL.slut) { S.stjarnor += SPEL.stj; spara(); } visa(mitt ? 'pass' : 'hem'); break; }
+      case 'spel-tillbaka': ljud('tap'); visa('pass'); break;
       case 'ova-mer': { var set = hittaSet(P.setId), g = set.pass.filter(function (p) { return p.gen; }); startaPass(set.id, g[g.length - 1].id); break; }
       case 'kompis': rorelse(slumpRorelse()); minSpel('jubel', 1200); { var pr = $('#prat'); if (pr) pr.textContent = PRAT[Math.floor(Math.random() * PRAT.length)]; } break;
       case 'rorelse': rorelse(el.getAttribute('data-r')); minSpel('jubel', 1200); break;
