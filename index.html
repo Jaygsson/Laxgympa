@@ -1358,12 +1358,15 @@ var Gubbar = (function () {
         '<path d="M77 81 L80 84 L83 81 M80 84 L80 87" stroke="' + K + '" stroke-width="1.8" stroke-linecap="round" fill="none"/>' + munnar(91, 8, false);
     },
     ljusapa: function () {
-      var b = '#EBD6B4', gr = '#8E8F9C';
-      return fluff(80, 66, 35, b, 28) +
-        '<circle cx="80" cy="70" r="25" fill="#FFFFFF" stroke="' + K + '" stroke-width="2"/>' +
-        '<ellipse cx="80" cy="72" rx="17" ry="20" fill="' + gr + '" stroke="' + K + '" stroke-width="2"/>' +
-        '<circle cx="73" cy="66" r="5.2" fill="#8A4522"/><circle cx="87" cy="66" r="5.2" fill="#8A4522"/>' + ogon(73, 87, 66, 2.6, 2.6) +
-        '<path d="M78 76 L80 78 L82 76" stroke="' + K + '" stroke-width="1.8" stroke-linecap="round" fill="none"/>' + munnar(83, 6, false);
+      var b = '#EBD6B4', gr = '#8E8F9C', ljus = '#F6E9D4', ansikte = 'M56 60 Q58 42 80 50 Q102 42 104 60 Q106 76 96 80 Q100 98 80 101 Q60 98 64 80 Q54 76 56 60 Z';
+      // Samma form som blå apan: runda öron på sidorna, lurvigt huvud och ett ansikte med ögonringar, men i ljus päls med grått ansikte och vit kant
+      return '<circle cx="42" cy="68" r="12" fill="' + b + '" stroke="' + K + '" stroke-width="3"/><circle cx="42" cy="68" r="6.5" fill="' + gr + '"/><circle cx="118" cy="68" r="12" fill="' + b + '" stroke="' + K + '" stroke-width="3"/><circle cx="118" cy="68" r="6.5" fill="' + gr + '"/>' +
+        fluff(80, 66, 35, b, 26) + '<path d="M60 40 Q66 50 70 40 Q76 52 82 40 Q88 52 94 42" fill="none" stroke="' + ljus + '" stroke-width="3" stroke-linecap="round"/>' +
+        '<path d="' + ansikte + '" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="9" stroke-linejoin="round"/>' +
+        '<path d="' + ansikte + '" fill="' + gr + '" stroke="' + K + '" stroke-width="2"/>' +
+        '<circle cx="69" cy="63" r="7.5" fill="#8A4522" stroke="' + K + '" stroke-width="1.5"/><circle cx="91" cy="63" r="7.5" fill="#8A4522" stroke="' + K + '" stroke-width="1.5"/>' +
+        ogon(69, 91, 63, 3.8, 3.8) +
+        '<path d="M77 81 L80 84 L83 81 M80 84 L80 87" stroke="' + K + '" stroke-width="1.8" stroke-linecap="round" fill="none"/>' + munnar(91, 8, false);
     }
   };
 
