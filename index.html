@@ -552,6 +552,12 @@ p{margin:0}
 .pass-grid.bred .pass-kompis{display:none}
 .pass-grid.bred .liten-kompis{display:block}
 
+.geo-hsfraga{margin-top:14px;background:var(--pop-soft);border-radius:20px;padding:14px 16px;animation:bubbla .4s cubic-bezier(.3,1.6,.5,1)}
+.geo-hsfraga h3{font-size:22px;margin-bottom:10px}
+.alternativ.fyra{grid-template-columns:repeat(2,minmax(0,1fr))}
+.alternativ.fyra .alt{min-height:62px;font-size:19px}
+.alternativ.fyra .alt:not(.ratt):not(.fel){background:var(--surface)}
+
 </style>
 <div id="app" class="app"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
@@ -2216,7 +2222,8 @@ if (typeof module !== "undefined") module.exports = GEO;
       if (G2.ratt) { klass[G2.ratt] = 'ratt'; etik.push(G2.ratt); }
       if (G2.info && !klass[G2.info]) { klass[G2.info] = 'vald'; etik.push(G2.info); }
       yta.innerHTML = '<div class="geo-karta fraga" data-mal="' + q.land + '">' + kartaSVG(q.region, { klass: klass, etiketter: etik, hs: G2.info }) + '</div>' +
-        (G2.info ? faktakort(G2.info) + '<p class="geo-tips">' + IK.lampa + '<span>Tryck på andra länder för att se fakta om dem.</span></p>' : '<p class="geo-tips">' + IK.lampa + '<span>Tryck på kartan där du tror att <b>' + esc(GEOFAKTA[q.land].namn) + '</b> ligger.</span></p>');
+        (q.hsFraga && G2.steg ? hsRuta(q) : '') +
+        (G2.info ? faktakort(G2.info) + '<p class="geo-tips">' + IK.lampa + '<span>Tryck på andra länder för att se fakta om dem.</span></p>' : G2.steg === 'hs' ? '' : '<p class="geo-tips">' + IK.lampa + '<span>Tryck på kartan där du tror att <b>' + esc(GEOFAKTA[q.land].namn) + '</b> ligger.</span></p>');
     } else if (q.typ === 'kort') {
       if (!P.kortVisat) yta.innerHTML = '<p class="kort-hjalp">' + IK.lampa + '<span>Tänk ut ett svar med egna ord. Säg det högt eller skriv det på papper. Tryck sedan på <b>Visa svaret</b>.</span></p>';
       else yta.innerHTML = '<div class="kort-svar">' + rt(q.svar) + '</div>' + (P.klar ? '' : '<p style="font-weight:600">Hur gick det?</p><div class="bedom"><button class="kunde" data-act="kort-bedom" data-v="kunde">Jag kunde det!<small>2 stjärnor</small></button><button class="nastan" data-act="kort-bedom" data-v="nastan">Nästan<small>1 stjärna</small></button><button class="inte" data-act="kort-bedom" data-v="inte">Inte än<small>Den kommer igen</small></button></div>');
@@ -2241,7 +2248,7 @@ if (typeof module !== "undefined") module.exports = GEO;
     // Knappar
     var k = '';
     if (!P.klar) {
-      if (q.ledtrad && !P.ledtrad && q.typ !== 'kort') k += '<button class="knapp tips" data-act="ledtrad">' + IK.lampa + 'Ledtråd</button>';
+      if (q.ledtrad && !P.ledtrad && q.typ !== 'kort' && !(q.typ === 'karta' && P.geo)) k += '<button class="knapp tips" data-act="ledtrad">' + IK.lampa + 'Ledtråd</button>';
       if (q.typ === 'svar' || q.typ === 'ordna' || q.typ === 'pil') k += '<button class="knapp" data-act="ratta">' + (P.forsok ? 'Rätta igen' : 'Rätta') + '</button>';
       if (q.typ === 'kort' && !P.kortVisat) k += '<button class="knapp" data-act="kort-visa">Visa svaret</button>';
     } else {
@@ -2494,6 +2501,18 @@ if (typeof module !== "undefined") module.exports = GEO;
   }
 
   // Frågor: "Var ligger …?" för en region, och huvudstadsfrågor
+  // Länder vars huvudstad man bör kunna i Sverige: grannländerna i Norden och Europas stora länder
+  var VIKTIGA = ['SE', 'NO', 'DK', 'FI', 'IS', 'DE', 'FR', 'GB', 'ES', 'IT', 'PL', 'RU', 'UA', 'NL', 'GR', 'PT', 'TR'];
+  function hsAlternativ(k, sak) {
+    var f = GEOFAKTA[k], reg = geoRegion(k), pool = Object.keys(GEOFAKTA).filter(function (x) { return x !== k && GEOFAKTA[x].hs !== f.hs && GEOFAKTA[x].namn !== f.hs; });
+    var nara = L.blanda(Math.random, pool.filter(function (x) { return geoRegion(x) === reg; })).slice(0, 2);
+    var kanda = L.blanda(Math.random, pool.filter(function (x) { return VIKTIGA.indexOf(x) >= 0; }));
+    var valda = nara.slice();
+    kanda.concat(L.blanda(Math.random, pool)).forEach(function (x) { if (valda.length < 3 && valda.indexOf(x) < 0) valda.push(x); });
+    var hamta = function (x) { return sak === 'land' ? GEOFAKTA[x].namn : GEOFAKTA[x].hs; };
+    var alt = [hamta(k)].concat(valda.map(hamta)), ord = L.blanda(Math.random, [0, 1, 2, 3]);
+    return { alt: ord.map(function (j) { return alt[j]; }), ratt: ord.indexOf(0) };
+  }
   function kartFragor(region, antal) {
     var koder = GEO.regioner[region].lander.filter(function (k) { return GEOFAKTA[k]; });
     koder = L.blanda(Math.random, koder);
@@ -2502,6 +2521,7 @@ if (typeof module !== "undefined") module.exports = GEO;
       var yta = GEO.lander[k].yta, niva = region === 'alla' ? (yta >= 8000 ? 1 : yta >= 1500 ? 2 : 3) : 0;
       var q = { typ: 'karta', land: k, region: region, amne: 'geo', text: 'Var ligger ' + GEOFAKTA[k].namn + '?', ledtrad: geoLedtrad(k) };
       if (niva) q.niva = niva;
+      if (VIKTIGA.indexOf(k) >= 0) q.hsFraga = hsAlternativ(k, 'hs');
       return q;
     });
   }
@@ -2509,12 +2529,9 @@ if (typeof module !== "undefined") module.exports = GEO;
     var alla = Object.keys(GEOFAKTA), koder = L.blanda(Math.random, alla).slice(0, antal);
     return koder.map(function (k, i) {
       var f = GEOFAKTA[k], reg = geoRegion(k);
-      var andra = L.blanda(Math.random, alla.filter(function (x) { return x !== k && geoRegion(x) === reg && GEOFAKTA[x].hs !== f.hs; })).slice(0, 2);
-      if (andra.length < 2) andra = andra.concat(L.blanda(Math.random, alla.filter(function (x) { return x !== k && andra.indexOf(x) < 0; })).slice(0, 2 - andra.length));
-      var fragaHs = i % 2 === 0, alt = fragaHs ? [f.hs].concat(andra.map(function (x) { return GEOFAKTA[x].hs; })) : [f.namn].concat(andra.map(geoNamn));
-      var ord = L.blanda(Math.random, [0, 1, 2]);
+      var fragaHs = i % 2 === 0, a = hsAlternativ(k, fragaHs ? 'hs' : 'land');
       return {
-        typ: 'val', amne: 'geo', visaLand: k, fast: true, alt: ord.map(function (j) { return alt[j]; }), ratt: ord.indexOf(0),
+        typ: 'val', amne: 'geo', visaLand: k, fast: true, alt: a.alt, ratt: a.ratt,
         text: fragaHs ? 'Vilken är ' + geoGen(f.namn) + ' huvudstad?' : 'Vilket land har huvudstaden ' + f.hs + '?',
         ledtrad: fragaHs ? 'Huvudstaden börjar på bokstaven ' + f.hs.charAt(0) + '.' : f.hs + ' ligger i ' + REGIONNAMN[reg] + '.'
       };
@@ -2525,20 +2542,63 @@ if (typeof module !== "undefined") module.exports = GEO;
   function geoTryck(x, y, malEl) {
     var q = P.q;
     if (P.klar) { var k0 = landVid(x, y); if (k0 && GEOFAKTA[k0]) { P.geo.info = k0; ljud('tap'); ritaInteraktion(); } return; }
+    if (P.geo && P.geo.steg === 'hs') return;
     var kod = naraLitet(q.land, x, y) ? q.land : landVid(x, y);
     if (!kod) { P.besked = { typ: 'info', text: 'Där är det hav. Försök igen!' }; ritaInteraktion(); return; }
     if (!GEOFAKTA[kod]) { P.besked = { typ: 'info', text: 'Det där landet är inte med i spelet. Försök igen!' }; ritaInteraktion(); return; }
     if (kod === q.land) {
-      P.geo = { ratt: kod, info: kod };
-      lyckat(GEOFAKTA[kod].namn + ' har grönt nu. Huvudstaden är ' + GEOFAKTA[kod].hs + '.', malEl);
+      if (!q.hsFraga) {
+        P.geo = { ratt: kod, info: kod };
+        lyckat(GEOFAKTA[kod].namn + ' har grönt nu. Huvudstaden är ' + GEOFAKTA[kod].hs + '.', malEl);
+        return;
+      }
+      // Rätt land. Nu kommer en fråga om huvudstaden innan fakta visas.
+      var p = (P.forsok === 0 && !P.ledtrad) ? 2 : 1;
+      P.utfall = p === 2 ? 'ratt' : 'ratt2'; P.resultat[P.i] = P.utfall; laggTillStjarnor(p);
+      P.geo = { ratt: kod, steg: 'hs' };
+      P.besked = { typ: 'ratt', text: BEROM[Math.floor(Math.random() * BEROM.length)], note: 'Nu en fråga till om ' + GEOFAKTA[kod].namn + '.', plus: p };
+      ljud('ratt'); minSpel('jubel', 1200); rorelse(slumpRorelse());
+      var fran = malEl && malEl.getBoundingClientRect();
+      ritaInteraktion(); konfettiFran(fran, 40);
       return;
     }
-    P.forsok++; P.klar = true; P.utfall = 'miss'; P.resultat[P.i] = 'miss';
+    P.forsok++; P.utfall = 'miss'; P.resultat[P.i] = 'miss';
     laggTillMissad(q);
-    P.geo = { ratt: q.land, fel: kod, info: q.land };
-    P.besked = { typ: 'fel', text: 'Det där är ' + geoNamn(kod) + '. ' + geoNamn(q.land) + ' är landet som lyser grönt.' };
+    if (q.hsFraga) { P.geo = { ratt: q.land, fel: kod, steg: 'hs' }; }
+    else { P.klar = true; P.geo = { ratt: q.land, fel: kod, info: q.land }; }
+    P.besked = { typ: 'fel', text: 'Det där är ' + geoNamn(kod) + '. ' + geoNamn(q.land) + ' är landet som lyser grönt.' + (q.hsFraga ? ' Kan du huvudstaden?' : '') };
     ljud('fel'); minSpel('hmm', 1400); rorelse('hmm');
     ritaInteraktion();
+  }
+
+  // Svar på huvudstadsfrågan efter kartan
+  function geoHsSvar(i) {
+    var q = P.q, f = GEOFAKTA[q.land]; if (!P.geo || P.geo.steg !== 'hs') return;
+    var ratt = i === q.hsFraga.ratt;
+    P.geo.steg = 'klar'; P.geo.hsVal = i; P.geo.info = q.land; P.klar = true;
+    if (ratt) {
+      laggTillStjarnor(1);
+      if (P.setId === 'igen' && P.utfall !== 'miss') taBortMissad(q);
+      P.besked = { typ: 'ratt', text: 'Rätt!', note: geoGen(f.namn) + ' huvudstad är ' + f.hs + '.', plus: 1 };
+      ljud('ratt'); minSpel('jubel', 1200);
+      ritaInteraktion(); konfettiFran($('.geo-hsfraga .alt.ratt'), 40);
+    } else {
+      if (P.utfall === 'ratt' || P.utfall === 'ratt2') { P.utfall = 'ratt2'; P.resultat[P.i] = 'ratt2'; }
+      var a = hsAlternativ(q.land, 'hs');
+      S.missade = S.missade.filter(function (m) { return !(m.q && m.q.hsMiss === q.land); });
+      laggTillMissad({ typ: 'val', amne: 'geo', hsMiss: q.land, visaLand: q.land, fast: true, alt: a.alt, ratt: a.ratt, text: 'Vilken är ' + geoGen(f.namn) + ' huvudstad?', ledtrad: 'Huvudstaden börjar på bokstaven ' + f.hs.charAt(0) + '.' });
+      P.besked = { typ: 'fel', text: geoGen(f.namn) + ' huvudstad är ' + f.hs + '. Den frågan kommer tillbaka i Öva igen.' };
+      ljud('fel'); minSpel('hmm', 1200);
+      ritaInteraktion();
+    }
+  }
+  function hsRuta(q) {
+    var G = P.geo || {}, f = GEOFAKTA[q.land], klar = G.steg === 'klar';
+    return '<div class="geo-hsfraga" data-r="' + q.hsFraga.ratt + '"><h3>Vad heter ' + esc(geoGen(f.namn)) + ' huvudstad?</h3><div class="alternativ fyra">' +
+      q.hsFraga.alt.map(function (a, i) {
+        var cls = klar ? (i === q.hsFraga.ratt ? ' ratt' : i === G.hsVal ? ' fel' : '') : '';
+        return '<button class="alt' + cls + '" data-act="geo-hs" data-i="' + i + '"' + (klar ? ' disabled' : '') + '><span class="bokstav">' + 'ABCD'[i] + '</span><span>' + esc(a) + '</span></button>';
+      }).join('') + '</div></div>';
   }
 
   // Vy: Utforska kartan
@@ -2613,7 +2673,8 @@ if (typeof module !== "undefined") module.exports = GEO;
   }
   function efterSpel() {
     var plan = $('#spelplan'), duk = $('#spelduk'), typ = spelTyp();
-    SPEL = { mitt: mittSpel(), tid: speltid(), maxStj: maxStj(), typ: typ, plan: plan, duk: duk, g: duk.getContext('2d'), fig: $('#spelfigur'), igang: false, slut: false, t: 0, liv: 3, stj: 0, stjUte: 0, saker: [], nasta: 0.9, skydd: 0, raf: 0, hopp: 0, vy: 0, markX: 0, moln: [], farg: spelFarger() };
+    SPEL = { mitt: mittSpel(), tid: speltid(), maxStj: maxStj(), typ: typ, plan: plan, duk: duk, g: duk.getContext('2d'), fig: $('#spelfigur'), igang: false, slut: false, t: 0, liv: 3, stj: 0, stjUte: 0, stjTid: 0, saker: [], nasta: 0.9, skydd: 0, raf: 0, hopp: 0, vy: 0, markX: 0, moln: [], farg: spelFarger() };
+    SPEL.stjTid = stjIntervall(SPEL) * 0.5;
     for (var i = 0; i < 4; i++) SPEL.moln.push({ x: Math.random(), y: 0.08 + Math.random() * 0.3, s: 0.6 + Math.random() * 0.8 });
     storlekSpel(true); ritaSpel(); placeraFigur();
     plan.addEventListener('pointerdown', spelPek);
@@ -2689,15 +2750,16 @@ if (typeof module !== "undefined") module.exports = GEO;
     s.x += (s.mx - s.x) * k; s.y += (s.my - s.y) * k;
     s.nasta -= dt;
     if (s.nasta <= 0) {
-      if (s.stj + s.stjUte < s.maxStj && Math.random() < 0.3) {
-        s.saker.push({ x: 20 + Math.random() * (s.W - 40), y: -20, r: 20, v: 150 * s.skala, vx: 0, typ: 'stjarna', rot: 0, vr: 0 }); s.stjUte++;
-      } else {
-        REGN.monster(s.t, Math.random).forEach(function (m) {
-          var r = m.r * s.skala;
-          s.saker.push({ x: r + m.fx * (s.W - 2 * r), y: -r, r: r, v: REGN.fart(s.t) * s.skala * m.fartF, vx: m.vx * s.skalaX, typ: m.stor ? 'snoboll' : (Math.random() < 0.5 ? 'snoboll' : 'kotte'), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 3 });
-        });
-      }
+      REGN.monster(s.t, Math.random).forEach(function (m) {
+        var r = m.r * s.skala;
+        s.saker.push({ x: r + m.fx * (s.W - 2 * r), y: -r, r: r, v: REGN.fart(s.t) * s.skala * m.fartF, vx: m.vx * s.skalaX, typ: m.stor ? 'snoboll' : (Math.random() < 0.5 ? 'snoboll' : 'kotte'), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 3 });
+      });
       s.nasta = REGN.paus(s.t);
+    }
+    // Stjärnorna kommer jämnt utspridda över hela spelet i stället för att alla kommer i början
+    if (s.t >= s.stjTid && s.stj + s.stjUte < s.maxStj) {
+      s.saker.push({ x: 20 + Math.random() * (s.W - 40), y: -20, r: 20, v: 150 * s.skala, vx: 0, typ: 'stjarna', rot: 0, vr: 0 }); s.stjUte++;
+      nastaStjarna(s);
     }
     var hb = hitbox(s);
     s.saker = s.saker.filter(function (o) {
@@ -2724,7 +2786,7 @@ if (typeof module !== "undefined") module.exports = GEO;
         if (o.typ === 'boll') s.saker.push({ typ: 'boll', x: s.W + 40 + o.dx * s.skalaX, r: o.r * s.skala, hojd: s.fh * 0.86 + o.r * s.skala + 16 * s.skala, rot: 0 });
         else s.saker.push({ typ: o.typ, x: s.W + 40 + o.dx * s.skalaX, w: o.w * s.skalaX, h: o.h * s.skala });
       });
-      if (m.hinder[0].typ !== 'boll' && s.stj + s.stjUte < s.maxStj && Math.random() < 0.6) { s.saker.push({ typ: 'stjarna', x: s.W + 40 + (90 + Math.random() * 90) * s.skalaX, y: s.mark - (120 + Math.random() * 80) * s.skala, r: 18 }); s.stjUte++; }
+      if (m.hinder[0].typ !== 'boll' && s.t >= s.stjTid && s.stj + s.stjUte < s.maxStj) { s.saker.push({ typ: 'stjarna', x: s.W + 40 + (90 + Math.random() * 90) * s.skalaX, y: s.mark - (120 + Math.random() * 80) * s.skala, r: 18 }); s.stjUte++; nastaStjarna(s); }
       s.nasta = m.paus;
     }
     var hb = hitbox(s);
@@ -2744,6 +2806,9 @@ if (typeof module !== "undefined") module.exports = GEO;
       return o.x + o.w > -40;
     });
   }
+  // En stjärna ungefär var tid/(max+1):e sekund, lite slumpad, så att de räcker hela spelet
+  function stjIntervall(s) { return s.tid / (s.maxStj + 1.5); }
+  function nastaStjarna(s) { var iv = stjIntervall(s); s.stjTid = Math.max(s.stjTid, s.t - iv * 0.5) + iv * (0.8 + Math.random() * 0.4); }
   function fangaStjarna(o) {
     var s = SPEL; s.stjUte = Math.max(0, s.stjUte - 1);
     if (s.stj >= s.maxStj) return;
@@ -2864,6 +2929,7 @@ if (typeof module !== "undefined") module.exports = GEO;
       case 'kor-igen': startaPass(P.setId, P.passId); break;
       case 'geo-region': U.region = el.getAttribute('data-r'); if (U.vald && GEO.regioner[U.region].lander.indexOf(U.vald) < 0 && U.region !== 'alla') U.vald = null; ljud('tap'); render(); break;
       case 'geo-tillbaka': ljud('tap'); visa('set'); break;
+      case 'geo-hs': geoHsSvar(+el.getAttribute('data-i')); break;
       case 'spel-start': ljud('tap'); spelStart(); break;
       case 'spel-slut': ljud('tap'); if (P) P.mittSpel = false; visa('spel'); break;
       case 'spel-avsluta': { var mitt = SPEL && SPEL.mitt; if (SPEL && SPEL.startad && !SPEL.slut) { S.stjarnor += SPEL.stj; spara(); } visa(mitt ? 'pass' : 'hem'); break; }
