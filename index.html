@@ -403,6 +403,38 @@ p{margin:0}
 .kompis.r-hmm .k-huvud{animation:hmm 1.1s ease-in-out}
 @keyframes hmm{0%,100%{transform:none}25%,75%{transform:rotate(-11deg)}}
 
+
+/* ---------- Fler trick ---------- */
+.kompis.r-stjarnhopp .k-hel{animation:hopp .95s cubic-bezier(.3,.7,.4,1)}
+.kompis.r-stjarnhopp .k-ben-v{animation:stjBenV .95s}
+.kompis.r-stjarnhopp .k-ben-h{animation:stjBenH .95s}
+.kompis.r-stjarnhopp .k-arm-v{animation:stjArmV .95s}
+.kompis.r-stjarnhopp .k-arm-h{animation:stjArmH .95s}
+@keyframes stjBenV{0%,25%,88%,100%{transform:rotate(0deg)}45%,65%{transform:rotate(38deg)}}
+@keyframes stjBenH{0%,25%,88%,100%{transform:rotate(0deg)}45%,65%{transform:rotate(-38deg)}}
+@keyframes stjArmV{0%,20%,90%,100%{transform:rotate(0deg)}45%,65%{transform:rotate(150deg)}}
+@keyframes stjArmH{0%,20%,90%,100%{transform:rotate(0deg)}45%,65%{transform:rotate(-95deg)}}
+.kompis.r-bakvolt .k-hel,.kompis.r-dubbelvolt .k-hel,.kompis.r-skruv .k-hel,.kompis.r-handstand .k-hel,.kompis.r-flickflack .k-hel{transform-origin:80px 110px}
+.kompis.r-bakvolt .k-hel{animation:bakvolt 1.1s cubic-bezier(.3,.7,.4,1)}
+@keyframes bakvolt{0%{transform:translateY(0) rotate(0deg) scale(1,1)}15%{transform:translateY(0) rotate(10deg) scale(1.1,.85)}30%{transform:translateY(-60px) rotate(90deg) scale(.95,1.05)}50%{transform:translateY(-90px) rotate(180deg) scale(1,1)}70%{transform:translateY(-60px) rotate(270deg) scale(1,1)}86%{transform:translateY(0) rotate(360deg) scale(1.08,.9)}100%{transform:translateY(0) rotate(360deg) scale(1,1)}}
+.kompis.r-dubbelvolt .k-hel{animation:dubbelvolt 1.4s cubic-bezier(.3,.7,.4,1)}
+@keyframes dubbelvolt{0%{transform:translateY(0) rotate(0deg) scale(1,1)}12%{transform:translateY(0) rotate(0deg) scale(1.12,.82)}25%{transform:translateY(-75px) rotate(-130deg) scale(.95,1.05)}40%{transform:translateY(-125px) rotate(-300deg) scale(.9,.9)}55%{transform:translateY(-130px) rotate(-450deg) scale(.9,.9)}70%{transform:translateY(-95px) rotate(-600deg) scale(.95,.95)}86%{transform:translateY(0) rotate(-720deg) scale(1.1,.88)}100%{transform:translateY(0) rotate(-720deg) scale(1,1)}}
+.kompis.r-skruv .k-hel{animation:skruv 1.4s cubic-bezier(.3,.7,.4,1)}
+@keyframes skruv{0%{transform:translateY(0) rotate(0deg) scale(1,1)}14%{transform:translateY(0) rotate(0deg) scale(1.1,.85)}26%{transform:translateY(-70px) rotate(-90deg) scale(-1,1)}38%{transform:translateY(-105px) rotate(-180deg) scale(1,1)}50%{transform:translateY(-115px) rotate(-240deg) scale(-1,1)}62%{transform:translateY(-95px) rotate(-300deg) scale(1,1)}74%{transform:translateY(-50px) rotate(-340deg) scale(-1,1)}86%{transform:translateY(0) rotate(-360deg) scale(1.08,.9)}100%{transform:translateY(0) rotate(-360deg) scale(1,1)}}
+.kompis.r-handstand .k-hel{animation:handstand 2s ease-in-out}
+.kompis.r-handstand .k-arm-v,.kompis.r-flickflack .k-arm-v,.kompis.r-bakvolt .k-arm-v,.kompis.r-dubbelvolt .k-arm-v,.kompis.r-skruv .k-arm-v,.kompis.r-spagat .k-arm-v{transform:rotate(110deg)}
+.kompis.r-handstand .k-arm-h,.kompis.r-flickflack .k-arm-h,.kompis.r-bakvolt .k-arm-h,.kompis.r-dubbelvolt .k-arm-h,.kompis.r-skruv .k-arm-h,.kompis.r-spagat .k-arm-h{transform:rotate(-55deg)}
+@keyframes handstand{0%{transform:translateY(0) rotate(0deg)}18%{transform:translateY(-14px) rotate(-180deg)}30%{transform:translateY(-8px) rotate(-186deg)}42%{transform:translateY(-8px) rotate(-175deg)}54%{transform:translateY(-8px) rotate(-184deg)}66%{transform:translateY(-8px) rotate(-180deg)}84%{transform:translateY(-14px) rotate(-360deg)}100%{transform:translateY(0) rotate(-360deg)}}
+.kompis.r-spagat .k-hel{animation:spagat 1.8s ease-in-out}
+.kompis.r-spagat .k-ben-v{animation:spagatV 1.8s ease-in-out}
+.kompis.r-spagat .k-ben-h{animation:spagatH 1.8s ease-in-out}
+@keyframes spagat{0%,100%{transform:translateY(0)}25%,75%{transform:translateY(34px)}}
+@keyframes spagatV{0%,100%{transform:rotate(0deg)}25%,75%{transform:rotate(82deg)}}
+@keyframes spagatH{0%,100%{transform:rotate(0deg)}25%,75%{transform:rotate(-82deg)}}
+.kompis.r-flickflack .k-hel{animation:flickflack 2.2s ease-in-out}
+@keyframes flickflack{0%{transform:translate(0px,0px) rotate(0deg)}10%{transform:translate(0px,6px) rotate(10deg)}28%{transform:translate(-30px,-40px) rotate(-180deg)}42%{transform:translate(-60px,0px) rotate(-360deg)}58%{transform:translate(-90px,-40px) rotate(-540deg)}70%{transform:translate(-120px,0px) rotate(-720deg)}76%{transform:translate(-120px,0px) rotate(-720deg)}84%{transform:translate(-80px,-16px) rotate(-720deg)}92%{transform:translate(-40px,0px) rotate(-720deg)}96%{transform:translate(-18px,-8px) rotate(-720deg)}100%{transform:translate(0px,0px) rotate(-720deg)}}
+.kompis.r-stjarnhopp .k-skugga,.kompis.r-bakvolt .k-skugga,.kompis.r-dubbelvolt .k-skugga,.kompis.r-skruv .k-skugga{animation:skugga 1s}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
@@ -466,6 +498,18 @@ p{margin:0}
 .spel-resultat svg{width:34px;height:34px}
 
 .spel-paus{font:800 18px var(--display)!important;color:var(--ink);background:var(--guld-soft);padding:6px 14px;border-radius:999px}
+
+.chip.niva{text-transform:none;letter-spacing:0;font-size:14px}
+.chip.niva.n1{background:var(--ratt-soft);color:var(--ink)}
+.chip.niva.n2{background:var(--guld-soft);color:var(--ink)}
+.chip.niva.n3{background:var(--fel-soft);color:var(--ink)}
+.chip.ny{background:var(--guld);color:#2B2100}
+.fig-del.farg-ljus{fill:var(--pop-soft);stroke:none}
+.fig-rut{stroke:var(--line);stroke-width:1.5}
+.fig-kant{fill:none;stroke:var(--ink);stroke-width:3}
+.st-axel{fill:var(--muted);font:600 15px var(--body);text-anchor:end}
+.st-stapel{stroke:var(--ink);stroke-width:2}
+.st-stapel.s0{fill:var(--rosa)}.st-stapel.s1{fill:var(--bla)}.st-stapel.s2{fill:var(--guld)}.st-stapel.s3{fill:var(--ratt)}
 
 </style>
 <div id="app" class="app"></div>
@@ -533,7 +577,7 @@ var Lx = (function () {
   function parseTal(s) {
     if (s === null || s === undefined) return null;
     var t = String(s).toLowerCase().replace(/[\s ]+/g, '').replace(/[−–—]/g, '-');
-    t = t.replace(/(kronor|kr|öre|kg|cm|mm|m|st|år|poäng|grader|°c|°)$/, '');
+    t = t.replace(/(kronor|kr|öre|kg|cm²|m²|cm|mm|dl|ml|min|m|g|l|h|st|år|poäng|grader|°c|°|%)$/, '');
     t = t.replace(',', '.');
     if (!/^-?(\d+(\.\d*)?|\.\d+)$/.test(t)) return null;
     return parseFloat(t);
@@ -940,6 +984,94 @@ var Lx = (function () {
     return { typ: 'val', text: 'Vilket av talen är ' + (max ? 'störst' : 'minst') + '?', alt: kand.map(function (k) { return k.vis; }), ratt: kand.indexOf(mal), fast: true, ledtrad: 'Skriv alla talen som decimaltal med två decimaler. Då blir de lätta att jämföra.', losning: ['Med två decimaler: ' + kand.map(function (k) { return fmtN(k.h / 100, 2); }).join(',  '), (max ? 'Störst' : 'Minst') + ' är ' + mal.vis + '.'] };
   };
 
+
+  // ---------- Generatorer: Femmans matte (Lgr22 åk 4–6) ----------
+  G.procent = function (r) {
+    var val = valj(r, [[50, 2], [25, 4], [10, 10], [75, 4], [20, 5]]), p = val[0], d = val[1];
+    var N = p === 10 ? 10 * heltal(r, 3, 40) : d * heltal(r, 2, 25), svar = N * p / 100, del = N / d;
+    var bra = { 50: 'hälften', 25: 'en fjärdedel', 10: 'en tiondel', 75: 'tre fjärdedelar', 20: 'en femtedel' }[p];
+    var los = [p + ' % = ' + br(p, 100) + ' = ' + bra + '.'];
+    if (p === 75) los.push('En fjärdedel av ' + N + ' är ' + br(N, 4) + ' = ' + del + '.', 'Tre fjärdedelar är 3 · ' + del + ' = ' + svar + '.');
+    else los.push(cap(bra) + ' av ' + N + ' är ' + br(N, d) + ' = ' + svar + '.');
+    los.push('Svar: ' + fmt(svar) + ' kr');
+    return { typ: 'svar', niva: p === 50 ? 1 : (p === 75 || p === 20) ? 3 : 2, text: 'Hur mycket är ' + p + ' % av ' + N + ' kr?', falt: [{ typ: 'tal', svar: fmt(svar), enhet: 'kr' }], ledtrad: p + ' % är samma sak som ' + bra + '.', losning: los };
+  };
+  G.brak_av = function (r) {
+    var d = valj(r, [2, 3, 4, 5, 10]), n = d === 2 ? 1 : heltal(r, 1, d - 1), k = heltal(r, 2, 9), N = d * k;
+    var sak = valj(r, [['kulor', 'st'], ['klistermärken', 'st'], ['kronor', 'kr'], ['minuter', 'min']]);
+    var vad = d === 2 ? 'hälften' : brakOrd(n, d);
+    var los = d === 2 ? ['Hälften av ' + N + ' är ' + br(N, 2) + ' = ' + k + '.'] : ['En ' + DELNAMN[d] + ' av ' + N + ' är ' + br(N, d) + ' = ' + k + '.'];
+    if (n > 1) los.push(cap(TALORD[n]) + ' ' + DELNAMN[d] + 'ar är ' + n + ' · ' + k + ' = ' + (n * k) + '.');
+    return { typ: 'svar', niva: n === 1 ? 1 : 2, text: 'Hur mycket är ' + vad + ' av ' + N + ' ' + sak[0] + '?', falt: [{ typ: 'tal', svar: String(n * k), enhet: sak[1] }], ledtrad: 'Dela först ' + N + ' i ' + d + ' lika stora delar.', losning: los };
+  };
+  var ENHETER = [
+    { fr: 'm', till: 'cm', f: 100 }, { fr: 'kg', till: 'g', f: 1000 }, { fr: 'l', till: 'dl', f: 10 }, { fr: 'km', till: 'm', f: 1000 },
+    { fr: 'h', till: 'min', f: 60 }, { fr: 'cm', till: 'mm', f: 10 }, { fr: 'l', till: 'ml', f: 1000 }
+  ];
+  G.enhet = function (r) {
+    var e = valj(r, ENHETER), bakat = r() < 0.4, dec = !bakat && e.f !== 60 && r() < 0.4;
+    var a = dec ? heltal(r, 11, 49) / 10 : heltal(r, 2, 9);
+    if (e.f === 60) a = valj(r, [1, 2, 3, 0.5, 1.5]);
+    var fran = bakat ? e.till : e.fr, till = bakat ? e.fr : e.till, varde = bakat ? a * e.f : a, svar = bakat ? a : a * e.f;
+    return { typ: 'svar', niva: dec || bakat ? 2 : 1, text: 'Hur många ' + till + ' är ' + fmt(varde) + ' ' + fran + '?', falt: [{ typ: 'tal', svar: fmt(svar), enhet: till }], ledtrad: '1 ' + e.fr + ' = ' + e.f + ' ' + e.till + '.', losning: ['1 ' + e.fr + ' = ' + e.f + ' ' + e.till + '.', bakat ? fmt(varde) + ' ' + e.till + ' = ' + br(fmt(varde), e.f) + ' ' + e.fr + ' = ' + fmt(svar) + ' ' + e.fr : fmt(varde) + ' · ' + e.f + ' = ' + fmt(svar) + ', alltså ' + fmt(svar) + ' ' + e.till + '.'] };
+  };
+  G.omkrets_area = function (r) {
+    var b = heltal(r, 2, 9), h = heltal(r, 2, 7), area = r() < 0.5;
+    if (b === h) b++;
+    return { typ: 'svar', niva: area ? 1 : 2, text: 'Rektangeln är ' + b + ' cm lång och ' + h + ' cm bred. Hur stor är ' + (area ? 'arean' : 'omkretsen') + '?', figur: { form: 'rektangel', b: b, h: h }, falt: [{ typ: 'tal', svar: String(area ? b * h : 2 * (b + h)), enhet: area ? 'cm²' : 'cm' }], ledtrad: area ? 'Arean är längden gånger bredden.' : 'Omkretsen är alla fyra sidor tillsammans.', losning: area ? ['Area = längd · bredd', b + ' · ' + h + ' = ' + (b * h), 'Svar: ' + (b * h) + ' cm²'] : ['Omkrets = alla sidor tillsammans', b + ' + ' + h + ' + ' + b + ' + ' + h + ' = ' + (2 * (b + h)), 'Svar: ' + (2 * (b + h)) + ' cm'] };
+  };
+  function grader(x) { return (x < 0 ? '−' : '') + Math.abs(x) + ' °C'; }
+  G.negativa = function (r) {
+    var v = heltal(r, 0, 2), a, d;
+    if (v === 0) { a = heltal(r, -9, -1); d = heltal(r, 2, 12); return { typ: 'svar', niva: 1, text: 'Termometern visar ' + grader(a) + '. Det blir ' + d + ' grader varmare. Vad visar termometern nu?', falt: [{ typ: 'tal', svar: String(a + d), enhet: '°C' }], ledtrad: 'Räkna uppåt på termometern från ' + grader(a) + '. Använd minus-knappen om svaret är under noll.', losning: [grader(a) + ' + ' + d + ' grader', 'Svar: ' + grader(a + d)], minus: true }; }
+    if (v === 1) { a = heltal(r, 1, 8); d = heltal(r, a + 1, a + 9); return { typ: 'svar', niva: 2, text: 'Det är ' + grader(a) + '. Det blir ' + d + ' grader kallare. Vad visar termometern nu?', falt: [{ typ: 'tal', svar: String(a - d), enhet: '°C' }], ledtrad: 'Först ' + a + ' grader ner till 0. Hur många grader är det kvar att gå ner?', losning: [a + ' grader ner ger 0 °C.', 'Sedan ' + (d - a) + ' grader till under noll.', 'Svar: ' + grader(a - d)], minus: true }; }
+    a = heltal(r, 1, 9); d = -heltal(r, 1, 9);
+    return { typ: 'svar', niva: 3, text: 'På dagen var det ' + grader(a) + ' och på natten ' + grader(d) + '. Hur många grader skiljer det?', falt: [{ typ: 'tal', svar: String(a - d), enhet: 'grader' }], ledtrad: 'Räkna från ' + grader(d) + ' upp till 0, och sedan upp till ' + grader(a) + '.', losning: ['Från ' + grader(d) + ' till 0 °C är ' + (-d) + ' grader.', 'Från 0 °C till ' + grader(a) + ' är ' + a + ' grader.', (-d) + ' + ' + a + ' = ' + (a - d) + ' grader'] };
+  };
+  G.lagesmatt = function (r) {
+    var v = valj(r, ['typvarde', 'median', 'medel']), tal = [], svar, los, x;
+    if (v === 'typvarde') {
+      var t = heltal(r, 2, 9);
+      while (tal.length < 3) { x = heltal(r, 1, 15); if (x !== t && tal.indexOf(x) < 0) tal.push(x); }
+      tal = blanda(r, tal.concat([t, t])); svar = t;
+      los = ['Typvärdet är det tal som finns flest gånger.', t + ' finns två gånger. De andra talen finns bara en gång.', 'Typvärde: ' + t];
+    } else if (v === 'median') {
+      while (tal.length < 5) { x = heltal(r, 1, 20); if (tal.indexOf(x) < 0) tal.push(x); }
+      var sort = tal.slice().sort(function (a, b) { return a - b; }); svar = sort[2];
+      los = ['Medianen är talet i mitten när talen står i storleksordning.', 'I ordning: ' + sort.join(', '), 'Medianen är ' + svar + '.'];
+    } else {
+      var n = valj(r, [3, 4]), m = heltal(r, 4, 12), sista;
+      do { tal = []; for (var i = 0; i < n - 1; i++) tal.push(m + heltal(r, -3, 3)); sista = m * n - tal.reduce(function (a, b) { return a + b; }, 0); } while (sista < 1 || sista > 25);
+      tal.push(sista); tal = blanda(r, tal); svar = m;
+      los = ['Medelvärde = summan delat med antalet tal.', 'Summa: ' + tal.join(' + ') + ' = ' + (m * n), br(m * n, n) + ' = ' + m];
+    }
+    var namn = { typvarde: 'typvärdet', median: 'medianen', medel: 'medelvärdet' }[v];
+    return { typ: 'svar', niva: v === 'medel' ? 3 : 2, text: 'Vad är ' + namn + ' av talen?', uttryck: tal.join(',   '), falt: [{ typ: 'tal', svar: String(svar) }], ledtrad: { typvarde: 'Vilket tal finns flest gånger?', median: 'Skriv talen i storleksordning. Vilket står i mitten?', medel: 'Lägg ihop alla tal. Dela sedan med hur många tal det är.' }[v], losning: los };
+  };
+  G.ekvation = function (r) {
+    var v = heltal(r, 0, 2), x = heltal(r, 2, 15), a;
+    if (v === 0) { a = heltal(r, 3, 20); return { typ: 'svar', niva: 1, text: 'Vilket tal är x?', uttryck: 'x + ' + a + ' = ' + (x + a), falt: [{ etikett: 'x =', typ: 'tal', svar: String(x) }], ledtrad: 'Vilket tal plus ' + a + ' blir ' + (x + a) + '? Du kan räkna ' + (x + a) + ' − ' + a + '.', losning: ['x = ' + (x + a) + ' − ' + a, 'x = ' + x, 'Kolla: ' + x + ' + ' + a + ' = ' + (x + a)] }; }
+    if (v === 1) { a = heltal(r, 3, 20); return { typ: 'svar', niva: 2, text: 'Vilket tal är x?', uttryck: 'x − ' + a + ' = ' + x, falt: [{ etikett: 'x =', typ: 'tal', svar: String(x + a) }], ledtrad: 'Vilket tal minus ' + a + ' blir ' + x + '? Räkna ' + x + ' + ' + a + '.', losning: ['x = ' + x + ' + ' + a, 'x = ' + (x + a), 'Kolla: ' + (x + a) + ' − ' + a + ' = ' + x] }; }
+    a = heltal(r, 2, 9); x = heltal(r, 2, 10);
+    return { typ: 'svar', niva: 2, text: 'Vilket tal är x?', uttryck: a + ' · x = ' + (a * x), falt: [{ etikett: 'x =', typ: 'tal', svar: String(x) }], ledtrad: a + ' gånger vilket tal blir ' + (a * x) + '? Tänk på ' + a + ':ans tabell.', losning: ['x = ' + br(a * x, a), 'x = ' + x, 'Kolla: ' + a + ' · ' + x + ' = ' + (a * x)] };
+  };
+  G.monster = function (r) {
+    var start = heltal(r, 3, 6), d = heltal(r, 2, 4), n = heltal(r, 5, 8);
+    var f = function (k) { return start + d * (k - 1); };
+    return { typ: 'svar', niva: 3, papper: true, text: 'Figur 1 är byggd av ' + f(1) + ' stickor, figur 2 av ' + f(2) + ' och figur 3 av ' + f(3) + '. Hur många stickor behövs till figur ' + n + '?', falt: [{ typ: 'tal', svar: String(f(n)), enhet: 'st' }], ledtrad: 'Hur många stickor kommer till för varje ny figur?', losning: ['För varje ny figur kommer ' + d + ' stickor till.', 'Figur ' + n + ': ' + f(1) + ' + ' + (n - 1) + ' · ' + d + ' = ' + f(n)] };
+  };
+  G.gange10 = function (r) {
+    var k = valj(r, [10, 100, 1000]), del = r() < 0.4, dec = r() < 0.5;
+    var a = dec ? heltal(r, 12, 98) / 10 : heltal(r, 3, 95);
+    if (del) { var tal = Math.round(a * k), svarD = tal / k; return { typ: 'svar', niva: dec ? 3 : 2, text: 'Räkna ut.', uttryck: fmt(tal) + ' / ' + k, falt: [{ typ: 'tal', svar: fmt(svarD) }], ledtrad: 'När man delar med ' + k + ' flyttar siffrorna ' + TALORD[String(k).length - 1] + ' steg åt höger, alltså mot de mindre talen.', losning: ['Dela med ' + k + ': siffrorna flyttar ' + TALORD[String(k).length - 1] + ' steg.', fmt(tal) + ' / ' + k + ' = ' + fmt(svarD)] }; }
+    return { typ: 'svar', niva: dec ? 2 : 1, text: 'Räkna ut.', uttryck: fmt(a) + ' · ' + k, falt: [{ typ: 'tal', svar: fmt(Math.round(a * k * 1e6) / 1e6) }], ledtrad: 'När man multiplicerar med ' + k + ' flyttar siffrorna ' + TALORD[String(k).length - 1] + ' steg åt vänster, alltså mot de större talen.', losning: ['Gånger ' + k + ': siffrorna flyttar ' + TALORD[String(k).length - 1] + ' steg.', fmt(a) + ' · ' + k + ' = ' + fmt(Math.round(a * k * 1e6) / 1e6)] };
+  };
+  G.proportion = function (r, c) {
+    var vara = valj(r, [['glassar', 'glassarna'], ['biobiljetter', 'biljetterna'], ['pennor', 'pennorna'], ['bullar', 'bullarna']]), styck = heltal(r, 3, 15), a = heltal(r, 2, 5), b;
+    do { b = heltal(r, 2, 8); } while (b === a);
+    return { typ: 'svar', niva: 3, papper: true, text: a + ' ' + vara[0] + ' kostar ' + (a * styck) + ' kr. Hur mycket kostar ' + b + ' ' + vara[0] + '?', falt: [{ typ: 'tal', svar: String(b * styck), enhet: 'kr' }], ledtrad: 'Räkna först ut vad en kostar.', losning: ['En kostar ' + br(a * styck, a) + ' = ' + styck + ' kr.', b + ' kostar ' + b + ' · ' + styck + ' = ' + (b * styck) + ' kr.'] };
+  };
+
   function genPass(lista, antal, c, seed) {
     var r = slump(seed === undefined ? (Date.now() ^ Math.floor(Math.random() * 1e9)) : seed);
     var ordning = [];
@@ -960,7 +1092,7 @@ var Lx = (function () {
     fmt: fmt, fmtN: fmtN, br: br, brakOrd: brakOrd, talbart: talbart, TALORD: TALORD,
     parseTal: parseTal, parseBrak: parseBrak, normText: normText, lev: lev,
     kollaFalt: kollaFalt, kolla: kolla, facit: facit, avrundaMilli: avrundaMilli,
-    G: G, genPass: genPass, TAVLA: TAVLA
+    G: G, genPass: genPass, TAVLA: TAVLA, DELNAMN: DELNAMN
   };
 })();
 if (typeof module !== 'undefined') module.exports = Lx;
@@ -973,6 +1105,78 @@ if (typeof module !== 'undefined') module.exports = Lx;
    Frågetyper: val (flerval), svar (skriv in svaret), kort (förklara med egna ord),
    ordna (storleksordning) och pil (pilkastning). {3/4} visas som ett bråk. */
 var LAXOR = [
+  {
+    id: 'femman', amne: 'matte', titel: 'Femmans matte', under: 'Det man ska kunna i åk 5 – från lätt till klurigt', ny: true,
+    pass: [
+      { id: 'tal', titel: 'Tal och räkning', under: 'Positionssystemet, huvudräkning och överslag', fragor: [
+        { niva: 1, typ: 'svar', text: 'Vilken siffra står på tiotalsplatsen i talet 4 381?', falt: [{ typ: 'tal', svar: '8' }], ledtrad: 'Från höger: ental, tiotal, hundratal, tusental.', losning: ['4 381: 4 tusental, 3 hundratal, 8 tiotal och 1 ental.', 'Tiotalssiffran är 8.'] },
+        { niva: 1, typ: 'svar', text: 'Räkna ut.', uttryck: '46 · 10', falt: [{ typ: 'tal', svar: '460' }], ledtrad: 'Gånger 10: alla siffror flyttar ett steg åt vänster, och en nolla kommer på entalsplatsen.', losning: ['46 · 10 = 460'] },
+        { niva: 1, typ: 'svar', text: 'Räkna ut i huvudet.', uttryck: '350 + 250', falt: [{ typ: 'tal', svar: '600' }], ledtrad: 'Börja med hundratalen: 300 + 200. Sedan 50 + 50.', losning: ['300 + 200 = 500', '50 + 50 = 100', '500 + 100 = 600'] },
+        { niva: 2, typ: 'svar', text: 'Räkna ut.', uttryck: '3 600 / 100', falt: [{ typ: 'tal', svar: '36' }], ledtrad: 'Delat med 100: ta bort två nollor.', losning: ['3 600 / 100 = 36'] },
+        { niva: 2, typ: 'val', text: 'Gör ett överslag. Ungefär hur mycket är 198 + 403?', alt: ['600', '500', '700'], ratt: 0, ledtrad: 'Avrunda: 198 är nästan 200 och 403 är nästan 400.', losning: ['198 ≈ 200 och 403 ≈ 400.', '200 + 400 = 600'] },
+        { niva: 3, typ: 'val', text: 'Ella köper 3 tröjor som kostar 199 kr styck. Vilket svar är rimligt?', alt: ['597 kr', '59,70 kr', '5 970 kr'], ratt: 0, ledtrad: 'En tröja kostar nästan 200 kr. Vad kostar då tre?', losning: ['199 kr är nästan 200 kr.', '3 · 200 = 600, så svaret ska vara nära 600 kr.', 'Exakt: 3 · 199 = 597 kr.'] },
+        { niva: 3, typ: 'svar', papper: true, text: 'Räkna ut.', uttryck: '1 000 − 382', falt: [{ typ: 'tal', svar: '618' }], ledtrad: 'Tips: räkna 999 − 382 först. Lägg sedan till 1.', losning: ['999 − 382 = 617 (då behövs ingen växling)', '1 000 är 1 mer än 999: 617 + 1 = 618'] }
+      ] },
+      { id: 'negativa', titel: 'Minusgrader', under: 'Negativa tal på termometern', fragor: [
+        { niva: 1, typ: 'val', text: 'Vilken temperatur är kallast?', alt: ['−8 °C', '−2 °C', '0 °C', '3 °C'], ratt: 0, fast: true, ledtrad: 'Ju längre ner under noll, desto kallare.', losning: ['−8 °C ligger längst ner på termometern.', 'Det är kallast.'] },
+        { niva: 1, typ: 'svar', minus: true, text: 'Termometern visar −3 °C. Det blir 5 grader varmare. Vad visar termometern nu?', falt: [{ typ: 'tal', svar: '2', enhet: '°C' }], ledtrad: 'Räkna uppåt: −3, −2, −1, 0, 1, 2.', losning: ['Från −3 °C är det 3 grader upp till 0 °C.', 'Sedan 2 grader till: 2 °C.'] },
+        { niva: 2, typ: 'ordna', text: 'Ordna talen. Börja med det minsta.', items: ['−5', '−1', '0', '2', '7'], etiketter: ['Minst', 'Störst'], ledtrad: 'Tänk dig en termometer. Det som är längst ner är minst.', losning: ['Minustal är mindre än noll.', '−5 är mindre än −1, eftersom det är längre från noll åt minushållet.', '−5, −1, 0, 2, 7'] },
+        { niva: 2, typ: 'svar', minus: true, text: 'Det är 4 °C. Det blir 10 grader kallare. Vad visar termometern nu?', falt: [{ typ: 'tal', svar: '-6', enhet: '°C' }], ledtrad: 'Först 4 grader ner till 0. Hur många grader är det kvar att gå ner? Tryck på minus-knappen för minusgrader.', losning: ['4 grader ner ger 0 °C.', 'Det är 6 grader kvar: −6 °C.'] },
+        { niva: 3, typ: 'svar', minus: true, text: 'Hissen står i källaren på våning −2. Den åker upp 7 våningar. Vilken våning är den på nu?', falt: [{ typ: 'tal', svar: '5' }], ledtrad: 'Räkna: −1, 0, 1, 2, 3 …', losning: ['Från −2 till 0 är 2 våningar.', 'Det är 5 våningar kvar: våning 5.'] },
+        { niva: 3, typ: 'svar', text: 'På natten var det −7 °C. På dagen var det 4 °C. Hur många grader skilde det?', falt: [{ typ: 'tal', svar: '11', enhet: 'grader' }], ledtrad: 'Från −7 upp till 0, och sedan upp till 4.', losning: ['Från −7 °C till 0 °C: 7 grader.', 'Från 0 °C till 4 °C: 4 grader.', '7 + 4 = 11 grader'] }
+      ] },
+      { id: 'procent', titel: 'Bråk och procent', under: 'Del av något, och procent som andel', fragor: [
+        { niva: 1, typ: 'svar', text: 'Hur mycket är hälften av 18?', falt: [{ typ: 'tal', svar: '9' }], ledtrad: 'Dela 18 i två lika stora delar.', losning: ['18 / 2 = 9'] },
+        { niva: 1, typ: 'val', text: 'Vad betyder 50 %?', alt: ['Hälften', 'En fjärdedel', 'En tiondel'], ratt: 0, ledtrad: 'Procent betyder hundradelar. 50 av 100 är …', losning: ['50 % = 50 hundradelar = ' + '{50/100}' + ' = {1/2}', 'Det är hälften.'] },
+        { niva: 2, typ: 'svar', text: 'Hur mycket är en fjärdedel av 20 kr?', falt: [{ typ: 'tal', svar: '5', enhet: 'kr' }], ledtrad: 'Dela 20 i fyra lika stora delar.', losning: ['20 / 4 = 5 kr'] },
+        { niva: 2, typ: 'svar', text: 'Skriv 25 % som ett bråk.', falt: [{ typ: 'brak', svar: '1/4' }], ledtrad: '25 % är 25 hundradelar. Hur många gånger får 25 plats i 100?', losning: ['25 % = {25/100}', '{25/100} = {1/4}'] },
+        { niva: 2, typ: 'svar', text: 'Räkna ut. Svara i bråkform.', uttryck: '{2/5} + {1/5}', falt: [{ typ: 'brak', svar: '3/5' }], ledtrad: 'Nämnarna är lika. Lägg bara ihop täljarna.', losning: ['Båda är femtedelar.', '2 femtedelar + 1 femtedel = 3 femtedelar = {3/5}'] },
+        { niva: 3, typ: 'svar', text: 'Hur mycket är 10 % av 250 kr?', falt: [{ typ: 'tal', svar: '25', enhet: 'kr' }], ledtrad: '10 % är en tiondel. Dela med 10.', losning: ['10 % = {1/10}', '250 / 10 = 25 kr'] },
+        { niva: 3, typ: 'svar', papper: true, text: 'En tröja kostar 200 kr. Priset sänks med 25 %. Vad kostar tröjan nu?', falt: [{ typ: 'tal', svar: '150', enhet: 'kr' }], ledtrad: 'Räkna först ut hur mycket 25 % av 200 kr är.', losning: ['25 % = en fjärdedel.', 'En fjärdedel av 200 kr = 50 kr.', '200 − 50 = 150 kr'] }
+      ] },
+      { id: 'matt', titel: 'Mått och tid', under: 'Enheter, längd, vikt, volym och klockan', fragor: [
+        { niva: 1, typ: 'svar', text: 'Hur många centimeter är 2 meter?', falt: [{ typ: 'tal', svar: '200', enhet: 'cm' }], ledtrad: '1 m = 100 cm.', losning: ['2 · 100 = 200 cm'] },
+        { niva: 1, typ: 'svar', text: 'Hur många gram är 3 kilogram?', falt: [{ typ: 'tal', svar: '3000', enhet: 'g' }], ledtrad: '1 kg = 1 000 g.', losning: ['3 · 1 000 = 3 000 g'] },
+        { niva: 2, typ: 'svar', text: 'Hur många deciliter är 1,5 liter?', falt: [{ typ: 'tal', svar: '15', enhet: 'dl' }], ledtrad: '1 l = 10 dl.', losning: ['1 l = 10 dl och en halv liter = 5 dl.', '10 + 5 = 15 dl'] },
+        { niva: 2, typ: 'svar', text: 'Hur många meter är 250 cm?', falt: [{ typ: 'tal', svar: '2,5', enhet: 'm' }], ledtrad: '100 cm = 1 m. Hur många hela meter, och vad blir över?', losning: ['200 cm = 2 m, och 50 cm = 0,5 m.', '250 cm = 2,5 m'] },
+        { niva: 2, typ: 'val', text: 'Filmen börjar 17:45 och är 1 timme och 30 minuter lång. När slutar den?', alt: ['19:15', '18:75', '19:45'], ratt: 0, ledtrad: 'Lägg först till 1 timme. Lägg sedan till 30 minuter. En timme har 60 minuter.', losning: ['17:45 + 1 timme = 18:45', '18:45 + 15 minuter = 19:00, och 15 minuter till = 19:15'] },
+        { niva: 3, typ: 'svar', text: 'Hur många minuter är två och en halv timme?', falt: [{ typ: 'tal', svar: '150', enhet: 'min' }], ledtrad: '1 timme = 60 minuter. En halv timme = 30 minuter.', losning: ['2 timmar = 2 · 60 = 120 minuter.', '120 + 30 = 150 minuter'] }
+      ] },
+      { id: 'geometri', titel: 'Geometri', under: 'Omkrets, area, vinklar och skala', fragor: [
+        { niva: 1, typ: 'svar', text: 'Hur lång är omkretsen av rektangeln?', figur: { form: 'rektangel', b: 6, h: 4 }, falt: [{ typ: 'tal', svar: '20', enhet: 'cm' }], ledtrad: 'Omkretsen är alla fyra sidor tillsammans.', losning: ['6 + 4 + 6 + 4 = 20 cm'] },
+        { niva: 1, typ: 'svar', text: 'Hur stor är arean av rektangeln?', figur: { form: 'rektangel', b: 6, h: 4 }, falt: [{ typ: 'tal', svar: '24', enhet: 'cm²' }], ledtrad: 'Area = längd · bredd. Det blir lika många rutor som 6 rader med 4 i varje.', losning: ['6 · 4 = 24 cm²'] },
+        { niva: 2, typ: 'val', text: 'Vilken vinkel är trubbig?', alt: ['120°', '90°', '35°'], ratt: 0, ledtrad: 'En rät vinkel är 90°. En trubbig vinkel är större än en rät.', losning: ['Spetsig: mindre än 90°. Rät: precis 90°. Trubbig: större än 90°.', '120° är trubbig.'] },
+        { niva: 2, typ: 'svar', text: 'En kvadrat har omkretsen 28 cm. Hur lång är en sida?', falt: [{ typ: 'tal', svar: '7', enhet: 'cm' }], ledtrad: 'En kvadrat har fyra lika långa sidor.', losning: ['28 / 4 = 7 cm'] },
+        { niva: 3, typ: 'svar', text: 'En karta har skalan 1:100. En sträcka är 3 cm på kartan. Hur många meter är den i verkligheten?', falt: [{ typ: 'tal', svar: '3', enhet: 'm' }], ledtrad: '1:100 betyder att allt i verkligheten är 100 gånger större.', losning: ['3 cm · 100 = 300 cm', '300 cm = 3 m'] },
+        { niva: 3, typ: 'svar', papper: true, text: 'Ett rum är 5 m långt och 4 m brett. En ny matta kostar 100 kr per kvadratmeter. Vad kostar en matta till hela golvet?', falt: [{ typ: 'tal', svar: '2000', enhet: 'kr' }], ledtrad: 'Räkna först ut arean.', losning: ['Area: 5 · 4 = 20 m²', '20 · 100 = 2 000 kr'] }
+      ] },
+      { id: 'statistik', titel: 'Diagram och statistik', under: 'Läsa diagram, typvärde, median, medelvärde och chans', fragor: [
+        { niva: 1, typ: 'val', text: 'Klassen röstade på sin favoritsport. Vilken sport fick flest röster?', figur: { form: 'stapel', rubrik: 'Favoritsport', data: [['Fotboll', 8], ['Gympa', 6], ['Dans', 5], ['Simning', 3]] }, alt: ['Fotboll', 'Gympa', 'Dans', 'Simning'], ratt: 0, fast: true, ledtrad: 'Vilken stapel är högst?', losning: ['Fotbollsstapeln är högst: 8 röster.'] },
+        { niva: 1, typ: 'svar', text: 'Hur många fler röstade på fotboll än på simning?', figur: { form: 'stapel', rubrik: 'Favoritsport', data: [['Fotboll', 8], ['Gympa', 6], ['Dans', 5], ['Simning', 3]] }, falt: [{ typ: 'tal', svar: '5' }], ledtrad: 'Läs av båda staplarna och räkna skillnaden.', losning: ['Fotboll 8, simning 3.', '8 − 3 = 5'] },
+        { niva: 2, typ: 'svar', text: 'Vad är typvärdet av talen?', uttryck: '3,   5,   9,   5,   7', falt: [{ typ: 'tal', svar: '5' }], ledtrad: 'Typvärdet är det tal som finns flest gånger.', losning: ['5 finns två gånger, de andra en gång.', 'Typvärde: 5'] },
+        { niva: 2, typ: 'svar', text: 'Vad är medianen av talen?', uttryck: '8,   2,   9,   4,   7', falt: [{ typ: 'tal', svar: '7' }], ledtrad: 'Skriv talen i storleksordning. Vilket står i mitten?', losning: ['I ordning: 2, 4, 7, 8, 9', 'Talet i mitten är 7.'] },
+        { niva: 3, typ: 'svar', text: 'Elsa gör 12 hjulningar på måndag, 15 på tisdag och 18 på onsdag. Hur många gör hon i medeltal per dag?', falt: [{ typ: 'tal', svar: '15', enhet: 'st' }], ledtrad: 'Lägg ihop alla. Dela sedan med antalet dagar.', losning: ['12 + 15 + 18 = 45', '45 / 3 = 15'] },
+        { niva: 3, typ: 'svar', text: 'Vilken är chansen att få en sexa när man slår en vanlig tärning? Svara i bråkform.', falt: [{ typ: 'brak', svar: '1/6' }], ledtrad: 'Hur många sidor har tärningen? Hur många av dem är en sexa?', losning: ['En tärning har 6 sidor, och en av dem är en sexa.', 'Chansen är {1/6}.'] }
+      ] },
+      { id: 'algebra', titel: 'Mönster och ekvationer', under: 'Hitta x och fortsätt mönster', fragor: [
+        { niva: 1, typ: 'svar', text: 'Vilket tal är x?', uttryck: 'x + 7 = 15', falt: [{ etikett: 'x =', typ: 'tal', svar: '8' }], ledtrad: 'Vilket tal plus 7 blir 15?', losning: ['15 − 7 = 8', 'x = 8'] },
+        { niva: 1, typ: 'svar', text: 'Vilket tal ska stå i stället för frågetecknet?', uttryck: '3,   6,   9,   12,   ?', falt: [{ typ: 'tal', svar: '15' }], ledtrad: 'Hur mycket ökar talen varje gång?', losning: ['Talen ökar med 3.', '12 + 3 = 15'] },
+        { niva: 2, typ: 'svar', text: 'Vilket tal är x?', uttryck: '4 · x = 28', falt: [{ etikett: 'x =', typ: 'tal', svar: '7' }], ledtrad: '4 gånger vilket tal blir 28?', losning: ['28 / 4 = 7', 'x = 7'] },
+        { niva: 2, typ: 'svar', text: 'Vilket tal är x?', uttryck: 'x − 12 = 30', falt: [{ etikett: 'x =', typ: 'tal', svar: '42' }], ledtrad: 'Vilket tal minus 12 blir 30? Räkna 30 + 12.', losning: ['30 + 12 = 42', 'x = 42'] },
+        { niva: 3, typ: 'svar', papper: true, text: 'Figur 1 är byggd av 4 stickor, figur 2 av 7 och figur 3 av 10. Hur många stickor behövs till figur 5?', falt: [{ typ: 'tal', svar: '16', enhet: 'st' }], ledtrad: 'Hur många stickor kommer till för varje ny figur?', losning: ['Det kommer 3 stickor till varje gång.', 'Figur 4: 13, figur 5: 16.'] },
+        { niva: 3, typ: 'svar', papper: true, text: 'Jag tänker på ett tal. Jag tar det gånger 2 och lägger till 5. Då får jag 29. Vilket tal tänker jag på?', falt: [{ typ: 'tal', svar: '12' }], ledtrad: 'Räkna baklänges: ta bort 5 först, och dela sedan med 2.', losning: ['29 − 5 = 24', '24 / 2 = 12', 'Kolla: 12 · 2 + 5 = 29'] }
+      ] },
+      { id: 'kluringar', titel: 'Kluringar', under: 'Problemlösning i vardagen', fragor: [
+        { niva: 2, typ: 'svar', papper: true, text: 'En busslapp kostar 26 kr. Fyra kompisar åker buss. Vad kostar det tillsammans?', falt: [{ typ: 'tal', svar: '104', enhet: 'kr' }], ledtrad: 'Räkna 4 · 26. Du kan dela upp 26 i 20 + 6.', losning: ['4 · 20 = 80 och 4 · 6 = 24', '80 + 24 = 104 kr'] },
+        { niva: 2, typ: 'svar', papper: true, text: 'Maja har 500 kr. Hon köper tre saker som kostar 89 kr styck. Hur mycket har hon kvar?', falt: [{ typ: 'tal', svar: '233', enhet: 'kr' }], ledtrad: 'Räkna först ut vad tre saker kostar.', losning: ['3 · 89 = 267 kr', '500 − 267 = 233 kr'] },
+        { niva: 2, typ: 'svar', papper: true, text: 'Tre glassar kostar 45 kr. Vad kostar fem glassar?', falt: [{ typ: 'tal', svar: '75', enhet: 'kr' }], ledtrad: 'Vad kostar en glass?', losning: ['En glass: 45 / 3 = 15 kr', 'Fem glassar: 5 · 15 = 75 kr'] },
+        { niva: 3, typ: 'svar', papper: true, text: 'Vera har 3 tröjor och 2 byxor. På hur många olika sätt kan hon klä sig med en tröja och en byxa?', falt: [{ typ: 'tal', svar: '6', enhet: 'sätt' }], ledtrad: 'Rita! Varje tröja kan sitta ihop med varje byxa.', losning: ['Tröja 1 med byxa 1 eller 2: 2 sätt.', 'Samma för tröja 2 och tröja 3.', '3 · 2 = 6 sätt'] },
+        { niva: 3, typ: 'val', text: 'Gympan börjar 18:10 och håller på i 75 minuter. När slutar den?', alt: ['19:25', '18:85', '19:15'], ratt: 0, ledtrad: '75 minuter = 1 timme och 15 minuter.', losning: ['75 minuter = 60 + 15 minuter.', '18:10 + 1 timme = 19:10', '19:10 + 15 minuter = 19:25'] },
+        { niva: 3, typ: 'svar', papper: true, text: 'Saga och Alva har tillsammans 30 klistermärken. Saga har 6 fler än Alva. Hur många har Alva?', falt: [{ typ: 'tal', svar: '12', enhet: 'st' }], ledtrad: 'Ta bort de 6 extra först. Dela sedan resten lika.', losning: ['30 − 6 = 24', '24 / 2 = 12. Alva har 12.', 'Saga har 12 + 6 = 18. Kolla: 12 + 18 = 30.'] }
+      ] },
+      { id: 'ova', titel: 'Träna mer', under: 'Nya frågor varje gång, från lätt till klurigt', gen: ['procent', 'brak_av', 'enhet', 'omkrets_area', 'negativa', 'lagesmatt', 'ekvation', 'monster', 'gange10', 'proportion'], antal: 10 }
+    ]
+  },
   {
     id: 'kap1', amne: 'matte', titel: 'Övningsprov kap 1', under: 'Bråk och decimaltal',
     pass: [
@@ -1503,7 +1707,11 @@ var Gubbar = (function () {
 
   var RORELSER = [
     { id: 'hopp', namn: 'Hopp', kravs: 0 }, { id: 'piruett', namn: 'Piruett', kravs: 15 }, { id: 'hjula', namn: 'Hjula', kravs: 40 },
-    { id: 'volt', namn: 'Volt', kravs: 80 }, { id: 'splitt', namn: 'Splitthopp', kravs: 130 }, { id: 'band', namn: 'Bandsnurr', kravs: 200 }
+    { id: 'volt', namn: 'Volt', kravs: 80 }, { id: 'splitt', namn: 'Splitthopp', kravs: 130 }, { id: 'band', namn: 'Bandsnurr', kravs: 200 },
+    { id: 'stjarnhopp', namn: 'Stjärnhopp', kravs: 240, tid: 1000 }, { id: 'bakvolt', namn: 'Bakåtvolt', kravs: 290, tid: 1200 },
+    { id: 'handstand', namn: 'Handstående', kravs: 350, tid: 2100 }, { id: 'spagat', namn: 'Spagat', kravs: 420, tid: 1900 },
+    { id: 'flickflack', namn: 'Flickflack', kravs: 500, tid: 2300 }, { id: 'dubbelvolt', namn: 'Dubbelvolt', kravs: 600, tid: 1500 },
+    { id: 'skruv', namn: 'Skruvvolt', kravs: 720, tid: 1500 }
   ];
   function upplasta() { return RORELSER.filter(function (r) { return S.stjarnor >= r.kravs; }); }
   var POANG = { ratt: 2, ratt2: 1, miss: 0, kunde: 2, nastan: 1, inte: 0 };
@@ -1632,7 +1840,8 @@ var Gubbar = (function () {
       RORELSER.concat([{ id: 'tap' }, { id: 'hmm' }]).forEach(function (r) { k.classList.remove('r-' + r.id); });
       void k.getBoundingClientRect();
       k.classList.add('r-' + id);
-      k._rt = setTimeout(function () { k.classList.remove('r-' + id); }, 1700);
+      var info = RORELSER.filter(function (r) { return r.id === id; })[0];
+      k._rt = setTimeout(function () { k.classList.remove('r-' + id); }, (info && info.tid) || 1700);
     });
     if (id !== 'tap' && id !== 'hmm') ljud('boing');
   }
@@ -1678,6 +1887,26 @@ var Gubbar = (function () {
         }
       }
       return '<svg viewBox="-4 -4 ' + (W + 8) + ' ' + (R * hh + 8).toFixed(1) + '" width="250" role="img" aria-label="En triangel delad i ' + idx + ' små trianglar">' + s + '</svg>';
+    }
+    if (f.form === 'rektangel') {
+      var ru = 30, rw = f.b * ru, rh = f.h * ru, rut = '';
+      for (i = 1; i < f.b; i++) rut += '<line x1="' + (i * ru) + '" y1="0" x2="' + (i * ru) + '" y2="' + rh + '" class="fig-rut"/>';
+      for (j = 1; j < f.h; j++) rut += '<line x1="0" y1="' + (j * ru) + '" x2="' + rw + '" y2="' + (j * ru) + '" class="fig-rut"/>';
+      return '<svg viewBox="-56 -10 ' + (rw + 70) + ' ' + (rh + 46) + '" width="' + Math.min(420, rw + 70) + '" role="img" aria-label="En rektangel som är ' + f.b + ' cm lång och ' + f.h + ' cm bred">' +
+        '<rect class="fig-del farg-ljus" x="0" y="0" width="' + rw + '" height="' + rh + '"/>' + rut + '<rect class="fig-kant" x="0" y="0" width="' + rw + '" height="' + rh + '"/>' +
+        '<text class="tl-text" x="' + (rw / 2) + '" y="' + (rh + 28) + '">' + f.b + ' cm</text><text class="tl-text" x="-30" y="' + (rh / 2 + 6) + '">' + f.h + ' cm</text></svg>';
+    }
+    if (f.form === 'stapel') {
+      var max = Math.max.apply(null, f.data.map(function (d) { return d[1]; })), steg = max > 10 ? 2 : 1, topp = Math.ceil(max / steg) * steg + steg;
+      var VW2 = 460, VH2 = 280, x0 = 44, y0 = 236, hojd = 200, bredd = (VW2 - x0 - 10) / f.data.length, Y = function (v) { return y0 - v / topp * hojd; };
+      for (i = 0; i <= topp; i += steg) s += '<line class="fig-rut" x1="' + x0 + '" y1="' + Y(i).toFixed(1) + '" x2="' + (VW2 - 6) + '" y2="' + Y(i).toFixed(1) + '"/><text class="st-axel" x="' + (x0 - 10) + '" y="' + (Y(i) + 5).toFixed(1) + '">' + i + '</text>';
+      f.data.forEach(function (d, k) {
+        var bx = x0 + k * bredd + bredd * 0.18, bw = bredd * 0.64;
+        s += '<rect class="st-stapel s' + (k % 4) + '" x="' + bx.toFixed(1) + '" y="' + Y(d[1]).toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + (y0 - Y(d[1])).toFixed(1) + '" rx="5"/>';
+        s += '<text class="tl-text" x="' + (bx + bw / 2).toFixed(1) + '" y="' + (y0 + 26) + '">' + esc(d[0]) + '</text>';
+      });
+      s += '<line class="tl-linje" x1="' + x0 + '" y1="' + y0 + '" x2="' + (VW2 - 6) + '" y2="' + y0 + '"/>';
+      return '<svg viewBox="0 -8 ' + VW2 + ' ' + VH2 + '" width="' + VW2 + '" role="img" aria-label="Stapeldiagram: ' + esc(f.rubrik || '') + '. ' + f.data.map(function (d) { return d[0] + ' ' + d[1]; }).join(', ') + '">' + s + '</svg>';
     }
     if (f.form === 'tallinje') {
       var VW = 680, m0 = 30, y = 92, sp = f.till - f.fran, X = function (v) { return m0 + (v - f.fran) / sp * (VW - 2 * m0 - 20); };
@@ -1767,7 +1996,7 @@ var Gubbar = (function () {
       var ny = !fasta.some(function (p) { return S.pass[passNyckel(set.id, p.id)]; });
       return '<button class="laxkort" data-act="oppna" data-set="' + set.id + '">' +
         '<span class="amnesruta ' + set.amne + '">' + (set.amne === 'no' ? IK.kolv : '<span aria-hidden="true">÷</span>') + '</span>' +
-        '<span><span class="rad"><span class="chip ' + set.amne + '">' + (set.amne === 'no' ? 'NO' : 'Matte') + '</span></span><h3>' + esc(set.titel) + '</h3><p>' + esc(set.under) + (ny ? '' : ' · ' + klara + ' av ' + fasta.length + ' pass klara') + '</p></span>' +
+        '<span><span class="rad"><span class="chip ' + set.amne + '">' + (set.amne === 'no' ? 'NO' : 'Matte') + '</span>' + (set.ny && ny ? '<span class="chip ny">Ny</span>' : '') + '</span><h3>' + esc(set.titel) + '</h3><p>' + esc(set.under) + (ny ? '' : ' · ' + klara + ' av ' + fasta.length + ' pass klara') + '</p></span>' +
         '<svg class="ring" viewBox="0 0 54 54" aria-label="' + klara + ' av ' + fasta.length + ' pass klara"><circle class="bak" cx="27" cy="27" r="22" fill="none" stroke-width="6"/><circle class="fram" cx="27" cy="27" r="22" fill="none" stroke-width="6" stroke-linecap="round" stroke-dasharray="' + omk.toFixed(1) + '" stroke-dashoffset="' + (omk * (1 - andel)).toFixed(1) + '" transform="rotate(-90 27 27)"/><text x="27" y="31.5" text-anchor="middle">' + klara + '/' + fasta.length + '</text></svg>' +
         '</button>';
     }).join('');
@@ -1817,6 +2046,10 @@ var Gubbar = (function () {
     var p = set.pass.filter(function (x) { return x.id === d[1]; })[0]; if (!p || !p.fragor || !p.fragor[+d[2]]) return null;
     return Object.assign({}, p.fragor[+d[2]], { ref: ref, amne: set.amne });
   }
+  function nivaOrdning(arr) {
+    if (!arr.some(function (q) { return q.niva; })) return arr;
+    return arr.map(function (q, i) { return [q, i]; }).sort(function (a, b) { return ((a[0].niva || 2) - (b[0].niva || 2)) || (a[1] - b[1]); }).map(function (x) { return x[0]; });
+  }
   function startaPass(setId, passId) {
     var fragor, set = hittaSet(setId), pass;
     if (setId === 'igen') {
@@ -1824,12 +2057,12 @@ var Gubbar = (function () {
       pass = { id: 'igen', titel: 'Öva igen' };
     } else {
       pass = set.pass.filter(function (p) { return p.id === passId; })[0];
-      if (pass.gen) fragor = L.genPass(pass.gen, pass.antal || 8, ctx()).map(function (q) { q.amne = set.amne; return q; });
+      if (pass.gen) fragor = nivaOrdning(L.genPass(pass.gen, pass.antal || 8, ctx()).map(function (q) { q.amne = set.amne; return q; }));
       else if (pass.pool) {
         var alla = [];
         set.pass.forEach(function (p) { if (p.fragor) p.fragor.forEach(function (q, i) { if (q.typ !== 'kort') alla.push(Object.assign({}, q, { ref: passNyckel(set.id, p.id) + '/' + i, amne: set.amne })); }); });
         fragor = L.blanda(Math.random, alla).slice(0, pass.antal || 10);
-      } else fragor = L.blanda(Math.random, pass.fragor.map(function (q, i) { return Object.assign({}, q, { ref: passNyckel(setId, passId) + '/' + i, amne: set.amne }); }));
+      } else fragor = nivaOrdning(L.blanda(Math.random, pass.fragor.map(function (q, i) { return Object.assign({}, q, { ref: passNyckel(setId, passId) + '/' + i, amne: set.amne }); })));
     }
     if (!fragor.length) { toast('Det finns inga frågor att öva på just nu.'); return visa('hem'); }
     if (setId !== 'igen') aktivtSet = setId;
@@ -1851,6 +2084,7 @@ var Gubbar = (function () {
     var prickar = P.fragor.map(function (_, i) { return '<i class="' + (P.resultat[i] ? ({ ratt: 'ratt', kunde: 'ratt', ratt2: 'ratt2', nastan: 'ratt2', miss: 'miss', inte: 'miss' })[P.resultat[i]] : '') + '"></i>'; }).join('');
     var amne = q.amne || 'matte';
     var meta = '<span class="chip ' + amne + '">' + (amne === 'no' ? 'NO' : 'Matte') + '</span>' +
+      (q.niva ? '<span class="chip niva n' + q.niva + '">' + ['', 'Lätt', 'Lagom', 'Klurig'][q.niva] + '</span>' : '') +
       (q.papper ? '<span class="chip papper">' + IK.penna + 'Räkna på papper</span>' : '') +
       (q.typ === 'kort' ? '<span class="chip papper">' + IK.penna + 'Förklara med egna ord</span>' : '') +
       '<button class="liten-kompis" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG() + '</button>';
@@ -1886,16 +2120,18 @@ var Gubbar = (function () {
         var etikett = '<span class="etikett">' + (f.etikett ? rt(f.etikett) : (q.falt.length > 1 ? '' : 'Ditt svar')) + '</span>';
         if (f.typ === 'text') return '<label class="falt' + st + '">' + etikett + '<input id="falt-' + P.i + '-' + i + '" data-text="' + i + '" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" value="' + esc(P.svar[i]) + '"' + (P.klar ? ' disabled' : '') + ' enterkeyhint="done"></label>';
         var v = P.svar[i];
-        var visas = v ? esc(v.replace('.', ',')).replace(/(\d+)\/(\d*)/, function (m, a, b) { return '<span class="br"><span>' + a + '</span><span>' + (b || '&nbsp;') + '</span></span>'; }) : '<span class="tomt">?</span>';
+        var visas = v ? esc(v.replace('.', ',').replace('-', '−')).replace(/(\d+)\/(\d*)/, function (m, a, b) { return '<span class="br"><span>' + a + '</span><span>' + (b || '&nbsp;') + '</span></span>'; }) : '<span class="tomt">?</span>';
         return '<button class="falt' + (i === P.aktivt && !P.klar ? ' aktiv' : '') + st + '" data-act="falt" data-i="' + i + '" aria-label="' + esc(L.talbart(f.etikett || 'Svar')) + ': ' + esc(v || 'tomt') + '"' + (P.klar ? ' disabled' : '') + '>' + etikett + '<span class="ruta"><span>' + visas + '</span>' + (f.enhet ? '<span class="enhet">' + esc(f.enhet) + '</span>' : '') + '</span></button>';
       }).join('');
       var tangenter = '';
       if (harTal && !P.klar) {
         var tk = ['7', '8', '9', '4', '5', '6', '1', '2', '3', ',', '0', 'del'];
         if (harBrak) tk = ['7', '8', '9', '/', '4', '5', '6', ',', '1', '2', '3', 'del', '0'];
-        tangenter = '<div class="tangenter' + (harBrak ? ' med-snedstreck' : '') + '">' + tk.map(function (k) {
+        else if (q.minus) tk = ['7', '8', '9', '-', '4', '5', '6', ',', '1', '2', '3', 'del', '0'];
+        var fyra = harBrak || !!q.minus;
+        tangenter = '<div class="tangenter' + (fyra ? ' med-snedstreck' : '') + '">' + tk.map(function (k) {
           if (k === 'del') return '<button class="tangent extra" data-act="tangent" data-k="del" aria-label="Sudda">' + IK.radera + '</button>';
-          return '<button class="tangent' + (k === '/' || k === ',' ? ' extra' : '') + '" data-act="tangent" data-k="' + k + '"' + (k === '0' && harBrak ? ' style="grid-column:span 4"' : '') + ' aria-label="' + (k === '/' ? 'Bråkstreck' : k === ',' ? 'Komma' : k) + '">' + k + '</button>';
+          return '<button class="tangent' + (k === '/' || k === ',' || k === '-' ? ' extra' : '') + '" data-act="tangent" data-k="' + k + '"' + (k === '0' && fyra ? ' style="grid-column:span 4"' : '') + ' aria-label="' + (k === '/' ? 'Bråkstreck' : k === ',' ? 'Komma' : k === '-' ? 'Minus' : k) + '">' + (k === '-' ? '−' : k) + '</button>';
         }).join('') + '</div>';
       }
       yta.innerHTML = '<div class="falten">' + falt + '</div>' + tangenter;
@@ -2042,8 +2278,8 @@ var Gubbar = (function () {
   var SPELTID = 30, MAX_SPELSTJ = 5, SPEL = null;
   // Pausspel mitt i ett pass (efter var tredje fråga) är kortare
   function mittSpel() { return !!(P && P.mittSpel); }
-  function speltid() { return mittSpel() ? 20 : SPELTID; }
-  function maxStj() { return mittSpel() ? 3 : MAX_SPELSTJ; }
+  function speltid() { return spelTyp() === 'regn' ? (mittSpel() ? 25 : 40) : (mittSpel() ? 20 : SPELTID); }
+  function maxStj() { return spelTyp() === 'regn' ? (mittSpel() ? 6 : 10) : (mittSpel() ? 3 : MAX_SPELSTJ); }
   var SPELNAMN = { regn: 'Akta dig!', hopp: 'Hinderhoppet' };
   /*HOPP-START*/
   var HOPP = {
@@ -2061,6 +2297,21 @@ var Gubbar = (function () {
     }
   };
   /*HOPP-SLUT*/
+  /*REGN-START*/
+  var REGN = {
+    fart: function (t) { return 240 + t * 11; },
+    paus: function (t) { return Math.max(0.22, 0.7 - t * 0.017); },
+    // fx = var över bredden (0–1), r = storlek vid skala 1, vx = sidledsfart, fartF = egen fart
+    monster: function (t, rnd) {
+      var en = function (extra) { var o = { fx: rnd(), r: 15 + rnd() * 12, vx: 0, fartF: 0.85 + rnd() * 0.35 }; for (var k in extra) o[k] = extra[k]; return o; };
+      var v = rnd();
+      if (t > 14 && v < 0.15) return [en({ r: 32 + rnd() * 6, fartF: 0.75, stor: true })];
+      if (t > 9 && v < 0.35) { var a = rnd(); return [en({ fx: a }), en({ fx: (a + 0.3 + rnd() * 0.4) % 1 })]; }
+      if (t > 5 && v < 0.6) return [en({ vx: (rnd() < 0.5 ? -1 : 1) * (60 + rnd() * 80) })];
+      return [en()];
+    }
+  };
+  /*REGN-SLUT*/
   function spelTyp() { return S.nastaSpel === 'hopp' ? 'hopp' : 'regn'; }
   var HJARTA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 5.3 3.1 1.7-1.9 3.2-3.1 5.3-3.1 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z" fill="var(--rod)" stroke="color-mix(in srgb,var(--rod) 60%,#000)" stroke-width="1.2"/></svg>';
 
@@ -2156,14 +2407,20 @@ var Gubbar = (function () {
     s.x += (s.mx - s.x) * k; s.y += (s.my - s.y) * k;
     s.nasta -= dt;
     if (s.nasta <= 0) {
-      var stjarna = s.stj + s.stjUte < s.maxStj && Math.random() < 0.2, r = stjarna ? 20 : (15 + Math.random() * 12) * s.skala;
-      s.saker.push({ x: r + Math.random() * (s.W - 2 * r), y: -r, r: r, v: (stjarna ? 150 : 190 + s.t * 9) * s.skala * (0.85 + Math.random() * 0.3), typ: stjarna ? 'stjarna' : (Math.random() < 0.5 ? 'snoboll' : 'kotte'), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 3 });
-      if (stjarna) s.stjUte++;
-      s.nasta = Math.max(0.3, 0.95 - s.t * 0.022);
+      if (s.stj + s.stjUte < s.maxStj && Math.random() < 0.3) {
+        s.saker.push({ x: 20 + Math.random() * (s.W - 40), y: -20, r: 20, v: 150 * s.skala, vx: 0, typ: 'stjarna', rot: 0, vr: 0 }); s.stjUte++;
+      } else {
+        REGN.monster(s.t, Math.random).forEach(function (m) {
+          var r = m.r * s.skala;
+          s.saker.push({ x: r + m.fx * (s.W - 2 * r), y: -r, r: r, v: REGN.fart(s.t) * s.skala * m.fartF, vx: m.vx * s.skalaX, typ: m.stor ? 'snoboll' : (Math.random() < 0.5 ? 'snoboll' : 'kotte'), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 3 });
+        });
+      }
+      s.nasta = REGN.paus(s.t);
     }
     var hb = hitbox(s);
     s.saker = s.saker.filter(function (o) {
       o.y += o.v * dt; o.rot += o.vr * dt;
+      if (o.vx) { o.x += o.vx * dt; if (o.x < o.r) { o.x = o.r; o.vx = -o.vx; } else if (o.x > s.W - o.r) { o.x = s.W - o.r; o.vx = -o.vx; } }
       if (cirkelTraff(o, hb)) {
         if (o.typ === 'stjarna') { fangaStjarna(o); return false; }
         if (s.skydd <= 0) { traffad(); return false; }
@@ -2390,6 +2647,7 @@ var Gubbar = (function () {
     if (k === 'del') v = v.slice(0, -1);
     else if (k === ',' ) { if (v.indexOf(',') < 0 && v.indexOf('/') < 0) v = (v || '0') + ','; }
     else if (k === '/') { if (v && v.indexOf('/') < 0 && v.indexOf(',') < 0) v += '/'; }
+    else if (k === '-') { v = v.charAt(0) === '-' ? v.slice(1) : '-' + v; }
     else if (v.length < 9) v += k;
     P.svar[P.aktivt] = v;
     if (P.faltStatus) P.faltStatus[P.aktivt] = null;
