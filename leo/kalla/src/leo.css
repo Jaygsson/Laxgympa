@@ -1,0 +1,128 @@
+/* ===== Lekgympan: Leos färger och de delar som är nya jämfört med Läxgympan =====
+   Läggs efter Lovas style.css. Färgerna byts genom att samma variabler får nya värden.
+   Tema "gron": grön fotbollsplan + orange. "bla": blå is + orange. "rod": röd + gul. */
+:root{
+  --bg:#F1FBF3; --surface:#FFFFFF; --surface2:#F6FCF7;
+  --ink:#1E3A2A; --muted:#527262; --line:#D9EDDD;
+  --gron:#2DB36A; --gron-deep:#178A4C; --gron-soft:#D6F5E2;
+  --orange:#FF8A2A; --orange-deep:#D9650F; --orange-soft:#FFE4CF;
+  --is:#3AAAF5; --is-deep:#1572C4; --is-soft:#D9EFFF;
+  --rosa:var(--orange); --rosa-deep:var(--orange-deep); --rosa-soft:var(--orange-soft);
+  --bla:var(--is); --bla-deep:var(--is-deep); --bla-soft:var(--is-soft);
+  --navy:#1E4D7A; --guld:#FFC226; --guld-soft:#FFF3C7;
+  --pop:var(--gron); --pop-deep:var(--gron-deep); --pop-soft:var(--gron-soft);
+  --pop2:var(--orange); --pop2-deep:var(--orange-deep); --pop2-soft:var(--orange-soft);
+  --matta:#5BCB84; --matta-kant:#2DB36A;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1F16; --surface:#1A2E22; --surface2:#1F3628;
+    --ink:#F0FBF3; --muted:#A9C9B4; --line:#2E4D3A;
+    --gron:#4ED489; --gron-deep:#6FE39F; --gron-soft:#1B4A30;
+    --orange:#FFA058; --orange-deep:#FFB375; --orange-soft:#4D2E16;
+    --is:#62C4FF; --is-deep:#86D2FF; --is-soft:#1E3B63;
+    --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
+    --matta:#2E7A4C; --matta-kant:#4ED489;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1F16; --surface:#1A2E22; --surface2:#1F3628;
+  --ink:#F0FBF3; --muted:#A9C9B4; --line:#2E4D3A;
+  --gron:#4ED489; --gron-deep:#6FE39F; --gron-soft:#1B4A30;
+  --orange:#FFA058; --orange-deep:#FFB375; --orange-soft:#4D2E16;
+  --is:#62C4FF; --is-deep:#86D2FF; --is-soft:#1E3B63;
+  --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
+  --matta:#2E7A4C; --matta-kant:#4ED489;
+}
+:root[data-skin="bla"]{ --pop:var(--is); --pop-deep:var(--is-deep); --pop-soft:var(--is-soft); --pop2:var(--orange); --pop2-deep:var(--orange-deep); --pop2-soft:var(--orange-soft); --matta:#CFEFFF; --matta-kant:var(--is); --bg:#EFF8FF; --line:#D4E7F5; }
+:root[data-skin="bla"] .matta{background:linear-gradient(var(--matta),var(--matta));box-shadow:inset 0 -7px 0 var(--matta-kant),inset 0 2px 0 #fff}
+:root[data-skin="rod"]{ --pop:#E53935; --pop-deep:#B71C1C; --pop-soft:#FFD9D7; --pop2:#FFC226; --pop2-deep:#B8860B; --pop2-soft:#FFF3C7; --matta:#FFD9D7; --matta-kant:#E53935; --bg:#FFF5F3; --line:#F3DBD8; }
+:root[data-skin="rod"] .matta{background:repeating-linear-gradient(90deg,#E53935 0 26px,#FFC226 26px 52px);box-shadow:inset 0 -7px 0 rgba(0,0,0,.18)}
+/* Fotbollsplanen: gräs med vita linjer */
+:root[data-skin="gron"] .matta{background:repeating-linear-gradient(90deg,#5BCB84 0 40px,#4FBF78 40px 80px);box-shadow:inset 0 -7px 0 var(--matta-kant),inset 0 0 0 3px rgba(255,255,255,.75)}
+.tema.gron i{background:linear-gradient(135deg,#2DB36A 50%,#FF8A2A 50%)}
+.tema.bla i{background:linear-gradient(135deg,#3AAAF5 50%,#FF8A2A 50%)}
+.tema.rod i{background:linear-gradient(135deg,#E53935 50%,#FFC226 50%)}
+
+/* ---------- Allmänt: större och enklare för en femåring ---------- */
+.emoji{font-family:"Noto Color Emoji","Apple Color Emoji","Segoe UI Emoji",sans-serif;line-height:1;display:inline-block}
+.amnesruta{background:var(--pop-soft);font-size:34px}
+.laxkort.bana p{font-size:14px}
+.laxkort .kor{width:44px;height:44px;border-radius:50%;background:var(--pop-deep);color:var(--on-pop);display:grid;place-items:center}
+.laxkort .kor svg{width:24px;height:24px}
+.laxkort .mini-medalj{width:36px;height:60px}
+.chip.dag{background:var(--guld-soft);color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px;align-self:flex-start;gap:8px;padding:8px 14px 8px 10px}
+.chip.dag svg{width:20px;height:20px}
+.chip.dag.klar{background:var(--ratt-soft)}
+.chip.bana-chip{background:var(--pop-soft);color:var(--pop-deep);text-transform:none;letter-spacing:0;font-size:15px;gap:8px}
+.chip.bana-chip .emoji{font-size:18px}
+.stjarnor.liten{height:44px;padding:0 14px 0 10px;font-size:20px}
+.stjarnor.liten svg{width:24px;height:24px}
+.pass-topp .ikon-knapp.las{margin-left:auto}
+.fraga-meta .las{margin-left:auto;background:var(--pop2-soft);color:var(--pop2-deep)}
+.fraga-text{font-size:clamp(22px,3.4vw,30px);font-weight:700}
+.liten-kompis{width:64px;margin:-8px 0 -8px}
+
+/* Bilderna i frågan */
+.bild{display:flex;flex-direction:column;align-items:center;gap:10px;padding:6px 0}
+.saker{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 10px;max-width:420px;font-size:38px}
+.saker.stor{font-size:clamp(44px,7vw,64px);gap:8px 14px;max-width:560px}
+.saker.n6,.saker.n7,.saker.n8,.saker.n9,.saker.n10{max-width:min(100%,5 * 1.45em)}
+.bild.plus{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:12px}
+.plustecken{font:800 48px var(--display);color:var(--pop-deep)}
+.emoji.jatte{font-size:clamp(84px,16vw,130px);animation:bubbla .5s cubic-bezier(.3,1.6,.5,1)}
+.ordet{font:800 clamp(40px,8vw,64px)/1.1 var(--display);letter-spacing:.08em;color:var(--pop-deep);display:flex;gap:.08em}
+.ordet.jatte{font-size:clamp(64px,13vw,110px)}
+.ordet span{display:inline-grid;place-items:center;min-width:1.1em;padding:0 .1em;border-radius:14px;background:var(--pop-soft)}
+.talrad{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.talrad span{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--surface2);border:2px solid var(--line);font:800 22px var(--display);color:var(--muted)}
+.talrad span.nu{background:var(--pop);color:var(--on-pop);border-color:var(--pop-deep);transform:scale(1.15)}
+.monster{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
+.lucka-form{width:52px;height:52px;border-radius:14px;background:var(--pop-soft);color:var(--pop-deep);display:grid;place-items:center;font:800 32px var(--display);border:3px dashed var(--pop)}
+svg.form{width:88px;height:88px;display:block}
+
+/* Svarsrutorna */
+.alternativ{grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px}
+.alternativ.fyra{grid-template-columns:repeat(2,minmax(0,1fr))}
+.alternativ.bred{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.alt{justify-content:center;min-height:110px;padding:12px;font-size:24px;border-width:4px}
+.alt.stor .alt-text{font:800 clamp(52px,10vw,80px)/1 var(--display);color:var(--ink)}
+.alt .alt-text.ord{font:800 clamp(30px,6vw,44px)/1 var(--display);letter-spacing:.06em}
+.alt.med-emoji{flex-direction:column;gap:6px}
+.alt .alt-emoji{font-size:clamp(56px,10vw,84px)}
+.alt .alt-ord{font:800 22px var(--display);letter-spacing:.05em}
+.alt.grupp{min-height:130px}
+.alt.grupp .saker{font-size:34px;max-width:220px}
+.alt .emoji.alt-emoji{line-height:1.05}
+.alt[style]{display:flex}
+.alt[style] .alt-emoji{font-size:inherit}
+.alt.las{pointer-events:none}
+.alt.fel{opacity:.4}
+.alt.ratt{box-shadow:0 0 0 6px var(--ratt-soft)}
+.besked .emoji{font-size:30px}
+.besked.ratt strong{font-size:26px}
+.knapp-rad .knapp.nasta{font-size:24px;min-height:66px}
+
+/* Tryck på N saker */
+.tryckyta{display:flex;flex-direction:column;align-items:center;gap:14px}
+.saker.tryck{gap:10px;font-size:1px}
+.sak{width:clamp(64px,13vw,92px);height:clamp(64px,13vw,92px);border-radius:22px;background:var(--surface2);border:4px solid var(--line);display:grid;place-items:center;transition:transform .18s cubic-bezier(.3,1.6,.5,1),background .2s,border-color .2s}
+.sak .emoji{font-size:clamp(38px,8vw,58px)}
+.sak:active{transform:scale(.9)}
+.sak.vald{background:var(--pop-soft);border-color:var(--pop);transform:scale(1.06) rotate(-4deg)}
+.tryck-rad{display:flex;align-items:center;gap:18px}
+.raknad{min-width:84px;height:84px;padding:0 14px;border-radius:24px;background:var(--pop);color:var(--on-pop);display:grid;place-items:center;font:800 48px var(--display);box-shadow:0 5px 0 var(--pop-deep)}
+.raknad.pop{animation:studs .35s cubic-bezier(.3,1.8,.5,1)}
+.knapp.klar-knapp{width:84px;height:84px;min-height:84px;padding:0;border-radius:50%;background:var(--ratt);box-shadow:0 5px 0 color-mix(in srgb,var(--ratt) 60%,#000),0 10px 22px var(--skugga)}
+.knapp.klar-knapp svg{width:40px;height:40px}
+
+/* Bygg ordet */
+.ordna.stor .plats,.ordna.stor .bricka{min-width:76px;min-height:84px;font:800 44px var(--display)}
+.ordna.stor .bricka{background:var(--pop2-soft);box-shadow:0 5px 0 color-mix(in srgb,var(--pop2) 50%,transparent)}
+.plats.ratt{border-color:var(--ratt);background:var(--ratt-soft)}
+.ordna-pool{gap:12px}
+
+/* Hem: banorna får plats bra på en platta i stående läge */
+@media (max-width:879px){.laxor{order:-1}}
+@media (min-width:880px){.hem-grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
+.panel .tema{font-size:15px}
