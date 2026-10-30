@@ -151,8 +151,10 @@ var Gubbar = (function () {
 
   function bollSVG() {
     // Fotboll i handen (motsvarar Lovas gymnastikband)
-    return '<g class="k-band"><circle cx="138" cy="96" r="13" fill="#fff" stroke="' + K + '" stroke-width="2.5"/><path d="M138 86 l6 4.5 -2.3 7 -7.4 0 -2.3 -7z" fill="' + K + '"/><path d="M126 92 l4 -4 M150 92 l-4 -4 M131 106 l3 -5 M145 106 l-3 -5" stroke="' + K + '" stroke-width="2" stroke-linecap="round"/>' +
-      '<animateTransform attributeName="transform" type="rotate" from="0 138 96" to="360 138 96" dur="2.4s" repeatCount="indefinite"/></g>';
+    // Yttre gruppen (k-band) är den som Lovas "Bandsnurr" vrider runt handen. Bollens egen snurr ligger på en inre grupp,
+    // annars krockar de två rotationerna och bollen far iväg i en stor cirkel.
+    return '<g class="k-band"><g><circle cx="138" cy="96" r="13" fill="#fff" stroke="' + K + '" stroke-width="2.5"/><path d="M138 86 l6 4.5 -2.3 7 -7.4 0 -2.3 -7z" fill="' + K + '"/><path d="M126 92 l4 -4 M150 92 l-4 -4 M131 106 l3 -5 M145 106 l-3 -5" stroke="' + K + '" stroke-width="2" stroke-linecap="round"/>' +
+      '<animateTransform attributeName="transform" type="rotate" from="0 138 96" to="360 138 96" dur="2.4s" repeatCount="indefinite"/></g></g>';
   }
 
   function figur(id, min, opt) {

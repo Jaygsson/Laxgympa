@@ -46,7 +46,8 @@ kropp = f'''<style>
 </script>
 '''
 ikon = ('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2096%2096%22%3E%3Crect%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%232DB36A%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2250%22%20r%3D%2230%22%20fill%3D%22%23fff%22%20stroke%3D%22%231E3A2A%22%20stroke-width%3D%224%22/%3E%3Cpath%20d%3D%22M48%2032l12%209-4.6%2014H40.6L36%2041z%22%20fill%3D%22%231E3A2A%22/%3E%3C/svg%3E')
-fristaende = ('<!doctype html><html lang="sv"><head><meta charset="utf-8">'
+# Alltid ljust läge: data-theme="light" stänger av Lovas mörka färger, "only light" hindrar webbläsarens tvingade mörka läge
+fristaende = ('<!doctype html><html lang="sv" data-theme="light"><head><meta charset="utf-8"><meta name="color-scheme" content="only light">'
               '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
               '<meta name="theme-color" content="#2DB36A"><meta name="mobile-web-app-capable" content="yes"><link rel="icon" href="' + ikon + '">'
               '<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>'

@@ -1,42 +1,30 @@
 /* ===== Lekgympan: Leos färger och de delar som är nya jämfört med Läxgympan =====
    Läggs efter Lovas style.css. Färgerna byts genom att samma variabler får nya värden.
-   Tema "gron": grön fotbollsplan + orange. "bla": blå is + orange. "rod": röd + gul. */
+   Tema "gron": grön fotbollsplan + orange. "bla": blå is + orange. "rod": röd + gul.
+   Leos app har bara ljust läge: <html data-theme="light"> stänger av Lovas mörka färger, och
+   color-scheme "only light" hindrar Chrome/Samsung på plattan från att måla om sidan mörk.
+   Kontrast (WCAG): text minst 4,5:1 – mörk färg (-deep) på ljus (-soft) 4,9–5,8:1, vit på -deep 5,9–6,9:1.
+   Kontrolleras med fargtest.py. */
 :root{
-  --bg:#F1FBF3; --surface:#FFFFFF; --surface2:#F6FCF7;
-  --ink:#1E3A2A; --muted:#527262; --line:#D9EDDD;
-  --gron:#2DB36A; --gron-deep:#178A4C; --gron-soft:#D6F5E2;
-  --orange:#FF8A2A; --orange-deep:#D9650F; --orange-soft:#FFE4CF;
-  --is:#3AAAF5; --is-deep:#1572C4; --is-soft:#D9EFFF;
+  color-scheme:only light;
+  --bg:#F1FBF4; --surface:#FFFFFF; --surface2:#F7FBF8;
+  --ink:#1C2B24; --muted:#4C6458; --line:#D3E9DA;
+  --gron:#2DB36A; --gron-deep:#12733F; --gron-soft:#DDF5E5;
+  --orange:#FF8A2A; --orange-deep:#A84A06; --orange-soft:#FFE9D6;
+  --is:#2F9BEA; --is-deep:#0D5C9E; --is-soft:#DCEEFD;
   --rosa:var(--orange); --rosa-deep:var(--orange-deep); --rosa-soft:var(--orange-soft);
   --bla:var(--is); --bla-deep:var(--is-deep); --bla-soft:var(--is-soft);
-  --navy:#1E4D7A; --guld:#FFC226; --guld-soft:#FFF3C7;
+  --navy:#1E4D7A; --guld:#FFC226; --guld-soft:#FFF2C4;
+  --ratt:#12885E; --ratt-soft:#D6F5E6; --fel:#D24A1C; --fel-soft:#FFE7DC;
+  --on-pop:#FFFFFF; --skugga:rgba(20,50,35,.12);
   --pop:var(--gron); --pop-deep:var(--gron-deep); --pop-soft:var(--gron-soft);
   --pop2:var(--orange); --pop2-deep:var(--orange-deep); --pop2-soft:var(--orange-soft);
   --matta:#5BCB84; --matta-kant:#2DB36A;
+  --formruta:#EDF1EE;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0F1F16; --surface:#1A2E22; --surface2:#1F3628;
-    --ink:#F0FBF3; --muted:#A9C9B4; --line:#2E4D3A;
-    --gron:#4ED489; --gron-deep:#6FE39F; --gron-soft:#1B4A30;
-    --orange:#FFA058; --orange-deep:#FFB375; --orange-soft:#4D2E16;
-    --is:#62C4FF; --is-deep:#86D2FF; --is-soft:#1E3B63;
-    --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
-    --matta:#2E7A4C; --matta-kant:#4ED489;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0F1F16; --surface:#1A2E22; --surface2:#1F3628;
-  --ink:#F0FBF3; --muted:#A9C9B4; --line:#2E4D3A;
-  --gron:#4ED489; --gron-deep:#6FE39F; --gron-soft:#1B4A30;
-  --orange:#FFA058; --orange-deep:#FFB375; --orange-soft:#4D2E16;
-  --is:#62C4FF; --is-deep:#86D2FF; --is-soft:#1E3B63;
-  --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
-  --matta:#2E7A4C; --matta-kant:#4ED489;
-}
-:root[data-skin="bla"]{ --pop:var(--is); --pop-deep:var(--is-deep); --pop-soft:var(--is-soft); --pop2:var(--orange); --pop2-deep:var(--orange-deep); --pop2-soft:var(--orange-soft); --matta:#CFEFFF; --matta-kant:var(--is); --bg:#EFF8FF; --line:#D4E7F5; }
+:root[data-skin="bla"]{ --pop:var(--is); --pop-deep:var(--is-deep); --pop-soft:var(--is-soft); --pop2:var(--orange); --pop2-deep:var(--orange-deep); --pop2-soft:var(--orange-soft); --matta:#CFEFFF; --matta-kant:var(--is); --bg:#EFF7FF; --surface2:#F6FAFE; --line:#D3E4F2; --skugga:rgba(15,40,70,.12); }
 :root[data-skin="bla"] .matta{background:linear-gradient(var(--matta),var(--matta));box-shadow:inset 0 -7px 0 var(--matta-kant),inset 0 2px 0 #fff}
-:root[data-skin="rod"]{ --pop:#E53935; --pop-deep:#B71C1C; --pop-soft:#FFD9D7; --pop2:#FFC226; --pop2-deep:#B8860B; --pop2-soft:#FFF3C7; --matta:#FFD9D7; --matta-kant:#E53935; --bg:#FFF5F3; --line:#F3DBD8; }
+:root[data-skin="rod"]{ --pop:#E53935; --pop-deep:#B0201B; --pop-soft:#FFE1DF; --pop2:#FFC226; --pop2-deep:#7A5300; --pop2-soft:#FFF2C4; --matta:#FFE1DF; --matta-kant:#E53935; --bg:#FFF6F4; --surface2:#FFFAF9; --line:#F2D8D4; --skugga:rgba(70,20,15,.12); }
 :root[data-skin="rod"] .matta{background:repeating-linear-gradient(90deg,#E53935 0 26px,#FFC226 26px 52px);box-shadow:inset 0 -7px 0 rgba(0,0,0,.18)}
 /* Fotbollsplanen: gräs med vita linjer */
 :root[data-skin="gron"] .matta{background:repeating-linear-gradient(90deg,#5BCB84 0 40px,#4FBF78 40px 80px);box-shadow:inset 0 -7px 0 var(--matta-kant),inset 0 0 0 3px rgba(255,255,255,.75)}
@@ -76,7 +64,7 @@
 .ordet span{display:inline-grid;place-items:center;min-width:1.1em;padding:0 .1em;border-radius:14px;background:var(--pop-soft)}
 .talrad{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
 .talrad span{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--surface2);border:2px solid var(--line);font:800 22px var(--display);color:var(--muted)}
-.talrad span.nu{background:var(--pop);color:var(--on-pop);border-color:var(--pop-deep);transform:scale(1.15)}
+.talrad span.nu{background:var(--pop-deep);color:var(--on-pop);border-color:var(--pop-deep);transform:scale(1.15)}
 .monster{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
 .lucka-form{width:52px;height:52px;border-radius:14px;background:var(--pop-soft);color:var(--pop-deep);display:grid;place-items:center;font:800 32px var(--display);border:3px dashed var(--pop)}
 svg.form{width:88px;height:88px;display:block}
@@ -85,7 +73,18 @@ svg.form{width:88px;height:88px;display:block}
 .alternativ{grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px}
 .alternativ.fyra{grid-template-columns:repeat(2,minmax(0,1fr))}
 .alternativ.bred{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
-.alt{justify-content:center;min-height:110px;padding:12px;font-size:24px;border-width:4px}
+/* Rutan är vit med en tjock kant och en "knappkant" under, så att den ser tryckbar ut. Siffran/ordet är alltid mörk
+   och fullt synlig – även när rutan är fel eller rätt. Rätt/fel visas med färg på rutan och ett märke i hörnet. */
+.alt,.alternativ.fyra .alt:not(.ratt):not(.fel){position:relative;justify-content:center;min-height:110px;padding:12px;font-size:24px;background:var(--surface);color:var(--ink);border:4px solid var(--line);box-shadow:0 5px 0 var(--line),0 10px 20px var(--skugga);opacity:1}
+.alt:active{transform:translateY(4px);box-shadow:0 1px 0 var(--line)}
+.alternativ .alt.formruta:not(.ratt):not(.fel){background:var(--formruta)}
+.alt.fel{opacity:1;background:var(--fel-soft);border-color:var(--fel);box-shadow:0 5px 0 color-mix(in srgb,var(--fel) 40%,transparent);animation:skaka .4s}
+.alt.ratt{background:var(--ratt-soft);border-color:var(--ratt);box-shadow:0 5px 0 color-mix(in srgb,var(--ratt) 45%,transparent),0 0 0 6px var(--ratt-soft)}
+.alt.fel::after,.alt.ratt::after{position:absolute;top:-14px;right:-12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font:800 22px/1 var(--body);box-shadow:0 3px 0 rgba(0,0,0,.18);animation:bubbla .35s cubic-bezier(.3,1.6,.5,1)}
+.alt.fel::after{content:"✕";background:var(--fel)}
+.alt.ratt::after{content:"✓";background:var(--ratt)}
+.alt.fel .alt-text,.alt.fel .alt-ord,.alt.fel .emoji,.alt.fel svg{opacity:1}
+.alt.fel svg.form,.alt.fel .alt-emoji{filter:saturate(.75)}
 .alt.stor .alt-text{font:800 clamp(52px,10vw,80px)/1 var(--display);color:var(--ink)}
 .alt .alt-text.ord{font:800 clamp(30px,6vw,44px)/1 var(--display);letter-spacing:.06em}
 .alt.med-emoji{flex-direction:column;gap:6px}
@@ -97,21 +96,20 @@ svg.form{width:88px;height:88px;display:block}
 .alt[style]{display:flex}
 .alt[style] .alt-emoji{font-size:inherit}
 .alt.las{pointer-events:none}
-.alt.fel{opacity:.4}
-.alt.ratt{box-shadow:0 0 0 6px var(--ratt-soft)}
 .besked .emoji{font-size:30px}
 .besked.ratt strong{font-size:26px}
 .knapp-rad .knapp.nasta{font-size:24px;min-height:66px}
 
 /* Tryck på N saker */
 .tryckyta{display:flex;flex-direction:column;align-items:center;gap:14px}
-.saker.tryck{gap:10px;font-size:1px}
-.sak{width:clamp(64px,13vw,92px);height:clamp(64px,13vw,92px);border-radius:22px;background:var(--surface2);border:4px solid var(--line);display:grid;place-items:center;transition:transform .18s cubic-bezier(.3,1.6,.5,1),background .2s,border-color .2s}
+.tryckyta .saker.tryck{display:grid;grid-template-columns:repeat(5,auto);gap:10px;max-width:none;justify-content:center}
+.tryckyta .saker.tryck.n6{grid-template-columns:repeat(3,auto)}
+.sak{width:clamp(64px,13vw,92px);height:clamp(64px,13vw,92px);border-radius:22px;background:var(--surface);border:4px solid var(--line);box-shadow:0 4px 0 var(--line);display:grid;place-items:center;transition:transform .18s cubic-bezier(.3,1.6,.5,1),background .2s,border-color .2s}
 .sak .emoji{font-size:clamp(38px,8vw,58px)}
 .sak:active{transform:scale(.9)}
 .sak.vald{background:var(--pop-soft);border-color:var(--pop);transform:scale(1.06) rotate(-4deg)}
 .tryck-rad{display:flex;align-items:center;gap:18px}
-.raknad{min-width:84px;height:84px;padding:0 14px;border-radius:24px;background:var(--pop);color:var(--on-pop);display:grid;place-items:center;font:800 48px var(--display);box-shadow:0 5px 0 var(--pop-deep)}
+.raknad{min-width:84px;height:84px;padding:0 14px;border-radius:24px;background:var(--pop-deep);color:var(--on-pop);display:grid;place-items:center;font:800 48px var(--display);box-shadow:0 5px 0 color-mix(in srgb,var(--pop-deep) 60%,#000)}
 .raknad.pop{animation:studs .35s cubic-bezier(.3,1.8,.5,1)}
 .knapp.klar-knapp{width:84px;height:84px;min-height:84px;padding:0;border-radius:50%;background:var(--ratt);box-shadow:0 5px 0 color-mix(in srgb,var(--ratt) 60%,#000),0 10px 22px var(--skugga)}
 .knapp.klar-knapp svg{width:40px;height:40px}

@@ -31,7 +31,7 @@ var Leo = (function () {
     { id: 'rod', namn: 'röd', den: 'röda', hex: '#E53935' }, { id: 'bla', namn: 'blå', den: 'blåa', hex: '#1E88E5' },
     { id: 'gron', namn: 'grön', den: 'gröna', hex: '#43A047' }, { id: 'gul', namn: 'gul', den: 'gula', hex: '#FDD835' },
     { id: 'orange', namn: 'orange', den: 'orangea', hex: '#FB8C00' }, { id: 'lila', namn: 'lila', den: 'lila', hex: '#8E24AA' },
-    { id: 'rosa', namn: 'rosa', den: 'rosa', hex: '#EC407A' }, { id: 'svart', namn: 'svart', den: 'svarta', hex: '#263238' },
+    { id: 'rosa', namn: 'rosa', den: 'rosa', hex: '#F48FB1' }, // ljusrosa, så att den inte förväxlas med röd { id: 'svart', namn: 'svart', den: 'svarta', hex: '#263238' },
     { id: 'vit', namn: 'vit', den: 'vita', hex: '#FAFAFA' }, { id: 'brun', namn: 'brun', den: 'bruna', hex: '#8D6E63' }
   ];
   var FORMER = [
@@ -52,7 +52,8 @@ var Leo = (function () {
   ];
   var LASORD = ORD.filter(function (w) { return w.o.length <= 4 && w.o.indexOf('CKEY') < 0; }); // korta ord att läsa och bygga
   var RIM = [[{ o: 'KATT', e: '🐱' }, { o: 'HATT', e: '🎩' }], [{ o: 'BIL', e: '🚗' }, { o: 'PIL', e: '🏹' }], [{ o: 'HUS', e: '🏠' }, { o: 'MUS', e: '🐭' }], [{ o: 'SOL', e: '☀️' }, { o: 'STOL', e: '🪑' }],
-    [{ o: 'BOLL', e: '⚽' }, { o: 'TROLL', e: '🧌' }], [{ o: 'KO', e: '🐄' }, { o: 'SKO', e: '👟' }], [{ o: 'RÄV', e: '🦊' }, { o: 'SÄV', e: '🌾' }], [{ o: 'TÅG', e: '🚂' }, { o: 'VÅG', e: '🌊' }]];
+    [{ o: 'GRIS', e: '🐷' }, { o: 'RIS', e: '🍚' }], [{ o: 'KO', e: '🐄' }, { o: 'SKO', e: '👟' }], [{ o: 'HAND', e: '✋' }, { o: 'SAND', e: '🏖️' }], [{ o: 'TÅG', e: '🚂' }, { o: 'VÅG', e: '🌊' }]];
+  // Alla bilder är emoji som finns i Android 10 och senare (Unicode 12), så att de syns på äldre plattor.
   var BOKSTAVER = 'ABCDEFGHIJKLMNOPRSTUVÅÄÖ'.split('');
   var SIFFERORD = ['noll', 'ett', 'två', 'tre', 'fyra', 'fem', 'sex', 'sju', 'åtta', 'nio', 'tio', 'elva', 'tolv', 'tretton', 'fjorton', 'femton', 'sexton', 'sjutton', 'arton', 'nitton', 'tjugo'];
   function sifferord(n) { return SIFFERORD[n] || String(n); }

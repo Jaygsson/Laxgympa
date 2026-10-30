@@ -205,7 +205,7 @@
     else if (a.e) inre = emoji(a.e, 'alt-emoji') + (a.text ? '<span class="alt-ord">' + esc(a.text) + '</span>' : '');
     else inre = '<span class="alt-text' + (a.ord ? ' ord' : '') + '">' + esc(a.text) + '</span>';
     var st = a.skala ? ' style="font-size:' + (a.skala * 34) + 'px"' : '';
-    return '<button class="alt' + (a.stor ? ' stor' : '') + (a.bild ? ' grupp' : '') + (a.e ? ' med-emoji' : '') + (extra || '') + '" data-act="val" data-i="' + i + '" aria-label="' + esc(a.tal || a.text || '') + '"' + st + '>' + inre + '</button>';
+    return '<button class="alt' + (a.stor ? ' stor' : '') + (a.bild ? ' grupp' : '') + (a.e ? ' med-emoji' : '') + (a.form ? ' formruta' : '') + (extra || '') + '" data-act="val" data-i="' + i + '" aria-label="' + esc(a.tal || a.text || '') + '"' + st + '>' + inre + '</button>';
   }
 
   // ---------- Vyer ----------
@@ -296,7 +296,7 @@
       '<span class="stjarnor liten" aria-label="' + S.stjarnor + ' stjärnor">' + IK.stjarna + '<span id="antal-stjarnor">' + S.stjarnor + '</span></span></header>' +
       '<div class="pass-grid"><article class="fraga-kort in" id="fraga" aria-live="polite">' +
         '<div class="fraga-meta"><span class="chip bana-chip">' + emoji(Leo.bana(P.bana).e) + esc(P.titel) + '</span>' + kompisHar + '<button class="ikon-knapp las" data-act="saga" aria-label="Läs upp frågan igen">' + IK.hogtalare + '</button></div>' +
-        '<p class="fraga-text">' + esc(q.text) + '</p>' + bildHTML(q.bild) +
+        '<p class="fraga-text">' + esc(q.text) + '</p>' + (q.typ === 'tryck' ? '' : bildHTML(q.bild)) +
         '<div id="interaktion"></div><div class="aterkoppling" id="aterkoppling"></div><div class="knapp-rad" id="knapp-rad"></div>' +
       '</article>' +
       '<aside class="pass-kompis"><button class="kompis-knapp" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG() + '</button><div class="matta"></div></aside></div>' +
@@ -512,7 +512,11 @@
     }
   });
   // För testerna: läs det aktuella passet
-  window.__lek = { P: function () { return P; }, S: function () { return S; } };
+  window.__lek = {
+    P: function () { return P; }, S: function () { return S; },
+    // Visar en viss frågetyp direkt (används av färggranskningen)
+    fraga: function (gen, niva) { if (!P) startaPass('mix'); P.fragor[P.i] = Object.assign(Leo.G[gen](Math.random, niva || 2), { gen: gen }); nyFraga(); vy = 'pass'; render(); }
+  };
 
   render();
 })();

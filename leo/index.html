@@ -1,4 +1,4 @@
-<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2DB36A"><meta name="mobile-web-app-capable" content="yes"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2096%2096%22%3E%3Crect%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%232DB36A%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2250%22%20r%3D%2230%22%20fill%3D%22%23fff%22%20stroke%3D%22%231E3A2A%22%20stroke-width%3D%224%22/%3E%3Cpath%20d%3D%22M48%2032l12%209-4.6%2014H40.6L36%2041z%22%20fill%3D%22%231E3A2A%22/%3E%3C/svg%3E"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style><title>Lekgympan</title>
+<!doctype html><html lang="sv" data-theme="light"><head><meta charset="utf-8"><meta name="color-scheme" content="only light"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2DB36A"><meta name="mobile-web-app-capable" content="yes"><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2096%2096%22%3E%3Crect%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%232DB36A%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2250%22%20r%3D%2230%22%20fill%3D%22%23fff%22%20stroke%3D%22%231E3A2A%22%20stroke-width%3D%224%22/%3E%3Cpath%20d%3D%22M48%2032l12%209-4.6%2014H40.6L36%2041z%22%20fill%3D%22%231E3A2A%22/%3E%3C/svg%3E"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style><title>Lekgympan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Grandstander:wght@600;800&family=Lexend:wght@400;500;600;700&display=swap">
@@ -559,43 +559,31 @@ p{margin:0}
 
 /* ===== Lekgympan: Leos färger och de delar som är nya jämfört med Läxgympan =====
    Läggs efter Lovas style.css. Färgerna byts genom att samma variabler får nya värden.
-   Tema "gron": grön fotbollsplan + orange. "bla": blå is + orange. "rod": röd + gul. */
+   Tema "gron": grön fotbollsplan + orange. "bla": blå is + orange. "rod": röd + gul.
+   Leos app har bara ljust läge: <html data-theme="light"> stänger av Lovas mörka färger, och
+   color-scheme "only light" hindrar Chrome/Samsung på plattan från att måla om sidan mörk.
+   Kontrast (WCAG): text minst 4,5:1 – mörk färg (-deep) på ljus (-soft) 4,9–5,8:1, vit på -deep 5,9–6,9:1.
+   Kontrolleras med fargtest.py. */
 :root{
-  --bg:#F1FBF3; --surface:#FFFFFF; --surface2:#F6FCF7;
-  --ink:#1E3A2A; --muted:#527262; --line:#D9EDDD;
-  --gron:#2DB36A; --gron-deep:#178A4C; --gron-soft:#D6F5E2;
-  --orange:#FF8A2A; --orange-deep:#D9650F; --orange-soft:#FFE4CF;
-  --is:#3AAAF5; --is-deep:#1572C4; --is-soft:#D9EFFF;
+  color-scheme:only light;
+  --bg:#F1FBF4; --surface:#FFFFFF; --surface2:#F7FBF8;
+  --ink:#1C2B24; --muted:#4C6458; --line:#D3E9DA;
+  --gron:#2DB36A; --gron-deep:#12733F; --gron-soft:#DDF5E5;
+  --orange:#FF8A2A; --orange-deep:#A84A06; --orange-soft:#FFE9D6;
+  --is:#2F9BEA; --is-deep:#0D5C9E; --is-soft:#DCEEFD;
   --rosa:var(--orange); --rosa-deep:var(--orange-deep); --rosa-soft:var(--orange-soft);
   --bla:var(--is); --bla-deep:var(--is-deep); --bla-soft:var(--is-soft);
-  --navy:#1E4D7A; --guld:#FFC226; --guld-soft:#FFF3C7;
+  --navy:#1E4D7A; --guld:#FFC226; --guld-soft:#FFF2C4;
+  --ratt:#12885E; --ratt-soft:#D6F5E6; --fel:#D24A1C; --fel-soft:#FFE7DC;
+  --on-pop:#FFFFFF; --skugga:rgba(20,50,35,.12);
   --pop:var(--gron); --pop-deep:var(--gron-deep); --pop-soft:var(--gron-soft);
   --pop2:var(--orange); --pop2-deep:var(--orange-deep); --pop2-soft:var(--orange-soft);
   --matta:#5BCB84; --matta-kant:#2DB36A;
+  --formruta:#EDF1EE;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#0F1F16; --surface:#1A2E22; --surface2:#1F3628;
-    --ink:#F0FBF3; --muted:#A9C9B4; --line:#2E4D3A;
-    --gron:#4ED489; --gron-deep:#6FE39F; --gron-soft:#1B4A30;
-    --orange:#FFA058; --orange-deep:#FFB375; --orange-soft:#4D2E16;
-    --is:#62C4FF; --is-deep:#86D2FF; --is-soft:#1E3B63;
-    --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
-    --matta:#2E7A4C; --matta-kant:#4ED489;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0F1F16; --surface:#1A2E22; --surface2:#1F3628;
-  --ink:#F0FBF3; --muted:#A9C9B4; --line:#2E4D3A;
-  --gron:#4ED489; --gron-deep:#6FE39F; --gron-soft:#1B4A30;
-  --orange:#FFA058; --orange-deep:#FFB375; --orange-soft:#4D2E16;
-  --is:#62C4FF; --is-deep:#86D2FF; --is-soft:#1E3B63;
-  --navy:#A9BCFF; --guld:#FFC84A; --guld-soft:#4A3A14;
-  --matta:#2E7A4C; --matta-kant:#4ED489;
-}
-:root[data-skin="bla"]{ --pop:var(--is); --pop-deep:var(--is-deep); --pop-soft:var(--is-soft); --pop2:var(--orange); --pop2-deep:var(--orange-deep); --pop2-soft:var(--orange-soft); --matta:#CFEFFF; --matta-kant:var(--is); --bg:#EFF8FF; --line:#D4E7F5; }
+:root[data-skin="bla"]{ --pop:var(--is); --pop-deep:var(--is-deep); --pop-soft:var(--is-soft); --pop2:var(--orange); --pop2-deep:var(--orange-deep); --pop2-soft:var(--orange-soft); --matta:#CFEFFF; --matta-kant:var(--is); --bg:#EFF7FF; --surface2:#F6FAFE; --line:#D3E4F2; --skugga:rgba(15,40,70,.12); }
 :root[data-skin="bla"] .matta{background:linear-gradient(var(--matta),var(--matta));box-shadow:inset 0 -7px 0 var(--matta-kant),inset 0 2px 0 #fff}
-:root[data-skin="rod"]{ --pop:#E53935; --pop-deep:#B71C1C; --pop-soft:#FFD9D7; --pop2:#FFC226; --pop2-deep:#B8860B; --pop2-soft:#FFF3C7; --matta:#FFD9D7; --matta-kant:#E53935; --bg:#FFF5F3; --line:#F3DBD8; }
+:root[data-skin="rod"]{ --pop:#E53935; --pop-deep:#B0201B; --pop-soft:#FFE1DF; --pop2:#FFC226; --pop2-deep:#7A5300; --pop2-soft:#FFF2C4; --matta:#FFE1DF; --matta-kant:#E53935; --bg:#FFF6F4; --surface2:#FFFAF9; --line:#F2D8D4; --skugga:rgba(70,20,15,.12); }
 :root[data-skin="rod"] .matta{background:repeating-linear-gradient(90deg,#E53935 0 26px,#FFC226 26px 52px);box-shadow:inset 0 -7px 0 rgba(0,0,0,.18)}
 /* Fotbollsplanen: gräs med vita linjer */
 :root[data-skin="gron"] .matta{background:repeating-linear-gradient(90deg,#5BCB84 0 40px,#4FBF78 40px 80px);box-shadow:inset 0 -7px 0 var(--matta-kant),inset 0 0 0 3px rgba(255,255,255,.75)}
@@ -635,7 +623,7 @@ p{margin:0}
 .ordet span{display:inline-grid;place-items:center;min-width:1.1em;padding:0 .1em;border-radius:14px;background:var(--pop-soft)}
 .talrad{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
 .talrad span{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--surface2);border:2px solid var(--line);font:800 22px var(--display);color:var(--muted)}
-.talrad span.nu{background:var(--pop);color:var(--on-pop);border-color:var(--pop-deep);transform:scale(1.15)}
+.talrad span.nu{background:var(--pop-deep);color:var(--on-pop);border-color:var(--pop-deep);transform:scale(1.15)}
 .monster{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
 .lucka-form{width:52px;height:52px;border-radius:14px;background:var(--pop-soft);color:var(--pop-deep);display:grid;place-items:center;font:800 32px var(--display);border:3px dashed var(--pop)}
 svg.form{width:88px;height:88px;display:block}
@@ -644,7 +632,18 @@ svg.form{width:88px;height:88px;display:block}
 .alternativ{grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px}
 .alternativ.fyra{grid-template-columns:repeat(2,minmax(0,1fr))}
 .alternativ.bred{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
-.alt{justify-content:center;min-height:110px;padding:12px;font-size:24px;border-width:4px}
+/* Rutan är vit med en tjock kant och en "knappkant" under, så att den ser tryckbar ut. Siffran/ordet är alltid mörk
+   och fullt synlig – även när rutan är fel eller rätt. Rätt/fel visas med färg på rutan och ett märke i hörnet. */
+.alt,.alternativ.fyra .alt:not(.ratt):not(.fel){position:relative;justify-content:center;min-height:110px;padding:12px;font-size:24px;background:var(--surface);color:var(--ink);border:4px solid var(--line);box-shadow:0 5px 0 var(--line),0 10px 20px var(--skugga);opacity:1}
+.alt:active{transform:translateY(4px);box-shadow:0 1px 0 var(--line)}
+.alternativ .alt.formruta:not(.ratt):not(.fel){background:var(--formruta)}
+.alt.fel{opacity:1;background:var(--fel-soft);border-color:var(--fel);box-shadow:0 5px 0 color-mix(in srgb,var(--fel) 40%,transparent);animation:skaka .4s}
+.alt.ratt{background:var(--ratt-soft);border-color:var(--ratt);box-shadow:0 5px 0 color-mix(in srgb,var(--ratt) 45%,transparent),0 0 0 6px var(--ratt-soft)}
+.alt.fel::after,.alt.ratt::after{position:absolute;top:-14px;right:-12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font:800 22px/1 var(--body);box-shadow:0 3px 0 rgba(0,0,0,.18);animation:bubbla .35s cubic-bezier(.3,1.6,.5,1)}
+.alt.fel::after{content:"✕";background:var(--fel)}
+.alt.ratt::after{content:"✓";background:var(--ratt)}
+.alt.fel .alt-text,.alt.fel .alt-ord,.alt.fel .emoji,.alt.fel svg{opacity:1}
+.alt.fel svg.form,.alt.fel .alt-emoji{filter:saturate(.75)}
 .alt.stor .alt-text{font:800 clamp(52px,10vw,80px)/1 var(--display);color:var(--ink)}
 .alt .alt-text.ord{font:800 clamp(30px,6vw,44px)/1 var(--display);letter-spacing:.06em}
 .alt.med-emoji{flex-direction:column;gap:6px}
@@ -656,21 +655,20 @@ svg.form{width:88px;height:88px;display:block}
 .alt[style]{display:flex}
 .alt[style] .alt-emoji{font-size:inherit}
 .alt.las{pointer-events:none}
-.alt.fel{opacity:.4}
-.alt.ratt{box-shadow:0 0 0 6px var(--ratt-soft)}
 .besked .emoji{font-size:30px}
 .besked.ratt strong{font-size:26px}
 .knapp-rad .knapp.nasta{font-size:24px;min-height:66px}
 
 /* Tryck på N saker */
 .tryckyta{display:flex;flex-direction:column;align-items:center;gap:14px}
-.saker.tryck{gap:10px;font-size:1px}
-.sak{width:clamp(64px,13vw,92px);height:clamp(64px,13vw,92px);border-radius:22px;background:var(--surface2);border:4px solid var(--line);display:grid;place-items:center;transition:transform .18s cubic-bezier(.3,1.6,.5,1),background .2s,border-color .2s}
+.tryckyta .saker.tryck{display:grid;grid-template-columns:repeat(5,auto);gap:10px;max-width:none;justify-content:center}
+.tryckyta .saker.tryck.n6{grid-template-columns:repeat(3,auto)}
+.sak{width:clamp(64px,13vw,92px);height:clamp(64px,13vw,92px);border-radius:22px;background:var(--surface);border:4px solid var(--line);box-shadow:0 4px 0 var(--line);display:grid;place-items:center;transition:transform .18s cubic-bezier(.3,1.6,.5,1),background .2s,border-color .2s}
 .sak .emoji{font-size:clamp(38px,8vw,58px)}
 .sak:active{transform:scale(.9)}
 .sak.vald{background:var(--pop-soft);border-color:var(--pop);transform:scale(1.06) rotate(-4deg)}
 .tryck-rad{display:flex;align-items:center;gap:18px}
-.raknad{min-width:84px;height:84px;padding:0 14px;border-radius:24px;background:var(--pop);color:var(--on-pop);display:grid;place-items:center;font:800 48px var(--display);box-shadow:0 5px 0 var(--pop-deep)}
+.raknad{min-width:84px;height:84px;padding:0 14px;border-radius:24px;background:var(--pop-deep);color:var(--on-pop);display:grid;place-items:center;font:800 48px var(--display);box-shadow:0 5px 0 color-mix(in srgb,var(--pop-deep) 60%,#000)}
 .raknad.pop{animation:studs .35s cubic-bezier(.3,1.8,.5,1)}
 .knapp.klar-knapp{width:84px;height:84px;min-height:84px;padding:0;border-radius:50%;background:var(--ratt);box-shadow:0 5px 0 color-mix(in srgb,var(--ratt) 60%,#000),0 10px 22px var(--skugga)}
 .knapp.klar-knapp svg{width:40px;height:40px}
@@ -723,7 +721,7 @@ var Leo = (function () {
     { id: 'rod', namn: 'röd', den: 'röda', hex: '#E53935' }, { id: 'bla', namn: 'blå', den: 'blåa', hex: '#1E88E5' },
     { id: 'gron', namn: 'grön', den: 'gröna', hex: '#43A047' }, { id: 'gul', namn: 'gul', den: 'gula', hex: '#FDD835' },
     { id: 'orange', namn: 'orange', den: 'orangea', hex: '#FB8C00' }, { id: 'lila', namn: 'lila', den: 'lila', hex: '#8E24AA' },
-    { id: 'rosa', namn: 'rosa', den: 'rosa', hex: '#EC407A' }, { id: 'svart', namn: 'svart', den: 'svarta', hex: '#263238' },
+    { id: 'rosa', namn: 'rosa', den: 'rosa', hex: '#F48FB1' }, // ljusrosa, så att den inte förväxlas med röd { id: 'svart', namn: 'svart', den: 'svarta', hex: '#263238' },
     { id: 'vit', namn: 'vit', den: 'vita', hex: '#FAFAFA' }, { id: 'brun', namn: 'brun', den: 'bruna', hex: '#8D6E63' }
   ];
   var FORMER = [
@@ -744,7 +742,8 @@ var Leo = (function () {
   ];
   var LASORD = ORD.filter(function (w) { return w.o.length <= 4 && w.o.indexOf('CKEY') < 0; }); // korta ord att läsa och bygga
   var RIM = [[{ o: 'KATT', e: '🐱' }, { o: 'HATT', e: '🎩' }], [{ o: 'BIL', e: '🚗' }, { o: 'PIL', e: '🏹' }], [{ o: 'HUS', e: '🏠' }, { o: 'MUS', e: '🐭' }], [{ o: 'SOL', e: '☀️' }, { o: 'STOL', e: '🪑' }],
-    [{ o: 'BOLL', e: '⚽' }, { o: 'TROLL', e: '🧌' }], [{ o: 'KO', e: '🐄' }, { o: 'SKO', e: '👟' }], [{ o: 'RÄV', e: '🦊' }, { o: 'SÄV', e: '🌾' }], [{ o: 'TÅG', e: '🚂' }, { o: 'VÅG', e: '🌊' }]];
+    [{ o: 'GRIS', e: '🐷' }, { o: 'RIS', e: '🍚' }], [{ o: 'KO', e: '🐄' }, { o: 'SKO', e: '👟' }], [{ o: 'HAND', e: '✋' }, { o: 'SAND', e: '🏖️' }], [{ o: 'TÅG', e: '🚂' }, { o: 'VÅG', e: '🌊' }]];
+  // Alla bilder är emoji som finns i Android 10 och senare (Unicode 12), så att de syns på äldre plattor.
   var BOKSTAVER = 'ABCDEFGHIJKLMNOPRSTUVÅÄÖ'.split('');
   var SIFFERORD = ['noll', 'ett', 'två', 'tre', 'fyra', 'fem', 'sex', 'sju', 'åtta', 'nio', 'tio', 'elva', 'tolv', 'tretton', 'fjorton', 'femton', 'sexton', 'sjutton', 'arton', 'nitton', 'tjugo'];
   function sifferord(n) { return SIFFERORD[n] || String(n); }
@@ -1078,8 +1077,10 @@ var Gubbar = (function () {
 
   function bollSVG() {
     // Fotboll i handen (motsvarar Lovas gymnastikband)
-    return '<g class="k-band"><circle cx="138" cy="96" r="13" fill="#fff" stroke="' + K + '" stroke-width="2.5"/><path d="M138 86 l6 4.5 -2.3 7 -7.4 0 -2.3 -7z" fill="' + K + '"/><path d="M126 92 l4 -4 M150 92 l-4 -4 M131 106 l3 -5 M145 106 l-3 -5" stroke="' + K + '" stroke-width="2" stroke-linecap="round"/>' +
-      '<animateTransform attributeName="transform" type="rotate" from="0 138 96" to="360 138 96" dur="2.4s" repeatCount="indefinite"/></g>';
+    // Yttre gruppen (k-band) är den som Lovas "Bandsnurr" vrider runt handen. Bollens egen snurr ligger på en inre grupp,
+    // annars krockar de två rotationerna och bollen far iväg i en stor cirkel.
+    return '<g class="k-band"><g><circle cx="138" cy="96" r="13" fill="#fff" stroke="' + K + '" stroke-width="2.5"/><path d="M138 86 l6 4.5 -2.3 7 -7.4 0 -2.3 -7z" fill="' + K + '"/><path d="M126 92 l4 -4 M150 92 l-4 -4 M131 106 l3 -5 M145 106 l-3 -5" stroke="' + K + '" stroke-width="2" stroke-linecap="round"/>' +
+      '<animateTransform attributeName="transform" type="rotate" from="0 138 96" to="360 138 96" dur="2.4s" repeatCount="indefinite"/></g></g>';
   }
 
   function figur(id, min, opt) {
@@ -1323,7 +1324,7 @@ var Gubbar = (function () {
     else if (a.e) inre = emoji(a.e, 'alt-emoji') + (a.text ? '<span class="alt-ord">' + esc(a.text) + '</span>' : '');
     else inre = '<span class="alt-text' + (a.ord ? ' ord' : '') + '">' + esc(a.text) + '</span>';
     var st = a.skala ? ' style="font-size:' + (a.skala * 34) + 'px"' : '';
-    return '<button class="alt' + (a.stor ? ' stor' : '') + (a.bild ? ' grupp' : '') + (a.e ? ' med-emoji' : '') + (extra || '') + '" data-act="val" data-i="' + i + '" aria-label="' + esc(a.tal || a.text || '') + '"' + st + '>' + inre + '</button>';
+    return '<button class="alt' + (a.stor ? ' stor' : '') + (a.bild ? ' grupp' : '') + (a.e ? ' med-emoji' : '') + (a.form ? ' formruta' : '') + (extra || '') + '" data-act="val" data-i="' + i + '" aria-label="' + esc(a.tal || a.text || '') + '"' + st + '>' + inre + '</button>';
   }
 
   // ---------- Vyer ----------
@@ -1414,7 +1415,7 @@ var Gubbar = (function () {
       '<span class="stjarnor liten" aria-label="' + S.stjarnor + ' stjärnor">' + IK.stjarna + '<span id="antal-stjarnor">' + S.stjarnor + '</span></span></header>' +
       '<div class="pass-grid"><article class="fraga-kort in" id="fraga" aria-live="polite">' +
         '<div class="fraga-meta"><span class="chip bana-chip">' + emoji(Leo.bana(P.bana).e) + esc(P.titel) + '</span>' + kompisHar + '<button class="ikon-knapp las" data-act="saga" aria-label="Läs upp frågan igen">' + IK.hogtalare + '</button></div>' +
-        '<p class="fraga-text">' + esc(q.text) + '</p>' + bildHTML(q.bild) +
+        '<p class="fraga-text">' + esc(q.text) + '</p>' + (q.typ === 'tryck' ? '' : bildHTML(q.bild)) +
         '<div id="interaktion"></div><div class="aterkoppling" id="aterkoppling"></div><div class="knapp-rad" id="knapp-rad"></div>' +
       '</article>' +
       '<aside class="pass-kompis"><button class="kompis-knapp" data-act="kompis" aria-label="Tryck på ' + esc(kompisNamn()) + '">' + kompisSVG() + '</button><div class="matta"></div></aside></div>' +
@@ -1907,7 +1908,11 @@ var Gubbar = (function () {
     }
   });
   // För testerna: läs det aktuella passet
-  window.__lek = { P: function () { return P; }, S: function () { return S; } };
+  window.__lek = {
+    P: function () { return P; }, S: function () { return S; },
+    // Visar en viss frågetyp direkt (används av färggranskningen)
+    fraga: function (gen, niva) { if (!P) startaPass('mix'); P.fragor[P.i] = Object.assign(Leo.G[gen](Math.random, niva || 2), { gen: gen }); nyFraga(); vy = 'pass'; render(); }
+  };
 
   render();
 })();
