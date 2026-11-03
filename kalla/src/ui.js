@@ -325,9 +325,10 @@
       var fasta = fastaPass(set), klara = fasta.filter(function (p) { return S.pass[passNyckel(set.id, p.id)]; }).length;
       var andel = fasta.length ? klara / fasta.length : 0, omk = 2 * Math.PI * 22;
       var ny = !fasta.some(function (p) { return S.pass[passNyckel(set.id, p.id)]; });
+      var nyaPass = !ny && fasta.some(function (p) { return p.ny && !S.pass[passNyckel(set.id, p.id)]; });
       return '<button class="laxkort" data-act="oppna" data-set="' + set.id + '">' +
         '<span class="amnesruta ' + set.amne + '">' + (set.amne === 'no' ? IK.kolv : set.amne === 'geo' ? IK.glob : '<span aria-hidden="true">÷</span>') + '</span>' +
-        '<span><span class="rad"><span class="chip ' + set.amne + '">' + amnesNamn(set.amne) + '</span>' + (set.ny && ny ? '<span class="chip ny">Ny</span>' : '') + '</span><h3>' + esc(set.titel) + '</h3><p>' + esc(set.under) + (ny ? '' : ' · ' + klara + ' av ' + fasta.length + ' pass klara') + '</p></span>' +
+        '<span><span class="rad"><span class="chip ' + set.amne + '">' + amnesNamn(set.amne) + '</span>' + (set.ny && ny ? '<span class="chip ny">Ny</span>' : nyaPass ? '<span class="chip ny">Nya frågor</span>' : '') + '</span><h3>' + esc(set.titel) + '</h3><p>' + esc(set.under) + (ny ? '' : ' · ' + klara + ' av ' + fasta.length + ' pass klara') + '</p></span>' +
         '<svg class="ring" viewBox="0 0 54 54" aria-label="' + klara + ' av ' + fasta.length + ' pass klara"><circle class="bak" cx="27" cy="27" r="22" fill="none" stroke-width="6"/><circle class="fram" cx="27" cy="27" r="22" fill="none" stroke-width="6" stroke-linecap="round" stroke-dasharray="' + omk.toFixed(1) + '" stroke-dashoffset="' + (omk * (1 - andel)).toFixed(1) + '" transform="rotate(-90 27 27)"/><text x="27" y="31.5" text-anchor="middle">' + klara + '/' + fasta.length + '</text></svg>' +
         '</button>';
     }).join('');
@@ -363,7 +364,7 @@
       if (!gen && !p.under) under = antalF + (p.karta ? ' länder' : ' frågor');
       return '<li><button class="station' + (gen ? ' gen' : '') + (res ? ' klar' : '') + '" data-act="starta" data-set="' + set.id + '" data-pass="' + p.id + '">' +
         '<span class="nr">' + (gen ? (p.utforska ? IK.glob : p.pool ? IK.blixt : IK.oandlig) : nr) + '</span>' +
-        '<span><h3>' + esc(p.titel) + '</h3><p>' + esc(under) + '</p></span>' +
+        '<span><h3>' + esc(p.titel) + (p.ny && !res ? ' <span class="chip ny">Ny</span>' : '') + '</h3><p>' + esc(under) + '</p></span>' +
         (p.utforska ? '<span class="kor">Öppna ' + IK.pil.replace('<svg', '<svg style="width:20px;height:20px"') + '</span>' : res && res.medalj ? '<span class="mini-medalj" aria-label="' + METALL[res.medalj][2] + '">' + medaljSVG(res.medalj) + '</span>' : '<span class="kor">Kör ' + IK.pil.replace('<svg', '<svg style="width:20px;height:20px"') + '</span>') +
         '</button></li>';
     }).join('');
@@ -473,7 +474,8 @@
     } else if (q.typ === 'ordna') {
       var platser = q.items.map(function (_, pos) { var it = P.ordning[pos]; return it === undefined ? '<span class="plats" aria-label="Tom plats"></span>' : '<button class="plats fylld" data-act="ordna-bort" data-pos="' + pos + '"' + (P.klar ? ' disabled' : '') + '>' + rt(q.items[it]) + '</button>'; }).join('');
       var pool = P.blandning.filter(function (i) { return P.ordning.indexOf(i) < 0; }).map(function (i) { return '<button class="bricka" data-act="ordna-ta" data-i="' + i + '">' + rt(q.items[i]) + '</button>'; }).join('');
-      yta.innerHTML = '<div class="ordna"><div class="ordna-rad"><span class="rand">' + esc(q.etiketter[0]) + '</span>' + platser + '<span class="rand">' + esc(q.etiketter[1]) + '</span></div><div class="ordna-pool">' + (P.klar ? '' : pool) + '</div></div>';
+      var ord = q.items.some(function (s) { return /[a-zåäö]{3}/i.test(s); });
+      yta.innerHTML = '<div class="ordna' + (ord ? ' ord' : '') + '"><div class="ordna-rad"><span class="rand">' + esc(q.etiketter[0]) + '</span>' + platser + '<span class="rand">' + esc(q.etiketter[1]) + '</span></div><div class="ordna-pool">' + (P.klar ? '' : pool) + '</div></div>';
     } else if (q.typ === 'pil') {
       var sum = P.pilar.reduce(function (a, p) { return a + p.v; }, 0);
       yta.innerHTML = '<div class="pilkast">' + tavlaSVG(P.pilar) + '<div class="pil-info"><div class="pil-summa">' + sum + ' <small>av ' + q.mal + ' poäng · ' + P.pilar.length + ' av ' + q.pilar + ' pilar</small></div><div class="traffar">' + P.pilar.map(function (p) { return '<span>' + p.v + '</span>'; }).join('') + '</div>' +
@@ -500,7 +502,7 @@
     }
     if (P.ledtrad && q.ledtrad && !P.klar) h += '<div class="ledtradsruta">' + IK.lampa + '<span><b>Ledtråd:</b> ' + rt(q.ledtrad) + '</span></div>';
     if (P.losning && q.losning) {
-      h += '<div class="losning"><h3>' + (P.utfall === 'miss' ? 'Så här kan man tänka' : 'Så här räknar man') + '</h3><ol>' + q.losning.map(function (s) { return '<li><span>' + rt(s) + '</span></li>'; }).join('') + '</ol>' +
+      h += '<div class="losning"><h3>' + (P.utfall === 'miss' ? 'Så här kan man tänka' : q.amne === 'matte' || !q.amne ? 'Så här räknar man' : 'Förklaring') + '</h3><ol>' + q.losning.map(function (s) { return '<li><span>' + rt(s) + '</span></li>'; }).join('') + '</ol>' +
         (P.utfall === 'miss' && L.facit(q) ? '<p class="facit">Rätt svar: ' + rt(L.facit(q)) + '</p>' : '') + '</div>';
     }
     if (q.visaLand && P.klar) h += '<div class="geo-karta mini">' + kartaSVG(geoRegion(q.visaLand), { klass: (function () { var o = {}; o[q.visaLand] = 'ratt'; return o; })(), etiketter: [q.visaLand], hs: q.visaLand }) + '</div>' + faktakort(q.visaLand);
@@ -514,7 +516,7 @@
       if (q.typ === 'svar' || q.typ === 'ordna' || q.typ === 'pil') k += '<button class="knapp" data-act="ratta">' + (P.forsok ? 'Rätta igen' : 'Rätta') + '</button>';
       if (q.typ === 'kort' && !P.kortVisat) k += '<button class="knapp" data-act="kort-visa">Visa svaret</button>';
     } else {
-      if (!P.losning && q.losning && q.typ !== 'kort') k += '<button class="knapp sek" data-act="visa-losning">Visa hur man räknar</button>';
+      if (!P.losning && q.losning && q.typ !== 'kort') k += '<button class="knapp sek" data-act="visa-losning">' + (q.amne === 'matte' || !q.amne ? 'Visa hur man räknar' : 'Visa förklaringen') + '</button>';
       k += '<button class="knapp nasta" data-act="nasta">' + (P.i + 1 < P.fragor.length ? 'Nästa' : 'Klar!') + IK.pil + '</button>';
     }
     kr.innerHTML = k;

@@ -551,3 +551,10 @@ p{margin:0}
 .alternativ.fyra{grid-template-columns:repeat(2,minmax(0,1fr))}
 .alternativ.fyra .alt{min-height:62px;font-size:19px}
 .alternativ.fyra .alt:not(.ratt):not(.fel){background:var(--surface)}
+
+/* Ordna ord: lodrät lista med större brickor för text */
+.ordna.ord .ordna-rad{flex-direction:column;align-items:stretch;counter-reset:plats}
+.ordna.ord .ordna-rad .rand{text-align:center}
+.ordna.ord .plats{width:100%;min-height:56px;font-size:19px;display:flex;align-items:center;gap:12px;padding:0 14px;text-align:left;counter-increment:plats}
+.ordna.ord .plats::before{content:counter(plats);flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--surface2);color:var(--muted);font:800 15px var(--display)}
+.ordna.ord .bricka{min-height:56px;font-size:19px;padding:0 16px}
