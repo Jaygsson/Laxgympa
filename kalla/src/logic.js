@@ -116,6 +116,11 @@ var Lx = (function () {
       if (parseBrak(raw)) return { ok: false, format: true, msg: 'Svara med ett tal i decimalform, till exempel 0,25.' };
       return { ok: false, format: true, msg: 'Svara med ett tal, till exempel 12 eller 0,5.' };
     }
+    if (f.ungefar) {
+      // Överslag: alla rimliga överslag godtas, och det vanligaste visas som tips
+      if (v < f.ungefar[0] - 1e-9 || v > f.ungefar[1] + 1e-9) return { ok: false };
+      return Math.abs(v - parseTal(f.svar)) < 1e-9 ? { ok: true } : { ok: true, overslag: f.svar };
+    }
     return { ok: Math.abs(v - parseTal(f.svar)) < 1e-9 };
   }
 
@@ -136,7 +141,11 @@ var Lx = (function () {
       var form = null;
       for (var k = 0; k < res.length; k++) if (res[k].format) { form = res[k]; break; }
       if (form) return { ok: false, format: true, msg: form.msg, falt: res };
-      return { ok: res.every(function (x) { return x.ok; }), falt: res, note: res.map(function (x) { return x.note; }).filter(Boolean).join(' ') };
+      // Överslag som skiljer sig från det vanligaste samlas i en enda mening
+      var os = q.falt.map(function (f, i) { return res[i].overslag ? (q.falt.length > 1 && f.etikett ? f.etikett.split(')')[0] + ') ' : '') + fmt(parseTal(res[i].overslag)) : null; }).filter(Boolean);
+      var notes = res.map(function (x) { return x.note; }).filter(Boolean);
+      if (os.length) notes.push('Bra överslag! ' + (os.length > 1 ? 'Vanliga överslag är ' + os.slice(0, -1).join(', ') + ' och ' + os[os.length - 1] : 'Ett vanligt överslag är ' + os[0].replace(/^[a-z]\) /, '')) + '.');
+      return { ok: res.every(function (x) { return x.ok; }), falt: res, note: notes.join(' ') };
     }
     return { ok: false };
   }
@@ -553,6 +562,93 @@ var Lx = (function () {
     var vara = valj(r, [['glassar', 'glassarna'], ['biobiljetter', 'biljetterna'], ['pennor', 'pennorna'], ['bullar', 'bullarna']]), styck = heltal(r, 3, 15), a = heltal(r, 2, 5), b;
     do { b = heltal(r, 2, 8); } while (b === a);
     return { typ: 'svar', niva: 3, papper: true, text: a + ' ' + vara[0] + ' kostar ' + (a * styck) + ' kr. Hur mycket kostar ' + b + ' ' + vara[0] + '?', falt: [{ typ: 'tal', svar: String(b * styck), enhet: 'kr' }], ledtrad: 'Räkna först ut vad en kostar.', losning: ['En kostar ' + br(a * styck, a) + ' = ' + styck + ' kr.', b + ' kostar ' + b + ' · ' + styck + ' = ' + (b * styck) + ' kr.'] };
+  };
+
+  // ---------- Kapitel 2: decimaltal, överslag och problemlösning ----------
+  // Allt räknas i heltal (hundradelar eller tiondelar) så att det inte blir avrundningsfel.
+  function delOrd(k, steg) { return k + ' ' + (steg === 100 ? (k === 1 ? 'hundradel' : 'hundradelar') : (k === 1 ? 'tiondel' : 'tiondelar')); }
+  G.dec_div = function (r) {
+    var n = heltal(r, 2, 9), steg = r() < 0.6 ? 100 : 10, k = heltal(r, 1, 9), A = k * n;
+    var a = A / steg, q = k / steg;
+    return { typ: 'svar', niva: steg === 100 ? 2 : 1, text: 'Räkna ut.', uttryck: br(fmt(a), n), falt: [{ typ: 'tal', svar: fmt(q) }],
+      ledtrad: 'Tänk i ' + (steg === 100 ? 'hundradelar' : 'tiondelar') + ': ' + fmt(a) + ' är ' + delOrd(A, steg) + '.',
+      losning: [fmt(a) + ' = ' + delOrd(A, steg), delOrd(A, steg) + ' / ' + n + ' = ' + delOrd(k, steg), delOrd(k, steg) + ' = ' + fmt(q)] };
+  };
+  G.dec_mul = function (r) {
+    var n = heltal(r, 2, 9), steg = r() < 0.6 ? 100 : 10, k = heltal(r, 2, 9), P = k * n;
+    var a = k / steg, p = P / steg;
+    return { typ: 'svar', niva: steg === 100 ? 2 : 1, text: 'Räkna ut.', uttryck: n + ' · ' + fmt(a), falt: [{ typ: 'tal', svar: fmt(p) }],
+      ledtrad: fmt(a) + ' är ' + delOrd(k, steg) + '. Hur mycket blir ' + n + ' gånger så många?',
+      losning: [fmt(a) + ' = ' + delOrd(k, steg), n + ' · ' + k + ' = ' + P + ', alltså ' + delOrd(P, steg), delOrd(P, steg) + ' = ' + fmt(p)] };
+  };
+  G.dec_plusminus = function (r) {
+    var v = heltal(r, 0, 3), A, B, plus = true;
+    if (v === 0) { A = heltal(r, 3, 9) * 10; B = heltal(r, 11 - A / 10, 9) * 10; }
+    else if (v === 1) { plus = false; A = heltal(r, 1, 5) * 100; B = heltal(r, 1, 9) * 10; }
+    else if (v === 2) { A = heltal(r, 1, 9); B = heltal(r, 1, 9) * 10; }
+    else { do { A = heltal(r, 11, 99); } while (A % 10 === 0); B = heltal(r, 11, 29) * 10; }
+    var C = plus ? A + B : A - B, tv = function (x) { return fmtN(x / 100, 2); };
+    var a = fmt(A / 100), b = fmt(B / 100), op = plus ? ' + ' : ' − ';
+    return { typ: 'svar', niva: v === 0 ? 1 : 2, text: 'Räkna ut.', uttryck: a + op + b, falt: [{ typ: 'tal', svar: fmt(C / 100) }],
+      ledtrad: 'Skriv talen med lika många decimaler. Då står tiondelar under tiondelar och hundradelar under hundradelar.',
+      losning: ['Skriv med två decimaler: ' + tv(A) + op + tv(B), 'Räkna i hundradelar: ' + A + op + B + ' = ' + C, C + ' hundradelar = ' + fmt(C / 100)] };
+  };
+  G.overslag = function (r) {
+    var v = heltal(r, 0, 4), tal = [], runda = [], uttr, ex, est, op;
+    var d1 = function () { var h = heltal(r, 2, 19), t = valj(r, [1, 2, 3, 7, 8, 9]); return h * 10 + t; };
+    if (v === 0) { var hel = 0; for (var i = 0; i < 3; i++) { var x = d1(); hel += x; tal.push(x / 10); runda.push(Math.round(x / 10)); } op = ' + '; ex = hel / 10; est = runda.reduce(function (s, y) { return s + y; }, 0); }
+    else if (v === 1) { var a = heltal(r, 2, 9) * 10 + valj(r, [1, 2, 8, 9]), b = heltal(r, 2, 9) * 10 + valj(r, [1, 2, 8, 9]); tal = [a, b]; runda = [Math.round(a / 10) * 10, Math.round(b / 10) * 10]; op = ' + '; ex = a + b; est = runda[0] + runda[1]; }
+    else if (v === 2) { var A, B; do { A = d1() + 100; B = d1(); } while (A - B < 80); tal = [A / 10, B / 10]; runda = [Math.round(A / 10), Math.round(B / 10)]; op = ' − '; ex = (A - B) / 10; est = runda[0] - runda[1]; }
+    else if (v === 3) { var m = heltal(r, 2, 9) * 10 + valj(r, [1, 2, 8, 9]), f = heltal(r, 2, 9) * 10 + valj(r, [1, 2, 8, 9]); tal = [m, f / 10]; runda = [Math.round(m / 10) * 10, Math.round(f / 10)]; op = ' · '; ex = m * f / 10; est = runda[0] * runda[1]; }
+    else { var dv = heltal(r, 2, 9), kv = heltal(r, 3, 9), T = dv * kv * 10 + valj(r, [-2, -1, 1, 2]), N = dv * 10 + valj(r, [-1, 1]); tal = [T / 10, N / 10]; runda = [dv * kv, dv]; op = ' / '; ex = T / N; est = kv; }
+    uttr = op === ' / ' ? br(fmt(tal[0]), fmt(tal[1])) : tal.map(fmt).join(op);
+    var tol = Math.abs(ex) * 0.08, lo = Math.min(est, ex) - tol, hi = Math.max(est, ex) + tol;
+    var avr = tal.map(function (t, j) { return fmt(t) + ' ≈ ' + fmt(runda[j]); }).join(', ');
+    var rakn = op === ' / ' ? br(fmt(runda[0]), fmt(runda[1])) + ' = ' + fmt(est) : runda.map(fmt).join(op) + ' = ' + fmt(est);
+    return { typ: 'svar', niva: v >= 3 ? 2 : 1, text: 'Beräkna med överslagsräkning.', uttryck: uttr + ' ≈ ?', falt: [{ typ: 'tal', svar: fmt(est), ungefar: [Math.round(lo * 100) / 100, Math.round(hi * 100) / 100] }],
+      ledtrad: 'Avrunda talen så att de blir lätta att räkna med, till exempel ' + fmt(tal[0]) + ' ≈ ' + fmt(runda[0]) + '.',
+      losning: ['Avrunda: ' + avr, rakn, 'Det exakta svaret är ' + (Math.abs(ex * 100 - Math.round(ex * 100)) > 1e-6 ? 'ungefär ' : '') + fmt(Math.round(ex * 100) / 100) + ', så överslaget stämmer bra.'] };
+  };
+  G.del_av_dec = function (r) {
+    var n = heltal(r, 2, 5), km = r() < 0.5, steg = km ? 10 : 100, k = km ? heltal(r, 2, 9) : heltal(r, 1, 9), T = n * k;
+    var tot = T / steg, del = k / steg, e = km ? 'km' : 'm';
+    var ord = n === 2 ? 'hälften' : 'en ' + DELNAMN[n];
+    return { typ: 'svar', niva: km ? 1 : 2, papper: true, text: 'En sträcka är ' + fmt(tot) + ' ' + e + '. Hur lång är ' + ord + ' av sträckan? Svara i ' + (km ? 'kilometer' : 'meter') + '.', falt: [{ typ: 'tal', svar: fmt(del), enhet: e }],
+      ledtrad: fmt(tot) + ' ' + e + ' är ' + delOrd(T, steg) + '. Dela med ' + n + '.',
+      losning: [fmt(tot) + ' = ' + delOrd(T, steg), delOrd(T, steg) + ' / ' + n + ' = ' + delOrd(k, steg), 'Svar: ' + fmt(del) + ' ' + e] };
+  };
+  G.kvar_resa = function (r, c) {
+    var N = namnen(r, c, 1)[0], d = valj(r, [3, 4, 5, 10]), m = heltal(r, 1, d - 1), k = heltal(r, 12, 160), T = d * k, kvar = (d - m) * k;
+    var plats = valj(r, ['sommarstugan', 'mormor', 'fjällen', 'stranden']);
+    var korde = brakOrd(m, d);
+    return { typ: 'svar', niva: m === 1 ? 1 : 2, papper: true, text: N + ' har ' + T + ' km till ' + plats + '. När ' + N + ' har åkt ' + korde + ' av sträckan stannar ' + N + ' för att äta. Hur långt är det kvar?', falt: [{ typ: 'tal', svar: String(kvar), enhet: 'km' }],
+      ledtrad: 'Räkna först ut hur långt en ' + DELNAMN[d] + ' av sträckan är. Hur många ' + DELNAMN[d] + 'ar är kvar?',
+      losning: ['En ' + DELNAMN[d] + ': ' + br(T, d) + ' = ' + k + ' km', 'Kvar: ' + (d - m) + ' ' + DELNAMN[d] + (d - m === 1 ? '' : 'ar') + ' av sträckan.', (d - m) + ' · ' + k + ' = ' + kvar + ' km'] };
+  };
+  G.sekund = function (r) {
+    var x = valj(r, [[1, 4, 'br'], [3, 4, 'br'], [1, 2, 'br'], [1, 3, 'br'], [2, 3, 'br'], [1, 5, 'br'], [1, 6, 'br'], [1, 10, 'br'], [4, 10, 'dec'], [2, 10, 'dec'], [6, 10, 'dec'], [8, 10, 'dec'], [25, 100, 'dec'], [75, 100, 'dec'], [5, 10, 'dec']]);
+    var s = 60 * x[0] / x[1], vis = x[2] === 'br' ? br(x[0], x[1]) : fmt(x[0] / x[1]);
+    var los = x[2] === 'br' ? ['Ett helt varv tar 60 sekunder.', (x[1] === 2 ? 'Ett halvt varv' : 'En ' + DELNAMN[x[1]] + 's varv') + ': ' + br(60, x[1]) + ' = ' + (60 / x[1]) + ' s', x[0] > 1 ? x[0] + ' · ' + (60 / x[1]) + ' = ' + s + ' s' : 'Svar: ' + s + ' s']
+      : ['Ett helt varv tar 60 sekunder.', fmt(x[0] / x[1]) + ' · 60 = ' + fmt(s) + ' s'];
+    return { typ: 'svar', niva: x[2] === 'br' && x[0] === 1 ? 1 : 2, text: 'Hur många sekunder tar det för sekundvisaren att vrida sig ' + vis + ' varv?', falt: [{ typ: 'tal', svar: fmt(s), enhet: 's' }],
+      ledtrad: 'Ett helt varv tar 60 sekunder.', losning: los };
+  };
+  G.vaxel = function (r, c) {
+    var N = namnen(r, c, 1)[0], n, p, lapp, antal, kost;
+    do { n = heltal(r, 2, 4); p = heltal(r, 12, 39) * 10 - valj(r, [1, 1, 5, 0]); lapp = valj(r, [100, 200, 500]); kost = n * p; antal = Math.ceil(kost / lapp); } while (antal > 4 || antal < 1 || antal * lapp - kost < 1);
+    var sak = valj(r, [['buskar', 'Buskarna'], ['tröjor', 'Tröjorna'], ['biljetter', 'Biljetterna'], ['böcker', 'Böckerna']]);
+    var sedel = { 100: 'hundralapp', 200: 'tvåhundralapp', 500: 'femhundralapp' }[lapp];
+    var tot = antal * lapp;
+    return { typ: 'svar', niva: 2, papper: true, text: N + ' köpte ' + TALORD[n] + ' ' + sak[0] + '. ' + sak[1] + ' kostade ' + p + ' kr styck, och ' + N + ' betalade med ' + TALORD[antal] + ' ' + sedel + (antal > 1 ? 'ar' : '') + '. Hur mycket fick ' + N + ' tillbaka?', falt: [{ typ: 'tal', svar: String(tot - kost), enhet: 'kr' }],
+      ledtrad: 'Räkna först ut vad allt kostade tillsammans.',
+      losning: [n + ' · ' + p + ' = ' + kost + ' kr', cap(TALORD[antal]) + ' ' + sedel + (antal > 1 ? 'ar' : '') + ' = ' + tot + ' kr', tot + ' − ' + kost + ' = ' + (tot - kost) + ' kr'] };
+  };
+  G.staket = function (r) {
+    var st = heltal(r, 4, 12), bredd = valj(r, [1, 2]), mellan = valj(r, [1, 2, 15, 25]);
+    var mel = mellan > 9 ? mellan / 10 : mellan, B = bredd / 10, L2 = Math.round(((st - 1) * mel + st * B) * 100) / 100;
+    return { typ: 'svar', niva: 3, papper: true, text: 'I ett staket är det ' + st + ' stolpar. Varje stolpe är ' + fmt(B) + ' m bred, och avståndet mellan två stolpar är ' + fmt(mel) + ' m. Hur långt är staketet?', falt: [{ typ: 'tal', svar: fmt(L2), enhet: 'm' }],
+      ledtrad: 'Rita staketet. Hur många mellanrum finns det mellan ' + st + ' stolpar?',
+      losning: ['Mellan ' + st + ' stolpar finns ' + (st - 1) + ' mellanrum: ' + (st - 1) + ' · ' + fmt(mel) + ' = ' + fmt(Math.round((st - 1) * mel * 100) / 100) + ' m', 'Stolparna: ' + st + ' · ' + fmt(B) + ' = ' + fmt(Math.round(st * B * 100) / 100) + ' m', 'Hela staketet: ' + fmt(L2) + ' m'] };
   };
 
   function genPass(lista, antal, c, seed) {

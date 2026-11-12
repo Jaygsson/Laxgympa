@@ -86,6 +86,46 @@ for (const g of Object.keys(L.G)) {
   }
 }
 
+// 4b. Kapitel 2: oberoende kontroll av generatorerna för decimaltal, överslag och problemlösning
+{
+  const T = x => L.parseTal(x), ORD = { en: 1, två: 2, tre: 3, fyra: 4, fem: 5 }, DEL = { halv: 2, tredjedel: 3, fjärdedel: 4, femtedel: 5, sjättedel: 6, tiondel: 10 };
+  const nyttVarde = (g, q) => {
+    const u = (q.uttryck || '').replace(' ≈ ?', '');
+    if (g === 'dec_div') { const m = u.match(/^\{([\d,]+)\/(\d+)\}$/); return T(m[1]) / +m[2]; }
+    if (g === 'dec_mul') { const m = u.match(/^(\d+) · ([\d,]+)$/); return +m[1] * T(m[2]); }
+    if (g === 'dec_plusminus') { const m = u.match(/^([\d,]+) ([+−]) ([\d,]+)$/); return m[2] === '+' ? T(m[1]) + T(m[3]) : T(m[1]) - T(m[3]); }
+    if (g === 'del_av_dec') { const m = q.text.match(/är ([\d,]+) (k?m)\. Hur lång är (hälften|en ([a-zåäö]+)) av/); return T(m[1]) / (m[3] === 'hälften' ? 2 : DEL[m[4]]); }
+    if (g === 'kvar_resa') { const m = q.text.match(/har (\d+) km till .* åkt ([a-zåäö]+) ([a-zåäö]+?)(?:ar)? av sträckan/); const d = DEL[m[3]], n = ORD[m[2]]; return +m[1] * (d - n) / d; }
+    if (g === 'sekund') { const m = q.text.match(/vrida sig (\{(\d+)\/(\d+)\}|[\d,]+) varv/); return 60 * (m[2] ? +m[2] / +m[3] : T(m[1])); }
+    if (g === 'vaxel') { const m = q.text.match(/köpte ([a-zåäö]+) .*kostade (\d+) kr styck.* betalade med ([a-zåäö]+) (hundra|tvåhundra|femhundra)lapp/); const lapp = { hundra: 100, tvåhundra: 200, femhundra: 500 }[m[4]]; return ORD[m[3]] * lapp - ORD[m[1]] * +m[2]; }
+    if (g === 'staket') { const m = q.text.match(/det (\d+) stolpar\. Varje stolpe är ([\d,]+) m bred, och avståndet mellan två stolpar är ([\d,]+) m/); return (+m[1] - 1) * T(m[3]) + +m[1] * T(m[2]); }
+    return null;
+  };
+  for (const g of ['dec_div', 'dec_mul', 'dec_plusminus', 'del_av_dec', 'kvar_resa', 'sekund', 'vaxel', 'staket', 'overslag']) {
+    let ok = true;
+    for (let seed = 1; seed <= 3000 && ok; seed++) {
+      const q = L.G[g](L.slump(seed * 53 + 11), {});
+      const f = q.falt[0];
+      if (g === 'overslag') {
+        // Överslaget ska ligga i godkänt intervall, och det exakta svaret också
+        const u = q.uttryck.replace(' ≈ ?', '').replace(/\{([\d,]+)\/([\d,]+)\}/, '$1 / $2').replace(/,/g, '.').replace(/·/g, '*').replace(/−/g, '-');
+        const ex = eval(u), est = T(f.svar);
+        if (!(est >= f.ungefar[0] && est <= f.ungefar[1] && ex >= f.ungefar[0] && ex <= f.ungefar[1])) { anta(false, `överslag ${u}: ${est} / ${ex} utanför ${f.ungefar}`); ok = false; }
+        if (Math.abs(est - ex) > 0.2 * Math.abs(ex)) { anta(false, `överslag för långt från exakt: ${u} ${est} ${ex}`); ok = false; }
+        if (L.kolla(q, [String(Math.round(ex * 3))]).ok) { anta(false, `överslag godtar orimligt svar ${u}`); ok = false; }
+        continue;
+      }
+      const vant = nyttVarde(g, q);
+      if (vant === null || Math.abs(vant - T(f.svar)) > 1e-9) { anta(false, `${g} seed ${seed}: ${q.text} ${q.uttryck || ''} facit ${f.svar} men ska vara ${vant}`); ok = false; }
+    }
+    anta(ok, `kap 2-generator ${g} stämmer i 3000 frågor`);
+  }
+  // Överslagsfält: godtar rimliga överslag, säger nej till orimliga
+  const kap2 = LAXOR.find(s => s.id === 'kap2');
+  const os = kap2.pass[0].fragor[1];
+  anta(L.kolla(os, ['70', '18', '6000']).ok && L.kolla(os, ['71', '20', '5900']).ok && !L.kolla(os, ['80', '18', '6000']).ok, 'överslag i läxa 7 godtar rimliga svar');
+}
+
 // 5. Femmans matte: oberoende kontroll av de nya generatorerna och minus-knappen
 const nyaGen = { procent: 0, brak_av: 0, enhet: 0, omkrets_area: 0, negativa: 0, lagesmatt: 0, ekvation: 0, monster: 0, gange10: 0, proportion: 0 };
 const tal = s => L.parseTal(s);

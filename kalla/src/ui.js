@@ -243,8 +243,8 @@
       s += '<line class="tl-linje" x1="' + (m0 - 10) + '" y1="' + y + '" x2="' + (VW - 14) + '" y2="' + y + '"/><path class="tl-pil" d="M' + (VW - 4) + ' ' + y + ' l-16 -8 v16 z" style="fill:var(--ink)"/>';
       var tot = sp * f.delar;
       for (i = 0; i <= tot; i++) {
-        var v = f.fran + i / f.delar, x = X(v), stor = i % f.delar === 0;
-        s += '<line class="tl-streck" x1="' + x.toFixed(1) + '" y1="' + (y - (stor ? 14 : 7)) + '" x2="' + x.toFixed(1) + '" y2="' + (y + (stor ? 14 : 7)) + '"/>';
+        var v = f.fran + i / f.delar, x = X(v), stor = i % f.delar === 0, halv = !stor && f.delar % 2 === 0 && f.delar > 2 && i % (f.delar / 2) === 0, len = stor ? 14 : halv ? 10 : 6;
+        s += '<line class="tl-streck" x1="' + x.toFixed(1) + '" y1="' + (y - len) + '" x2="' + x.toFixed(1) + '" y2="' + (y + len) + '"/>';
         if (stor) s += '<text class="tl-text" x="' + x.toFixed(1) + '" y="' + (y + 38) + '">' + L.fmt(v) + '</text>';
       }
       f.pilar.forEach(function (p) {
@@ -428,7 +428,7 @@
       '<header class="pass-topp"><button class="ikon-knapp" data-act="avbryt" aria-label="Avsluta passet">' + IK.kryss + '</button>' +
         '<div class="bom" role="progressbar" aria-valuemin="0" aria-valuemax="' + n + '" aria-valuenow="' + P.i + '" aria-label="Fråga ' + (P.i + 1) + ' av ' + n + '"><div class="bom-yta"><div class="bom-fyll" style="width:' + (andel * 100).toFixed(1) + '%"></div></div><div class="bom-prickar">' + prickar + '</div><div class="bom-kompis hoppa" style="left:' + (4 + andel * 92).toFixed(1) + '%">' + miniKompis() + '</div></div>' +
         '<span class="raknare">' + (P.i + 1) + '/' + n + '</span></header>' +
-      '<div class="pass-grid' + (q.typ === 'karta' ? ' bred' : '') + '"><article class="fraga-kort in" id="fraga" data-ref="' + esc(q.ref || '') + '">' +
+      '<div class="pass-grid' + (q.typ === 'karta' || (q.figur && q.figur.form === 'tallinje' && (q.figur.till - q.figur.fran) * q.figur.delar > 40) ? ' bred' : '') + '"><article class="fraga-kort in" id="fraga" data-ref="' + esc(q.ref || '') + '">' +
         '<div class="fraga-meta">' + meta + '</div>' +
         '<h2 class="fraga-text">' + rt(q.text) + '</h2>' +
         (q.uttryck ? '<div class="uttryck">' + rtUttryck(q.uttryck) + '</div>' : '') +

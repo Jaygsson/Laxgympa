@@ -687,6 +687,11 @@ var Lx = (function () {
       if (parseBrak(raw)) return { ok: false, format: true, msg: 'Svara med ett tal i decimalform, till exempel 0,25.' };
       return { ok: false, format: true, msg: 'Svara med ett tal, till exempel 12 eller 0,5.' };
     }
+    if (f.ungefar) {
+      // Överslag: alla rimliga överslag godtas, och det vanligaste visas som tips
+      if (v < f.ungefar[0] - 1e-9 || v > f.ungefar[1] + 1e-9) return { ok: false };
+      return Math.abs(v - parseTal(f.svar)) < 1e-9 ? { ok: true } : { ok: true, overslag: f.svar };
+    }
     return { ok: Math.abs(v - parseTal(f.svar)) < 1e-9 };
   }
 
@@ -707,7 +712,11 @@ var Lx = (function () {
       var form = null;
       for (var k = 0; k < res.length; k++) if (res[k].format) { form = res[k]; break; }
       if (form) return { ok: false, format: true, msg: form.msg, falt: res };
-      return { ok: res.every(function (x) { return x.ok; }), falt: res, note: res.map(function (x) { return x.note; }).filter(Boolean).join(' ') };
+      // Överslag som skiljer sig från det vanligaste samlas i en enda mening
+      var os = q.falt.map(function (f, i) { return res[i].overslag ? (q.falt.length > 1 && f.etikett ? f.etikett.split(')')[0] + ') ' : '') + fmt(parseTal(res[i].overslag)) : null; }).filter(Boolean);
+      var notes = res.map(function (x) { return x.note; }).filter(Boolean);
+      if (os.length) notes.push('Bra överslag! ' + (os.length > 1 ? 'Vanliga överslag är ' + os.slice(0, -1).join(', ') + ' och ' + os[os.length - 1] : 'Ett vanligt överslag är ' + os[0].replace(/^[a-z]\) /, '')) + '.');
+      return { ok: res.every(function (x) { return x.ok; }), falt: res, note: notes.join(' ') };
     }
     return { ok: false };
   }
@@ -1126,6 +1135,93 @@ var Lx = (function () {
     return { typ: 'svar', niva: 3, papper: true, text: a + ' ' + vara[0] + ' kostar ' + (a * styck) + ' kr. Hur mycket kostar ' + b + ' ' + vara[0] + '?', falt: [{ typ: 'tal', svar: String(b * styck), enhet: 'kr' }], ledtrad: 'Räkna först ut vad en kostar.', losning: ['En kostar ' + br(a * styck, a) + ' = ' + styck + ' kr.', b + ' kostar ' + b + ' · ' + styck + ' = ' + (b * styck) + ' kr.'] };
   };
 
+  // ---------- Kapitel 2: decimaltal, överslag och problemlösning ----------
+  // Allt räknas i heltal (hundradelar eller tiondelar) så att det inte blir avrundningsfel.
+  function delOrd(k, steg) { return k + ' ' + (steg === 100 ? (k === 1 ? 'hundradel' : 'hundradelar') : (k === 1 ? 'tiondel' : 'tiondelar')); }
+  G.dec_div = function (r) {
+    var n = heltal(r, 2, 9), steg = r() < 0.6 ? 100 : 10, k = heltal(r, 1, 9), A = k * n;
+    var a = A / steg, q = k / steg;
+    return { typ: 'svar', niva: steg === 100 ? 2 : 1, text: 'Räkna ut.', uttryck: br(fmt(a), n), falt: [{ typ: 'tal', svar: fmt(q) }],
+      ledtrad: 'Tänk i ' + (steg === 100 ? 'hundradelar' : 'tiondelar') + ': ' + fmt(a) + ' är ' + delOrd(A, steg) + '.',
+      losning: [fmt(a) + ' = ' + delOrd(A, steg), delOrd(A, steg) + ' / ' + n + ' = ' + delOrd(k, steg), delOrd(k, steg) + ' = ' + fmt(q)] };
+  };
+  G.dec_mul = function (r) {
+    var n = heltal(r, 2, 9), steg = r() < 0.6 ? 100 : 10, k = heltal(r, 2, 9), P = k * n;
+    var a = k / steg, p = P / steg;
+    return { typ: 'svar', niva: steg === 100 ? 2 : 1, text: 'Räkna ut.', uttryck: n + ' · ' + fmt(a), falt: [{ typ: 'tal', svar: fmt(p) }],
+      ledtrad: fmt(a) + ' är ' + delOrd(k, steg) + '. Hur mycket blir ' + n + ' gånger så många?',
+      losning: [fmt(a) + ' = ' + delOrd(k, steg), n + ' · ' + k + ' = ' + P + ', alltså ' + delOrd(P, steg), delOrd(P, steg) + ' = ' + fmt(p)] };
+  };
+  G.dec_plusminus = function (r) {
+    var v = heltal(r, 0, 3), A, B, plus = true;
+    if (v === 0) { A = heltal(r, 3, 9) * 10; B = heltal(r, 11 - A / 10, 9) * 10; }
+    else if (v === 1) { plus = false; A = heltal(r, 1, 5) * 100; B = heltal(r, 1, 9) * 10; }
+    else if (v === 2) { A = heltal(r, 1, 9); B = heltal(r, 1, 9) * 10; }
+    else { do { A = heltal(r, 11, 99); } while (A % 10 === 0); B = heltal(r, 11, 29) * 10; }
+    var C = plus ? A + B : A - B, tv = function (x) { return fmtN(x / 100, 2); };
+    var a = fmt(A / 100), b = fmt(B / 100), op = plus ? ' + ' : ' − ';
+    return { typ: 'svar', niva: v === 0 ? 1 : 2, text: 'Räkna ut.', uttryck: a + op + b, falt: [{ typ: 'tal', svar: fmt(C / 100) }],
+      ledtrad: 'Skriv talen med lika många decimaler. Då står tiondelar under tiondelar och hundradelar under hundradelar.',
+      losning: ['Skriv med två decimaler: ' + tv(A) + op + tv(B), 'Räkna i hundradelar: ' + A + op + B + ' = ' + C, C + ' hundradelar = ' + fmt(C / 100)] };
+  };
+  G.overslag = function (r) {
+    var v = heltal(r, 0, 4), tal = [], runda = [], uttr, ex, est, op;
+    var d1 = function () { var h = heltal(r, 2, 19), t = valj(r, [1, 2, 3, 7, 8, 9]); return h * 10 + t; };
+    if (v === 0) { var hel = 0; for (var i = 0; i < 3; i++) { var x = d1(); hel += x; tal.push(x / 10); runda.push(Math.round(x / 10)); } op = ' + '; ex = hel / 10; est = runda.reduce(function (s, y) { return s + y; }, 0); }
+    else if (v === 1) { var a = heltal(r, 2, 9) * 10 + valj(r, [1, 2, 8, 9]), b = heltal(r, 2, 9) * 10 + valj(r, [1, 2, 8, 9]); tal = [a, b]; runda = [Math.round(a / 10) * 10, Math.round(b / 10) * 10]; op = ' + '; ex = a + b; est = runda[0] + runda[1]; }
+    else if (v === 2) { var A, B; do { A = d1() + 100; B = d1(); } while (A - B < 80); tal = [A / 10, B / 10]; runda = [Math.round(A / 10), Math.round(B / 10)]; op = ' − '; ex = (A - B) / 10; est = runda[0] - runda[1]; }
+    else if (v === 3) { var m = heltal(r, 2, 9) * 10 + valj(r, [1, 2, 8, 9]), f = heltal(r, 2, 9) * 10 + valj(r, [1, 2, 8, 9]); tal = [m, f / 10]; runda = [Math.round(m / 10) * 10, Math.round(f / 10)]; op = ' · '; ex = m * f / 10; est = runda[0] * runda[1]; }
+    else { var dv = heltal(r, 2, 9), kv = heltal(r, 3, 9), T = dv * kv * 10 + valj(r, [-2, -1, 1, 2]), N = dv * 10 + valj(r, [-1, 1]); tal = [T / 10, N / 10]; runda = [dv * kv, dv]; op = ' / '; ex = T / N; est = kv; }
+    uttr = op === ' / ' ? br(fmt(tal[0]), fmt(tal[1])) : tal.map(fmt).join(op);
+    var tol = Math.abs(ex) * 0.08, lo = Math.min(est, ex) - tol, hi = Math.max(est, ex) + tol;
+    var avr = tal.map(function (t, j) { return fmt(t) + ' ≈ ' + fmt(runda[j]); }).join(', ');
+    var rakn = op === ' / ' ? br(fmt(runda[0]), fmt(runda[1])) + ' = ' + fmt(est) : runda.map(fmt).join(op) + ' = ' + fmt(est);
+    return { typ: 'svar', niva: v >= 3 ? 2 : 1, text: 'Beräkna med överslagsräkning.', uttryck: uttr + ' ≈ ?', falt: [{ typ: 'tal', svar: fmt(est), ungefar: [Math.round(lo * 100) / 100, Math.round(hi * 100) / 100] }],
+      ledtrad: 'Avrunda talen så att de blir lätta att räkna med, till exempel ' + fmt(tal[0]) + ' ≈ ' + fmt(runda[0]) + '.',
+      losning: ['Avrunda: ' + avr, rakn, 'Det exakta svaret är ' + (Math.abs(ex * 100 - Math.round(ex * 100)) > 1e-6 ? 'ungefär ' : '') + fmt(Math.round(ex * 100) / 100) + ', så överslaget stämmer bra.'] };
+  };
+  G.del_av_dec = function (r) {
+    var n = heltal(r, 2, 5), km = r() < 0.5, steg = km ? 10 : 100, k = km ? heltal(r, 2, 9) : heltal(r, 1, 9), T = n * k;
+    var tot = T / steg, del = k / steg, e = km ? 'km' : 'm';
+    var ord = n === 2 ? 'hälften' : 'en ' + DELNAMN[n];
+    return { typ: 'svar', niva: km ? 1 : 2, papper: true, text: 'En sträcka är ' + fmt(tot) + ' ' + e + '. Hur lång är ' + ord + ' av sträckan? Svara i ' + (km ? 'kilometer' : 'meter') + '.', falt: [{ typ: 'tal', svar: fmt(del), enhet: e }],
+      ledtrad: fmt(tot) + ' ' + e + ' är ' + delOrd(T, steg) + '. Dela med ' + n + '.',
+      losning: [fmt(tot) + ' = ' + delOrd(T, steg), delOrd(T, steg) + ' / ' + n + ' = ' + delOrd(k, steg), 'Svar: ' + fmt(del) + ' ' + e] };
+  };
+  G.kvar_resa = function (r, c) {
+    var N = namnen(r, c, 1)[0], d = valj(r, [3, 4, 5, 10]), m = heltal(r, 1, d - 1), k = heltal(r, 12, 160), T = d * k, kvar = (d - m) * k;
+    var plats = valj(r, ['sommarstugan', 'mormor', 'fjällen', 'stranden']);
+    var korde = brakOrd(m, d);
+    return { typ: 'svar', niva: m === 1 ? 1 : 2, papper: true, text: N + ' har ' + T + ' km till ' + plats + '. När ' + N + ' har åkt ' + korde + ' av sträckan stannar ' + N + ' för att äta. Hur långt är det kvar?', falt: [{ typ: 'tal', svar: String(kvar), enhet: 'km' }],
+      ledtrad: 'Räkna först ut hur långt en ' + DELNAMN[d] + ' av sträckan är. Hur många ' + DELNAMN[d] + 'ar är kvar?',
+      losning: ['En ' + DELNAMN[d] + ': ' + br(T, d) + ' = ' + k + ' km', 'Kvar: ' + (d - m) + ' ' + DELNAMN[d] + (d - m === 1 ? '' : 'ar') + ' av sträckan.', (d - m) + ' · ' + k + ' = ' + kvar + ' km'] };
+  };
+  G.sekund = function (r) {
+    var x = valj(r, [[1, 4, 'br'], [3, 4, 'br'], [1, 2, 'br'], [1, 3, 'br'], [2, 3, 'br'], [1, 5, 'br'], [1, 6, 'br'], [1, 10, 'br'], [4, 10, 'dec'], [2, 10, 'dec'], [6, 10, 'dec'], [8, 10, 'dec'], [25, 100, 'dec'], [75, 100, 'dec'], [5, 10, 'dec']]);
+    var s = 60 * x[0] / x[1], vis = x[2] === 'br' ? br(x[0], x[1]) : fmt(x[0] / x[1]);
+    var los = x[2] === 'br' ? ['Ett helt varv tar 60 sekunder.', (x[1] === 2 ? 'Ett halvt varv' : 'En ' + DELNAMN[x[1]] + 's varv') + ': ' + br(60, x[1]) + ' = ' + (60 / x[1]) + ' s', x[0] > 1 ? x[0] + ' · ' + (60 / x[1]) + ' = ' + s + ' s' : 'Svar: ' + s + ' s']
+      : ['Ett helt varv tar 60 sekunder.', fmt(x[0] / x[1]) + ' · 60 = ' + fmt(s) + ' s'];
+    return { typ: 'svar', niva: x[2] === 'br' && x[0] === 1 ? 1 : 2, text: 'Hur många sekunder tar det för sekundvisaren att vrida sig ' + vis + ' varv?', falt: [{ typ: 'tal', svar: fmt(s), enhet: 's' }],
+      ledtrad: 'Ett helt varv tar 60 sekunder.', losning: los };
+  };
+  G.vaxel = function (r, c) {
+    var N = namnen(r, c, 1)[0], n, p, lapp, antal, kost;
+    do { n = heltal(r, 2, 4); p = heltal(r, 12, 39) * 10 - valj(r, [1, 1, 5, 0]); lapp = valj(r, [100, 200, 500]); kost = n * p; antal = Math.ceil(kost / lapp); } while (antal > 4 || antal < 1 || antal * lapp - kost < 1);
+    var sak = valj(r, [['buskar', 'Buskarna'], ['tröjor', 'Tröjorna'], ['biljetter', 'Biljetterna'], ['böcker', 'Böckerna']]);
+    var sedel = { 100: 'hundralapp', 200: 'tvåhundralapp', 500: 'femhundralapp' }[lapp];
+    var tot = antal * lapp;
+    return { typ: 'svar', niva: 2, papper: true, text: N + ' köpte ' + TALORD[n] + ' ' + sak[0] + '. ' + sak[1] + ' kostade ' + p + ' kr styck, och ' + N + ' betalade med ' + TALORD[antal] + ' ' + sedel + (antal > 1 ? 'ar' : '') + '. Hur mycket fick ' + N + ' tillbaka?', falt: [{ typ: 'tal', svar: String(tot - kost), enhet: 'kr' }],
+      ledtrad: 'Räkna först ut vad allt kostade tillsammans.',
+      losning: [n + ' · ' + p + ' = ' + kost + ' kr', cap(TALORD[antal]) + ' ' + sedel + (antal > 1 ? 'ar' : '') + ' = ' + tot + ' kr', tot + ' − ' + kost + ' = ' + (tot - kost) + ' kr'] };
+  };
+  G.staket = function (r) {
+    var st = heltal(r, 4, 12), bredd = valj(r, [1, 2]), mellan = valj(r, [1, 2, 15, 25]);
+    var mel = mellan > 9 ? mellan / 10 : mellan, B = bredd / 10, L2 = Math.round(((st - 1) * mel + st * B) * 100) / 100;
+    return { typ: 'svar', niva: 3, papper: true, text: 'I ett staket är det ' + st + ' stolpar. Varje stolpe är ' + fmt(B) + ' m bred, och avståndet mellan två stolpar är ' + fmt(mel) + ' m. Hur långt är staketet?', falt: [{ typ: 'tal', svar: fmt(L2), enhet: 'm' }],
+      ledtrad: 'Rita staketet. Hur många mellanrum finns det mellan ' + st + ' stolpar?',
+      losning: ['Mellan ' + st + ' stolpar finns ' + (st - 1) + ' mellanrum: ' + (st - 1) + ' · ' + fmt(mel) + ' = ' + fmt(Math.round((st - 1) * mel * 100) / 100) + ' m', 'Stolparna: ' + st + ' · ' + fmt(B) + ' = ' + fmt(Math.round(st * B * 100) / 100) + ' m', 'Hela staketet: ' + fmt(L2) + ' m'] };
+  };
+
   function genPass(lista, antal, c, seed) {
     var r = slump(seed === undefined ? (Date.now() ^ Math.floor(Math.random() * 1e9)) : seed);
     var ordning = [];
@@ -1159,6 +1255,120 @@ if (typeof module !== 'undefined') module.exports = Lx;
    Frågetyper: val (flerval), svar (skriv in svaret), kort (förklara med egna ord),
    ordna (storleksordning) och pil (pilkastning). {3/4} visas som ett bråk. */
 var LAXOR = [
+  {
+    id: 'kap2', amne: 'matte', titel: 'Läxa 7 och övningsprov kap 2', under: 'Decimaltal, överslag och problemlösning', ny: true,
+    pass: [
+      { id: 'laxa7', titel: 'Läxa 7', under: 'Efter avsnitt 2.5', fragor: [
+        { typ: 'svar', text: 'Räkna ut.',
+          falt: [{ etikett: 'a) {0,25/5}', typ: 'tal', svar: '0,05' }, { etikett: 'b) {3,2/8}', typ: 'tal', svar: '0,4' }, { etikett: 'c) {0,14/7}', typ: 'tal', svar: '0,02' }],
+          ledtrad: 'Tänk i hundradelar eller tiondelar. 0,25 är 25 hundradelar.',
+          losning: ['a) 0,25 = 25 hundradelar. 25 / 5 = 5 hundradelar = 0,05', 'b) 3,2 = 32 tiondelar. 32 / 8 = 4 tiondelar = 0,4', 'c) 0,14 = 14 hundradelar. 14 / 7 = 2 hundradelar = 0,02'] },
+        { typ: 'svar', text: 'Beräkna med överslagsräkning.',
+          falt: [{ etikett: 'a) 29 + 42 ≈', typ: 'tal', svar: '70', ungefar: [65, 75] }, { etikett: 'b) 38,1 − 19,8 ≈', typ: 'tal', svar: '18', ungefar: [17, 20] }, { etikett: 'c) 1 885 + 3 164 + 899 ≈', typ: 'tal', svar: '6000', ungefar: [5800, 6200] }],
+          ledtrad: 'Avrunda talen så att de blir lätta att räkna med. 29 är nästan 30.',
+          losning: ['a) 29 ≈ 30 och 42 ≈ 40. 30 + 40 = 70', 'b) 38,1 ≈ 38 och 19,8 ≈ 20. 38 − 20 = 18', 'c) 1 885 ≈ 1 900, 3 164 ≈ 3 200 och 899 ≈ 900. 1 900 + 3 200 + 900 = 6 000'] },
+        { typ: 'svar', text: 'Du köper en t-tröja för 149 kr och ett par jeans för 599 kr. Ungefär hur mycket får du tillbaka på en tusenlapp?', papper: true,
+          falt: [{ typ: 'tal', svar: '250', ungefar: [240, 260], enhet: 'kr' }],
+          ledtrad: '149 kr är nästan 150 kr, och 599 kr är nästan 600 kr.',
+          losning: ['149 ≈ 150 och 599 ≈ 600', '150 + 600 = 750 kr', '1 000 − 750 = 250 kr. Du får ungefär 250 kr tillbaka.'] },
+        { typ: 'svar', text: 'En sträcka är 0,12 m. Hur lång är', papper: true,
+          falt: [{ etikett: 'a) en tredjedel av sträckan', typ: 'tal', svar: '0,04', enhet: 'm' }, { etikett: 'b) en fjärdedel av sträckan', typ: 'tal', svar: '0,03', enhet: 'm' }],
+          ledtrad: '0,12 m är 12 hundradelar av en meter.',
+          losning: ['0,12 = 12 hundradelar', 'a) 12 / 3 = 4 hundradelar = 0,04 m', 'b) 12 / 4 = 3 hundradelar = 0,03 m'] },
+        { typ: 'svar', text: 'Vilka tal pekar pilarna på?',
+          figur: { form: 'tallinje', fran: 0, till: 10, delar: 10, pilar: [{ namn: 'a', varde: 1.4 }, { namn: 'b', varde: 4.8 }, { namn: 'c', varde: 6.3 }, { namn: 'd', varde: 8.5 }] },
+          falt: [{ etikett: 'a', typ: 'tal', svar: '1,4' }, { etikett: 'b', typ: 'tal', svar: '4,8' }, { etikett: 'c', typ: 'tal', svar: '6,3' }, { etikett: 'd', typ: 'tal', svar: '8,5' }],
+          ledtrad: 'Mellan två heltal finns 10 små steg. Hur mycket är ett litet steg värt?',
+          losning: ['Mellan två heltal finns 10 små steg, så ett steg är 0,1. Det lite längre strecket i mitten är 0,5.', 'a) 4 steg efter 1 = 1,4', 'b) 2 steg före 5 = 4,8', 'c) 3 steg efter 6 = 6,3', 'd) mitt emellan 8 och 9 = 8,5'] },
+        { typ: 'svar', text: 'Räkna ut. Ställ upp på papperet.', papper: true,
+          falt: [{ etikett: 'a) 387 + 1 215', typ: 'tal', svar: '1602' }, { etikett: 'b) 2 423 − 987', typ: 'tal', svar: '1436' }, { etikett: 'c) 576 · 6', typ: 'tal', svar: '3456' }],
+          ledtrad: 'Ställ upp talen under varandra så att entalen står under entalen. Börja med entalen.',
+          losning: ['a) 7 + 5 = 12, skriv 2 och 1 i minnet. 8 + 1 + 1 = 10, skriv 0 och 1 i minnet. 3 + 2 + 1 = 6. Tusental: 1. Svar: 1 602', 'b) Du behöver växla tre gånger: 13 − 7 = 6, 11 − 8 = 3, 13 − 9 = 4 och 1 tusental kvar. Svar: 1 436', 'c) 6 · 6 = 36, 6 · 70 = 420 och 6 · 500 = 3 000. 36 + 420 + 3 000 = 3 456'] },
+        { typ: 'svar', text: 'Darin köpte tre buskar till sin trädgård. Buskarna kostade 289 kr styck, och Darin betalade med två femhundrakronorssedlar. Hur mycket fick han tillbaka?', papper: true,
+          falt: [{ typ: 'tal', svar: '133', enhet: 'kr' }],
+          ledtrad: 'Räkna först ut vad buskarna kostade tillsammans.',
+          losning: ['3 · 289 = 867 kr', 'Två femhundralappar = 1 000 kr', '1 000 − 867 = 133 kr'] },
+        { typ: 'svar', text: 'Summan av tre tal är 42 135. Två av talen är 9 768 och 21 054. Vilket är det tredje talet?', papper: true,
+          falt: [{ typ: 'tal', svar: '11313' }],
+          ledtrad: 'Lägg först ihop de två tal du vet. Hur mycket fattas sedan till 42 135?',
+          losning: ['9 768 + 21 054 = 30 822', '42 135 − 30 822 = 11 313', 'Kolla: 9 768 + 21 054 + 11 313 = 42 135'] },
+        { typ: 'svar', text: 'Medlemsavgiften i en förening är 150 kr per år. Ett år hade föreningen 70 medlemmar. Året därpå ökade antalet medlemmar med 15. Samtidigt höjdes medlemsavgiften till 200 kr. Hur mycket mer fick föreningen in på medlemsavgifterna det andra året?', papper: true,
+          falt: [{ typ: 'tal', svar: '6500', enhet: 'kr' }],
+          ledtrad: 'Räkna ut hur mycket föreningen fick in varje år för sig. Hur många medlemmar var det det andra året?',
+          losning: ['Första året: 70 · 150 = 10 500 kr', 'Andra året: 70 + 15 = 85 medlemmar. 85 · 200 = 17 000 kr', '17 000 − 10 500 = 6 500 kr mer'] },
+        { typ: 'svar', text: 'Veckans problem: I en gammal bok saknas ett antal blad. Efter en vänstersida med nummer 28 kommer en högersida med nummer 49. Hur många blad saknas i boken?', papper: true,
+          falt: [{ typ: 'tal', svar: '10', enhet: 'blad' }],
+          ledtrad: 'Ett blad har två sidor, en framsida och en baksida. Vilka sidnummer saknas?',
+          losning: ['Sidorna 29 till 48 saknas. Det är 48 − 28 = 20 sidor.', 'Varje blad har 2 sidor, till exempel 29 och 30.', '20 / 2 = 10 blad saknas.'] }
+      ] },
+      { id: 'prov1', titel: 'Övningsprov: del 1', under: 'Uppgift 1–7: decimaltal, överslag och bråk', fragor: [
+        { typ: 'svar', text: 'Räkna ut.',
+          falt: [{ etikett: 'a) 0,6 + 0,6', typ: 'tal', svar: '1,2' }, { etikett: 'b) 2 − 0,2', typ: 'tal', svar: '1,8' }, { etikett: 'c) 0,04 + 0,7', typ: 'tal', svar: '0,74' }],
+          ledtrad: 'Skriv talen med lika många decimaler. 0,7 är samma sak som 0,70.',
+          losning: ['a) 6 tiondelar + 6 tiondelar = 12 tiondelar = 1,2', 'b) 2 = 20 tiondelar. 20 − 2 = 18 tiondelar = 1,8', 'c) 0,04 + 0,70 = 0,74'] },
+        { typ: 'svar', text: 'Vilket tal är',
+          falt: [{ etikett: 'a) en tiondel större än 0,8', typ: 'tal', svar: '0,9' }, { etikett: 'b) tre gånger så stort som 0,8', typ: 'tal', svar: '2,4' }, { etikett: 'c) en fjärdedel av 0,8', typ: 'tal', svar: '0,2' }],
+          ledtrad: '0,8 är 8 tiondelar. En tiondel är 0,1.',
+          losning: ['a) 0,8 + 0,1 = 0,9', 'b) 3 · 8 tiondelar = 24 tiondelar = 2,4', 'c) 8 tiondelar / 4 = 2 tiondelar = 0,2'] },
+        { typ: 'val', text: 'Ali har 2,5 km till skolan. Efter 10 min har han gått en femtedel av sträckan. Med vilket uttryck kan du räkna ut hur lång sträcka Ali har gått?', alt: ['2,5 · 5', '{2,5/10}', '{2,5/5}', '5 − 2,5'], ratt: 2, fast: true,
+          ledtrad: 'En femtedel betyder att sträckan delas i 5 lika stora delar.',
+          losning: ['En femtedel av 2,5 km får du om du delar 2,5 med 5.', 'Rätt uttryck är C: {2,5/5}'] },
+        { typ: 'svar', text: 'Ali har 2,5 km till skolan. Efter 10 min har han gått en femtedel av sträckan. Hur långt har Ali kvar till skolan?', papper: true,
+          falt: [{ typ: 'tal', svar: '2', enhet: 'km' }],
+          ledtrad: 'Räkna först ut hur långt Ali har gått: {2,5/5}.',
+          losning: ['{2,5/5} = 0,5 km. Ali har gått 0,5 km.', '2,5 − 0,5 = 2 km kvar.'] },
+        { typ: 'svar', text: 'Räkna ut.',
+          falt: [{ etikett: 'a) 6 · 0,08', typ: 'tal', svar: '0,48' }, { etikett: 'b) {0,18/6}', typ: 'tal', svar: '0,03' }, { etikett: 'c) 0,15 + 1,9', typ: 'tal', svar: '2,05' }],
+          ledtrad: 'Tänk i hundradelar. 0,08 är 8 hundradelar.',
+          losning: ['a) 6 · 8 hundradelar = 48 hundradelar = 0,48', 'b) 18 hundradelar / 6 = 3 hundradelar = 0,03', 'c) Skriv 1,9 som 1,90. 0,15 + 1,90 = 2,05'] },
+        { typ: 'svar', text: 'Beräkna med överslagsräkning.',
+          falt: [{ etikett: 'a) 8,9 + 3,3 + 5,7 ≈', typ: 'tal', svar: '18', ungefar: [17, 19] }, { etikett: 'b) 42 · 6,8 ≈', typ: 'tal', svar: '280', ungefar: [260, 300] }, { etikett: 'c) {31,8/4,1} ≈', typ: 'tal', svar: '8', ungefar: [7, 8.5] }],
+          ledtrad: 'Avrunda talen så att de blir lätta att räkna med, till exempel 8,9 ≈ 9.',
+          losning: ['a) 9 + 3 + 6 = 18 (exakt: 17,9)', 'b) 42 ≈ 40 och 6,8 ≈ 7. 40 · 7 = 280 (exakt: 285,6)', 'c) 31,8 ≈ 32 och 4,1 ≈ 4. {32/4} = 8 (exakt: ungefär 7,8)'] },
+        { typ: 'svar', text: 'Skriv talen i decimalform och beräkna.', papper: true,
+          falt: [{ etikett: 'a) 1 − {2/5} − {1/4}', typ: 'tal', svar: '0,35' }, { etikett: 'b) 0,7 + {3/10} − {3/4}', typ: 'tal', svar: '0,25' }],
+          ledtrad: '{2/5} = {4/10} = 0,4. Vad är {1/4} och {3/4} i decimalform?',
+          losning: ['a) {2/5} = 0,4 och {1/4} = 0,25. 1 − 0,4 − 0,25 = 0,35', 'b) {3/10} = 0,3 och {3/4} = 0,75. 0,7 + 0,3 − 0,75 = 0,25'] },
+        { typ: 'svar', text: 'I ett staket är det 9 stolpar. Varje stolpe är 0,1 m bred, och avståndet mellan två stolpar är 1 m. Hur långt är staketet?', papper: true,
+          falt: [{ etikett: 'Exakt', typ: 'tal', svar: '8,9', enhet: 'm' }, { etikett: 'Avrundat till hela meter', typ: 'tal', svar: '9', enhet: 'm' }],
+          ledtrad: 'Rita staketet. Hur många mellanrum finns det mellan 9 stolpar?',
+          losning: ['Mellan 9 stolpar finns 8 mellanrum: 8 · 1 m = 8 m', 'Stolparna: 9 · 0,1 m = 0,9 m', '8 + 0,9 = 8,9 m ≈ 9 m'] }
+      ] },
+      { id: 'prov2', titel: 'Övningsprov: del 2', under: 'Uppgift 8–14: tallinjer och problemlösning', fragor: [
+        { typ: 'svar', text: 'Dividera talet A med talet B. Addera sedan talet C. Vilken är summan?', papper: true,
+          figur: { form: 'tallinje', fran: 0, till: 10, delar: 10, pilar: [{ namn: 'A', varde: 0.5 }, { namn: 'B', varde: 5 }, { namn: 'C', varde: 7.5 }] },
+          falt: [{ etikett: 'A', typ: 'tal', svar: '0,5' }, { etikett: 'B', typ: 'tal', svar: '5' }, { etikett: 'C', typ: 'tal', svar: '7,5' }, { etikett: 'Summan', typ: 'tal', svar: '7,6' }],
+          ledtrad: 'Läs först av A, B och C. Räkna sedan {A/B} och lägg till C.',
+          losning: ['A = 0,5, B = 5 och C = 7,5', '{0,5/5} = 0,1', '0,1 + 7,5 = 7,6'] },
+        { typ: 'svar', text: 'Vilket tal är x?', papper: true,
+          falt: [{ etikett: 'a) {2/5} m + x cm = 1,2 m', typ: 'tal', svar: '80' }, { etikett: 'b) x m − 65 cm = {1/4} m', typ: 'tal', svar: '0,9' }],
+          ledtrad: 'Gör om allt till samma enhet. {2/5} m = 0,4 m = 40 cm.',
+          losning: ['a) {2/5} m = 40 cm och 1,2 m = 120 cm. 120 − 40 = 80, så x = 80.', 'b) {1/4} m = 25 cm. 25 + 65 = 90 cm = 0,9 m, så x = 0,9.'] },
+        { typ: 'svar', text: 'David har 536 km till sitt sommarhus. När han kört tre fjärdedelar av sträckan stannar han för att tanka. Hur långt har David sedan kvar att åka?', papper: true,
+          falt: [{ typ: 'tal', svar: '134', enhet: 'km' }],
+          ledtrad: 'Om David har kört tre fjärdedelar, hur stor del är då kvar?',
+          losning: ['En fjärdedel är kvar.', '{536/4} = 134 km'] },
+        { typ: 'svar', text: 'Beräkna summan av talen A och C. Subtrahera sedan talet B. Vilket är svaret?', papper: true,
+          figur: { form: 'tallinje', fran: 0, till: 10, delar: 10, pilar: [{ namn: 'A', varde: 0.2 }, { namn: 'B', varde: 1.5 }, { namn: 'C', varde: 5.1 }] },
+          falt: [{ etikett: 'A', typ: 'tal', svar: '0,2' }, { etikett: 'B', typ: 'tal', svar: '1,5' }, { etikett: 'C', typ: 'tal', svar: '5,1' }, { etikett: 'Svaret', typ: 'tal', svar: '3,8' }],
+          ledtrad: 'Ett litet steg är 0,1. Räkna A + C först och ta sedan bort B.',
+          losning: ['A = 0,2, B = 1,5 och C = 5,1', '0,2 + 5,1 = 5,3', '5,3 − 1,5 = 3,8'] },
+        { typ: 'svar', text: 'Hur många sekunder tar det för en sekundvisare att vrida sig',
+          falt: [{ etikett: 'a) {1/4} varv', typ: 'tal', svar: '15', enhet: 's' }, { etikett: 'b) {3/4} varv', typ: 'tal', svar: '45', enhet: 's' }, { etikett: 'c) 0,4 varv', typ: 'tal', svar: '24', enhet: 's' }],
+          ledtrad: 'Ett helt varv tar 60 sekunder.',
+          losning: ['a) {60/4} = 15 s', 'b) 3 · 15 = 45 s', 'c) 0,1 varv tar 6 s, så 0,4 varv tar 4 · 6 = 24 s'] },
+        { typ: 'svar', text: 'Två sidor i en rektangel är 8 cm. De andra två sidorna är tre fjärdedelar så långa. Hur lång omkrets har rektangeln?', papper: true,
+          falt: [{ typ: 'tal', svar: '28', enhet: 'cm' }],
+          ledtrad: 'Räkna först ut hur långa de andra sidorna är: tre fjärdedelar av 8 cm.',
+          losning: ['En fjärdedel av 8 cm är 2 cm, så tre fjärdedelar är 6 cm.', 'Omkrets: 8 + 8 + 6 + 6 = 28 cm'] },
+        { typ: 'svar', text: 'I en trädgård finns 10 äppelträd, vilket är lika med en fjärdedel av alla träd. Av alla träden är 0,4 körsbärsträd och en femtedel päronträd. De övriga träden är plommonträd. Hur många plommonträd finns det?', papper: true,
+          falt: [{ typ: 'tal', svar: '6', enhet: 'st' }],
+          ledtrad: 'Börja med att räkna ut hur många träd det finns allt som allt.',
+          losning: ['10 äppelträd är {1/4} av alla. Alla träd: 4 · 10 = 40', 'Körsbärsträd: 0,4 · 40 = 16. Päronträd: {40/5} = 8', 'Plommonträd: 40 − 10 − 16 − 8 = 6'] }
+      ] },
+      { id: 'ova', titel: 'Träna mer', under: 'Nya liknande frågor varje gång', gen: ['dec_div', 'dec_mul', 'dec_plusminus', 'overslag', 'del_av_dec', 'kvar_resa', 'sekund', 'vaxel', 'staket', 'uppstallning', 'brak_dec'], antal: 8 }
+    ]
+  },
   {
     id: 'no5', amne: 'no', titel: 'Femmans NO', under: 'Biologi, fysik och kemi – det man ska kunna i åk 4–6', ny: true,
     pass: [
@@ -2139,8 +2349,8 @@ if (typeof module !== "undefined") module.exports = GEO;
       s += '<line class="tl-linje" x1="' + (m0 - 10) + '" y1="' + y + '" x2="' + (VW - 14) + '" y2="' + y + '"/><path class="tl-pil" d="M' + (VW - 4) + ' ' + y + ' l-16 -8 v16 z" style="fill:var(--ink)"/>';
       var tot = sp * f.delar;
       for (i = 0; i <= tot; i++) {
-        var v = f.fran + i / f.delar, x = X(v), stor = i % f.delar === 0;
-        s += '<line class="tl-streck" x1="' + x.toFixed(1) + '" y1="' + (y - (stor ? 14 : 7)) + '" x2="' + x.toFixed(1) + '" y2="' + (y + (stor ? 14 : 7)) + '"/>';
+        var v = f.fran + i / f.delar, x = X(v), stor = i % f.delar === 0, halv = !stor && f.delar % 2 === 0 && f.delar > 2 && i % (f.delar / 2) === 0, len = stor ? 14 : halv ? 10 : 6;
+        s += '<line class="tl-streck" x1="' + x.toFixed(1) + '" y1="' + (y - len) + '" x2="' + x.toFixed(1) + '" y2="' + (y + len) + '"/>';
         if (stor) s += '<text class="tl-text" x="' + x.toFixed(1) + '" y="' + (y + 38) + '">' + L.fmt(v) + '</text>';
       }
       f.pilar.forEach(function (p) {
@@ -2324,7 +2534,7 @@ if (typeof module !== "undefined") module.exports = GEO;
       '<header class="pass-topp"><button class="ikon-knapp" data-act="avbryt" aria-label="Avsluta passet">' + IK.kryss + '</button>' +
         '<div class="bom" role="progressbar" aria-valuemin="0" aria-valuemax="' + n + '" aria-valuenow="' + P.i + '" aria-label="Fråga ' + (P.i + 1) + ' av ' + n + '"><div class="bom-yta"><div class="bom-fyll" style="width:' + (andel * 100).toFixed(1) + '%"></div></div><div class="bom-prickar">' + prickar + '</div><div class="bom-kompis hoppa" style="left:' + (4 + andel * 92).toFixed(1) + '%">' + miniKompis() + '</div></div>' +
         '<span class="raknare">' + (P.i + 1) + '/' + n + '</span></header>' +
-      '<div class="pass-grid' + (q.typ === 'karta' ? ' bred' : '') + '"><article class="fraga-kort in" id="fraga" data-ref="' + esc(q.ref || '') + '">' +
+      '<div class="pass-grid' + (q.typ === 'karta' || (q.figur && q.figur.form === 'tallinje' && (q.figur.till - q.figur.fran) * q.figur.delar > 40) ? ' bred' : '') + '"><article class="fraga-kort in" id="fraga" data-ref="' + esc(q.ref || '') + '">' +
         '<div class="fraga-meta">' + meta + '</div>' +
         '<h2 class="fraga-text">' + rt(q.text) + '</h2>' +
         (q.uttryck ? '<div class="uttryck">' + rtUttryck(q.uttryck) + '</div>' : '') +
