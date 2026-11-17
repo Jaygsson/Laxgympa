@@ -105,6 +105,8 @@ var Lx = (function () {
       var n = normText(raw);
       var godta = [f.svar].concat(f.godta || []).map(normText);
       if (godta.indexOf(n) >= 0) return { ok: true };
+      // Stavningsövning: bara exakt rätt stavning godtas
+      if (f.exakt) return { ok: false };
       for (var i = 0; i < godta.length; i++) {
         var tol = godta[i].length >= 9 ? 2 : godta[i].length >= 5 ? 1 : 0;
         if (tol && lev(n, godta[i]) <= tol) return { ok: true, note: 'Det stavas: ' + f.svar + '.' };

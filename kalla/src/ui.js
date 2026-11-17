@@ -76,6 +76,8 @@
     igen: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 14-5.3M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-14 5.3M4 20v-4h4"/></svg>',
     oandlig: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 12c-2-2.6-3.6-4-5.5-4a4 4 0 0 0 0 8c1.9 0 3.5-1.4 5.5-4zm0 0c2 2.6 3.6 4 5.5 4a4 4 0 0 0 0-8c-1.9 0-3.5 1.4-5.5 4z"/></svg>',
     kolv: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4.6 18.2A1.9 1.9 0 0 0 6.2 21h11.6a1.9 1.9 0 0 0 1.6-2.8L14 9V3"/><path d="M7 15h10" /><path d="M6.4 16.5h11.2l1.8 2.4a1 1 0 0 1-.8 1.6H5.4a1 1 0 0 1-.8-1.6z" fill="currentColor" fill-opacity=".3" stroke="none"/></svg>',
+    bok: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 5 7 4.5 3.5 5v13c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z" fill="currentColor" fill-opacity=".12"/><path d="M12 6.5v13"/></svg>',
+    prat: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v10H11l-4.5 3.5v-3.5H4z" fill="currentColor" fill-opacity=".12"/><path d="M8.5 12.5l1.8-5 1.8 5M9.1 11h2.4M14.3 12.5V7.6m0 1.6c.4-.6 1-.9 1.6-.9.9 0 1.5.7 1.5 2s-.6 2.2-1.5 2.2c-.6 0-1.2-.3-1.6-.9"/></svg>',
     glob: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" fill="currentColor" fill-opacity=".12"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg>',
     karta: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z" fill="currentColor" fill-opacity=".12"/><path d="M9 4v14M15 6v14"/></svg>',
     blixt: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="currentColor" fill-opacity=".2"/></svg>'
@@ -277,7 +279,7 @@
   function hittaSet(id) { return LAXOR.filter(function (s) { return s.id === id; })[0]; }
   function passNyckel(setId, passId) { return setId + '/' + passId; }
   function fastaPass(set) { return set.pass.filter(function (p) { return p.fragor || p.karta || p.huvudstader; }); }
-  function amnesNamn(a) { return { matte: 'Matte', no: 'NO', geo: 'Geografi' }[a] || 'Matte'; }
+  function amnesNamn(a) { return { matte: 'Matte', no: 'NO', geo: 'Geografi', so: 'SO', eng: 'Engelska', sv: 'Svenska', sprak: 'Språk' }[a] || 'Matte'; }
 
   function visa(ny) {
     if (vy === 'spel' && ny !== 'spel') stoppaSpel();
@@ -327,7 +329,7 @@
       var ny = !fasta.some(function (p) { return S.pass[passNyckel(set.id, p.id)]; });
       var nyaPass = !ny && fasta.some(function (p) { return p.ny && !S.pass[passNyckel(set.id, p.id)]; });
       return '<button class="laxkort" data-act="oppna" data-set="' + set.id + '">' +
-        '<span class="amnesruta ' + set.amne + '">' + (set.amne === 'no' ? IK.kolv : set.amne === 'geo' ? IK.glob : '<span aria-hidden="true">÷</span>') + '</span>' +
+        '<span class="amnesruta ' + set.amne + '">' + (set.amne === 'no' ? IK.kolv : set.amne === 'geo' ? IK.glob : set.amne === 'so' ? IK.bok : set.amne === 'sprak' ? IK.prat : '<span aria-hidden="true">÷</span>') + '</span>' +
         '<span><span class="rad"><span class="chip ' + set.amne + '">' + amnesNamn(set.amne) + '</span>' + (set.ny && ny ? '<span class="chip ny">Ny</span>' : nyaPass ? '<span class="chip ny">Nya frågor</span>' : '') + '</span><h3>' + esc(set.titel) + '</h3><p>' + esc(set.under) + (ny ? '' : ' · ' + klara + ' av ' + fasta.length + ' pass klara') + '</p></span>' +
         '<svg class="ring" viewBox="0 0 54 54" aria-label="' + klara + ' av ' + fasta.length + ' pass klara"><circle class="bak" cx="27" cy="27" r="22" fill="none" stroke-width="6"/><circle class="fram" cx="27" cy="27" r="22" fill="none" stroke-width="6" stroke-linecap="round" stroke-dasharray="' + omk.toFixed(1) + '" stroke-dashoffset="' + (omk * (1 - andel)).toFixed(1) + '" transform="rotate(-90 27 27)"/><text x="27" y="31.5" text-anchor="middle">' + klara + '/' + fasta.length + '</text></svg>' +
         '</button>';
@@ -377,7 +379,8 @@
   function hamtaRef(ref) {
     var d = ref.split('/'), set = hittaSet(d[0]); if (!set) return null;
     var p = set.pass.filter(function (x) { return x.id === d[1]; })[0]; if (!p || !p.fragor || !p.fragor[+d[2]]) return null;
-    return Object.assign({}, p.fragor[+d[2]], { ref: ref, amne: set.amne });
+    var q0 = p.fragor[+d[2]];
+    return Object.assign({}, q0, { ref: ref, amne: q0.amne || set.amne });
   }
   function nivaOrdning(arr) {
     if (!arr.some(function (q) { return q.niva; })) return arr;
@@ -396,9 +399,9 @@
       else if (pass.gen) fragor = nivaOrdning(L.genPass(pass.gen, pass.antal || 8, ctx()).map(function (q) { q.amne = set.amne; return q; }));
       else if (pass.pool) {
         var alla = [];
-        set.pass.forEach(function (p) { if (p.fragor) p.fragor.forEach(function (q, i) { if (q.typ !== 'kort') alla.push(Object.assign({}, q, { ref: passNyckel(set.id, p.id) + '/' + i, amne: set.amne })); }); });
+        set.pass.forEach(function (p) { if (p.fragor) p.fragor.forEach(function (q, i) { if (q.typ !== 'kort') alla.push(Object.assign({}, q, { ref: passNyckel(set.id, p.id) + '/' + i, amne: q.amne || set.amne })); }); });
         fragor = L.blanda(Math.random, alla).slice(0, pass.antal || 10);
-      } else fragor = nivaOrdning(L.blanda(Math.random, pass.fragor.map(function (q, i) { return Object.assign({}, q, { ref: passNyckel(setId, passId) + '/' + i, amne: set.amne }); })));
+      } else fragor = nivaOrdning(L.blanda(Math.random, pass.fragor.map(function (q, i) { return Object.assign({}, q, { ref: passNyckel(setId, passId) + '/' + i, amne: q.amne || set.amne }); })));
     }
     if (!fragor.length) { toast('Det finns inga frågor att öva på just nu.'); return visa('hem'); }
     if (setId !== 'igen') aktivtSet = setId;
@@ -454,7 +457,7 @@
       var falt = q.falt.map(function (f, i) {
         var st = P.faltStatus && P.faltStatus[i] ? (P.faltStatus[i].format ? '' : P.faltStatus[i].ok ? ' ok' : ' nej') : '';
         var etikett = '<span class="etikett">' + (f.etikett ? rt(f.etikett) : (q.falt.length > 1 ? '' : 'Ditt svar')) + '</span>';
-        if (f.typ === 'text') return '<label class="falt' + st + '">' + etikett + '<input id="falt-' + P.i + '-' + i + '" data-text="' + i + '" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" value="' + esc(P.svar[i]) + '"' + (P.klar ? ' disabled' : '') + ' enterkeyhint="done"></label>';
+        if (f.typ === 'text') return '<label class="falt' + st + '">' + etikett + '<input id="falt-' + P.i + '-' + i + '" data-text="' + i + '" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" value="' + esc(P.svar[i]) + '"' + (P.klar ? ' disabled' : '') + ' enterkeyhint="done"></label>';
         var v = P.svar[i];
         var visas = v ? esc(v.replace('.', ',').replace('-', '−')).replace(/(\d+)\/(\d*)/, function (m, a, b) { return '<span class="br"><span>' + a + '</span><span>' + (b || '&nbsp;') + '</span></span>'; }) : '<span class="tomt">?</span>';
         return '<button class="falt' + (i === P.aktivt && !P.klar ? ' aktiv' : '') + st + '" data-act="falt" data-i="' + i + '" aria-label="' + esc(L.talbart(f.etikett || 'Svar')) + ': ' + esc(v || 'tomt') + '"' + (P.klar ? ' disabled' : '') + '>' + etikett + '<span class="ruta"><span>' + visas + '</span>' + (f.enhet ? '<span class="enhet">' + esc(f.enhet) + '</span>' : '') + '</span></button>';

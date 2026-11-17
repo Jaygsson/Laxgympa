@@ -558,3 +558,11 @@ p{margin:0}
 .ordna.ord .plats{width:100%;min-height:56px;font-size:19px;display:flex;align-items:center;gap:12px;padding:0 14px;text-align:left;counter-increment:plats}
 .ordna.ord .plats::before{content:counter(plats);flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--surface2);color:var(--muted);font:800 15px var(--display)}
 .ordna.ord .bricka{min-height:56px;font-size:19px;padding:0 16px}
+
+/* Ämnesetiketter för SO och språk */
+.chip.so{background:var(--guld-soft);color:var(--ink)}
+.chip.eng{background:var(--pop2-soft);color:var(--ink)}
+.chip.sv{background:var(--pop-soft);color:var(--pop-deep)}
+.chip.sprak{background:var(--pop2-soft);color:var(--ink)}
+.amnesruta.so{background:var(--guld-soft);color:var(--ink)}
+.amnesruta.sprak{background:var(--pop2-soft);color:var(--bla-deep)}

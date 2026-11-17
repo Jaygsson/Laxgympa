@@ -126,6 +126,20 @@ for (const g of Object.keys(L.G)) {
   anta(L.kolla(os, ['70', '18', '6000']).ok && L.kolla(os, ['71', '20', '5900']).ok && !L.kolla(os, ['80', '18', '6000']).ok, 'överslag i läxa 7 godtar rimliga svar');
 }
 
+// 4c. Stavning: exakt-fält godtar bara rätt stavning, och ämnet följer frågan
+{
+  const ord = LAXOR.find(s => s.id === 'ord47');
+  const q = ord.pass.find(p => p.id === 'sv3').fragor[3];
+  anta(L.kolla(q, ['tillsammans']).ok && L.kolla(q, ['Tillsammans ']).ok, 'stavning: rätt ord godtas, även med stor bokstav');
+  anta(!L.kolla(q, ['tilsammans']).ok && !L.kolla(q, ['tillsamans']).ok, 'stavning: nästan rätt godtas inte');
+  const e = ord.pass.find(p => p.id === 'eng3').fragor[0];
+  anta(L.kolla(e, ['sea turtle']).ok && !L.kolla(e, ['see turtle']).ok, 'glosor: sea turtle stavas exakt');
+  const alla = ord.pass.filter(p => p.fragor).flatMap(p => p.fragor);
+  anta(alla.every(x => x.amne === 'eng' || x.amne === 'sv'), 'glosor och veckoord har ämne engelska eller svenska');
+  const rel = LAXOR.find(s => s.id === 'religion');
+  anta(rel.pass.filter(p => p.fragor).every(p => p.fragor.length >= 8), 'religion: varje station har minst 8 frågor');
+}
+
 // 5. Femmans matte: oberoende kontroll av de nya generatorerna och minus-knappen
 const nyaGen = { procent: 0, brak_av: 0, enhet: 0, omkrets_area: 0, negativa: 0, lagesmatt: 0, ekvation: 0, monster: 0, gange10: 0, proportion: 0 };
 const tal = s => L.parseTal(s);
